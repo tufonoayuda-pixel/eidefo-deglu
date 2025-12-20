@@ -132,8 +132,8 @@ const DeglutionNoNutritivaPage = () => {
     }
 
     console.log('Datos de Deglución no nutritiva:', deglutionNoNutritivaData);
-    toast.success('Etapa 9 - Deglución no nutritiva completada. Procediendo a la siguiente etapa...');
-    // navigate('/next-stage'); // Placeholder for the next stage
+    toast.success('Etapa 9 - Deglución no nutritiva completada. Procediendo a la página de resultados...');
+    navigate('/deglution-result', { state: { deglutionNoNutritivaData } }); // Navigate to the result page, passing data
   };
 
   return (
@@ -328,8 +328,8 @@ const DeglutionNoNutritivaPage = () => {
                 id="bdtInmediato"
                 checked={deglutionNoNutritivaData.bdtInmediato}
                 onCheckedChange={(checked) => handleCheckboxChange('bdtInmediato', checked as boolean)}
-                disabled={deglutionNoNutritivaData.sinAlteracion}
                 className="data-[state=checked]:bg-[#e99e7c]"
+                disabled={deglutionNoNutritivaData.sinAlteracion}
               />
             </div>
 

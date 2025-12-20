@@ -14,7 +14,10 @@ import CommunicationPage from "./pages/CommunicationPage";
 import OrofacialEvaluationPage from "./pages/OrofacialEvaluationPage";
 import DentitionPage from "./pages/DentitionPage";
 import ReflexesPage from "./pages/ReflexesPage";
-import DeglutionNoNutritivaPage from "./pages/DeglutionNoNutritivaPage"; // Import the new DeglutionNoNutritivaPage
+import DeglutionNoNutritivaPage from "./pages/DeglutionNoNutritivaPage";
+import DeglutionResultPage from "./pages/DeglutionResultPage"; // Import the new DeglutionResultPage
+import DeglutionNutritivaPage from "./pages/DeglutionNutritivaPage"; // Import the new DeglutionNutritivaPage
+import ConclusionsPage from "./pages/ConclusionsPage"; // Import the new ConclusionsPage
 import { AuthProvider, useAuth } from "./context/AuthContext";
 
 const queryClient = new QueryClient();
@@ -102,7 +105,31 @@ const App = () => (
               path="/deglution-no-nutritiva"
               element={
                 <ProtectedRoute>
-                  <DeglutionNoNutritivaPage /> {/* New protected route for DeglutionNoNutritivaPage */}
+                  <DeglutionNoNutritivaPage /> {/* Protected route for DeglutionNoNutritivaPage */}
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/deglution-result"
+              element={
+                <ProtectedRoute>
+                  <DeglutionResultPage /> {/* New protected route for DeglutionResultPage */}
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/deglution-nutritiva"
+              element={
+                <ProtectedRoute>
+                  <DeglutionNutritivaPage /> {/* New protected route for DeglutionNutritivaPage */}
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/conclusions"
+              element={
+                <ProtectedRoute>
+                  <ConclusionsPage /> {/* New protected route for ConclusionsPage */}
                 </ProtectedRoute>
               }
             />
