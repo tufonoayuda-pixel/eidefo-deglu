@@ -71,6 +71,15 @@ interface ConclusionsData {
   derivacionOtros: string;
 
   observaciones: string;
+
+  // New fields from user request
+  optimizarHigieneOral: boolean;
+  ningunaRecomendacion: boolean;
+  instalacionViaAlternativa: boolean;
+  viaAlternativaTipos: string[];
+  evaluacionComplementaria: boolean;
+  terapiaDeglucion: boolean;
+  evaluacionComunicativa: boolean;
 }
 
 const trastornoOrigenOptions = [
@@ -99,6 +108,15 @@ const rehabilitacionTiposOptions = [
   { value: 'maniobras_compensatorias', label: 'Maniobras compensatorias' },
   { value: 'terapia_miofuncional', label: 'Terapia miofuncional' },
   { value: 'otros', label: 'Otros' },
+];
+
+const viaAlternativaOptions = [
+  { value: 'SNG', label: 'SNG' },
+  { value: 'SNY', label: 'SNY' },
+  { value: 'SOG', label: 'SOG' },
+  { value: 'GTT', label: 'GTT' },
+  { value: 'YTT', label: 'YTT' },
+  { value: 'NPT', label: 'NPT' },
 ];
 
 const ConclusionsPage = () => {
@@ -152,6 +170,13 @@ const ConclusionsPage = () => {
     derivacionMedico: false,
     derivacionOtros: '',
     observaciones: '',
+    optimizarHigieneOral: false,
+    ningunaRecomendacion: false,
+    instalacionViaAlternativa: false,
+    viaAlternativaTipos: [],
+    evaluacionComplementaria: false,
+    terapiaDeglucion: false,
+    evaluacionComunicativa: false,
   });
 
   const handleSwitchChange = (field: keyof ConclusionsData, checked: boolean) => {
@@ -206,6 +231,59 @@ const ConclusionsPage = () => {
         newState.derivacionOtros = '';
       }
 
+      // New logic for "Ninguna recomendación"
+      if (field === 'ningunaRecomendacion' && checked) {
+        // If "Ninguna recomendación" is checked, clear all other recommendations
+        return {
+          ...prev,
+          ningunaRecomendacion: true,
+          asistenciaVigilancia: false,
+          posicion45a90: false,
+          maniobraDeglutoria: false,
+          verificarResiduosBoca: false,
+          modificacionVolumen: false,
+          modificacionVelocidad: false,
+          modificacionTemperatura: false,
+          modificacionSabor: false,
+          modificacionTextura: false,
+          modificacionConsistencia: false,
+          usoEspesante: false,
+          usoCucharaMedidora: false,
+          usoVasoAdaptado: false,
+          usoJeringa: false,
+          usoBombilla: false,
+          usoProtesisDental: false,
+          usoEstimulacionSensorial: false,
+          usoEstimulacionTermica: false,
+          usoEstimulacionMecanica: false,
+          usoEstimulacionElectrica: false,
+          usoEstimulacionFarmacologica: false,
+          usoEstimulacionOtros: '',
+          rehabilitacionDeglutoria: false,
+          rehabilitacionDeglutoriaTipos: [],
+          rehabilitacionDeglutoriaOtros: '',
+          derivacionNutricionista: false,
+          derivacionKinesiologo: false,
+          derivacionTerapeutaOcupacional: false,
+          derivacionMedico: false,
+          derivacionOtros: '',
+          optimizarHigieneOral: false,
+          instalacionViaAlternativa: false,
+          viaAlternativaTipos: [],
+          evaluacionComplementaria: false,
+          terapiaDeglucion: false,
+          evaluacionComunicativa: false,
+        };
+      } else if (field !== 'ningunaRecomendacion' && checked) {
+        // If any other recommendation is checked, uncheck "Ninguna recomendación"
+        newState.ningunaRecomendacion = false;
+      }
+
+      // Logic for "Instalación de vía alternativa"
+      if (field === 'instalacionViaAlternativa' && !checked) {
+        newState.viaAlternativaTipos = [];
+      }
+
       return newState;
     });
   };
@@ -252,6 +330,11 @@ const ConclusionsPage = () => {
       toast.error('Por favor, seleccione al menos un tipo de rehabilitación deglutoria o especifique "Otros".');
       return;
     }
+    if (conclusionsData.instalacionViaAlternativa && conclusionsData.viaAlternativaTipos.length === 0) {
+      toast.error('Por favor, seleccione al menos un tipo de vía alternativa.');
+      return;
+    }
+
 
     console.log('Conclusiones de la Evaluación:', conclusionsData);
     toast.success('Evaluación finalizada y conclusiones registradas.');
@@ -514,7 +597,7 @@ const ConclusionsPage = () => {
               <Switch
                 id="asistenciaVigilancia"
                 checked={conclusionsData.asistenciaVigilancia}
-                onCheckedChange={(checked) => setConclusionsData(prev => ({ ...prev, asistenciaVigilancia: checked }))}
+                onCheckedChange={(checked) => handleSwitchChange('asistenciaVigilancia', checked)}
                 className="data-[state=checked]:bg-[#e99e7c]"
               />
             </div>
@@ -523,7 +606,7 @@ const ConclusionsPage = () => {
               <Switch
                 id="posicion45a90"
                 checked={conclusionsData.posicion45a90}
-                onCheckedChange={(checked) => setConclusionsData(prev => ({ ...prev, posicion45a90: checked }))}
+                onCheckedChange={(checked) => handleSwitchChange('posicion45a90', checked)}
                 className="data-[state=checked]:bg-[#e99e7c]"
               />
             </div>
@@ -532,7 +615,7 @@ const ConclusionsPage = () => {
               <Switch
                 id="maniobraDeglutoria"
                 checked={conclusionsData.maniobraDeglutoria}
-                onCheckedChange={(checked) => setConclusionsData(prev => ({ ...prev, maniobraDeglutoria: checked }))}
+                onCheckedChange={(checked) => handleSwitchChange('maniobraDeglutoria', checked)}
                 className="data-[state=checked]:bg-[#e99e7c]"
               />
             </div>
@@ -541,7 +624,7 @@ const ConclusionsPage = () => {
               <Switch
                 id="verificarResiduosBoca"
                 checked={conclusionsData.verificarResiduosBoca}
-                onCheckedChange={(checked) => setConclusionsData(prev => ({ ...prev, verificarResiduosBoca: checked }))}
+                onCheckedChange={(checked) => handleSwitchChange('verificarResiduosBoca', checked)}
                 className="data-[state=checked]:bg-[#e99e7c]"
               />
             </div>
@@ -550,7 +633,7 @@ const ConclusionsPage = () => {
               <Switch
                 id="modificacionVolumen"
                 checked={conclusionsData.modificacionVolumen}
-                onCheckedChange={(checked) => setConclusionsData(prev => ({ ...prev, modificacionVolumen: checked }))}
+                onCheckedChange={(checked) => handleSwitchChange('modificacionVolumen', checked)}
                 className="data-[state=checked]:bg-[#e99e7c]"
               />
             </div>
@@ -559,7 +642,7 @@ const ConclusionsPage = () => {
               <Switch
                 id="modificacionVelocidad"
                 checked={conclusionsData.modificacionVelocidad}
-                onCheckedChange={(checked) => setConclusionsData(prev => ({ ...prev, modificacionVelocidad: checked }))}
+                onCheckedChange={(checked) => handleSwitchChange('modificacionVelocidad', checked)}
                 className="data-[state=checked]:bg-[#e99e7c]"
               />
             </div>
@@ -568,7 +651,7 @@ const ConclusionsPage = () => {
               <Switch
                 id="modificacionTemperatura"
                 checked={conclusionsData.modificacionTemperatura}
-                onCheckedChange={(checked) => setConclusionsData(prev => ({ ...prev, modificacionTemperatura: checked }))}
+                onCheckedChange={(checked) => handleSwitchChange('modificacionTemperatura', checked)}
                 className="data-[state=checked]:bg-[#e99e7c]"
               />
             </div>
@@ -577,7 +660,7 @@ const ConclusionsPage = () => {
               <Switch
                 id="modificacionSabor"
                 checked={conclusionsData.modificacionSabor}
-                onCheckedChange={(checked) => setConclusionsData(prev => ({ ...prev, modificacionSabor: checked }))}
+                onCheckedChange={(checked) => handleSwitchChange('modificacionSabor', checked)}
                 className="data-[state=checked]:bg-[#e99e7c]"
               />
             </div>
@@ -586,7 +669,7 @@ const ConclusionsPage = () => {
               <Switch
                 id="modificacionTextura"
                 checked={conclusionsData.modificacionTextura}
-                onCheckedChange={(checked) => setConclusionsData(prev => ({ ...prev, modificacionTextura: checked }))}
+                onCheckedChange={(checked) => handleSwitchChange('modificacionTextura', checked)}
                 className="data-[state=checked]:bg-[#e99e7c]"
               />
             </div>
@@ -595,7 +678,7 @@ const ConclusionsPage = () => {
               <Switch
                 id="modificacionConsistencia"
                 checked={conclusionsData.modificacionConsistencia}
-                onCheckedChange={(checked) => setConclusionsData(prev => ({ ...prev, modificacionConsistencia: checked }))}
+                onCheckedChange={(checked) => handleSwitchChange('modificacionConsistencia', checked)}
                 className="data-[state=checked]:bg-[#e99e7c]"
               />
             </div>
@@ -604,7 +687,7 @@ const ConclusionsPage = () => {
               <Switch
                 id="usoEspesante"
                 checked={conclusionsData.usoEspesante}
-                onCheckedChange={(checked) => setConclusionsData(prev => ({ ...prev, usoEspesante: checked }))}
+                onCheckedChange={(checked) => handleSwitchChange('usoEspesante', checked)}
                 className="data-[state=checked]:bg-[#e99e7c]"
               />
             </div>
@@ -613,7 +696,7 @@ const ConclusionsPage = () => {
               <Switch
                 id="usoCucharaMedidora"
                 checked={conclusionsData.usoCucharaMedidora}
-                onCheckedChange={(checked) => setConclusionsData(prev => ({ ...prev, usoCucharaMedidora: checked }))}
+                onCheckedChange={(checked) => handleSwitchChange('usoCucharaMedidora', checked)}
                 className="data-[state=checked]:bg-[#e99e7c]"
               />
             </div>
@@ -622,7 +705,7 @@ const ConclusionsPage = () => {
               <Switch
                 id="usoVasoAdaptado"
                 checked={conclusionsData.usoVasoAdaptado}
-                onCheckedChange={(checked) => setConclusionsData(prev => ({ ...prev, usoVasoAdaptado: checked }))}
+                onCheckedChange={(checked) => handleSwitchChange('usoVasoAdaptado', checked)}
                 className="data-[state=checked]:bg-[#e99e7c]"
               />
             </div>
@@ -631,7 +714,7 @@ const ConclusionsPage = () => {
               <Switch
                 id="usoJeringa"
                 checked={conclusionsData.usoJeringa}
-                onCheckedChange={(checked) => setConclusionsData(prev => ({ ...prev, usoJeringa: checked }))}
+                onCheckedChange={(checked) => handleSwitchChange('usoJeringa', checked)}
                 className="data-[state=checked]:bg-[#e99e7c]"
               />
             </div>
@@ -640,7 +723,7 @@ const ConclusionsPage = () => {
               <Switch
                 id="usoBombilla"
                 checked={conclusionsData.usoBombilla}
-                onCheckedChange={(checked) => setConclusionsData(prev => ({ ...prev, usoBombilla: checked }))}
+                onCheckedChange={(checked) => handleSwitchChange('usoBombilla', checked)}
                 className="data-[state=checked]:bg-[#e99e7c]"
               />
             </div>
@@ -649,7 +732,91 @@ const ConclusionsPage = () => {
               <Switch
                 id="usoProtesisDental"
                 checked={conclusionsData.usoProtesisDental}
-                onCheckedChange={(checked) => setConclusionsData(prev => ({ ...prev, usoProtesisDental: checked }))}
+                onCheckedChange={(checked) => handleSwitchChange('usoProtesisDental', checked)}
+                className="data-[state=checked]:bg-[#e99e7c]"
+              />
+            </div>
+
+            {/* NEW: Optimizar higiene oral */}
+            <div className="flex items-center justify-between">
+              <Label htmlFor="optimizarHigieneOral" className="text-gray-700 font-medium">Optimizar higiene oral</Label>
+              <Switch
+                id="optimizarHigieneOral"
+                checked={conclusionsData.optimizarHigieneOral}
+                onCheckedChange={(checked) => handleSwitchChange('optimizarHigieneOral', checked)}
+                className="data-[state=checked]:bg-[#e99e7c]"
+              />
+            </div>
+
+            {/* NEW: Ninguna recomendación */}
+            <div className="flex items-center justify-between">
+              <Label htmlFor="ningunaRecomendacion" className="text-gray-700 font-medium">Ninguna recomendación</Label>
+              <Switch
+                id="ningunaRecomendacion"
+                checked={conclusionsData.ningunaRecomendacion}
+                onCheckedChange={(checked) => handleSwitchChange('ningunaRecomendacion', checked)}
+                className="data-[state=checked]:bg-[#e99e7c]"
+              />
+            </div>
+
+            {/* NEW: Instalación de vía alternativa */}
+            <div className="space-y-3">
+              <div className="flex items-center justify-between">
+                <Label htmlFor="instalacionViaAlternativa" className="text-gray-700 font-medium">Instalación de vía alternativa</Label>
+                <Switch
+                  id="instalacionViaAlternativa"
+                  checked={conclusionsData.instalacionViaAlternativa}
+                  onCheckedChange={(checked) => handleSwitchChange('instalacionViaAlternativa', checked)}
+                  className="data-[state=checked]:bg-[#e99e7c]"
+                />
+              </div>
+              {conclusionsData.instalacionViaAlternativa && (
+                <div className="ml-8 mt-4 space-y-2 p-4 border rounded-lg bg-gray-50">
+                  <h3 className="text-lg font-semibold text-gray-800 mb-2">Tipos de vía alternativa:</h3>
+                  {viaAlternativaOptions.map((option) => (
+                    <div key={option.value} className="flex items-center space-x-2">
+                      <Checkbox
+                        id={`via-alternativa-${option.value}`}
+                        checked={conclusionsData.viaAlternativaTipos.includes(option.value)}
+                        onCheckedChange={(checked) => handleCheckboxGroupChange('viaAlternativaTipos', option.value, checked as boolean)}
+                        className="data-[state=checked]:bg-[#e99e7c]"
+                      />
+                      <Label htmlFor={`via-alternativa-${option.value}`}>{option.label}</Label>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            {/* NEW: Evaluación complementaria */}
+            <div className="flex items-center justify-between">
+              <Label htmlFor="evaluacionComplementaria" className="text-gray-700 font-medium">Evaluación complementaria</Label>
+              <Switch
+                id="evaluacionComplementaria"
+                checked={conclusionsData.evaluacionComplementaria}
+                onCheckedChange={(checked) => handleSwitchChange('evaluacionComplementaria', checked)}
+                className="data-[state=checked]:bg-[#e99e7c]"
+              />
+            </div>
+
+            {/* NEW: Terapia de deglución */}
+            <div className="flex items-center justify-between">
+              <Label htmlFor="terapiaDeglucion" className="text-gray-700 font-medium">Terapia de deglución</Label>
+              <Switch
+                id="terapiaDeglucion"
+                checked={conclusionsData.terapiaDeglucion}
+                onCheckedChange={(checked) => handleSwitchChange('terapiaDeglucion', checked)}
+                className="data-[state=checked]:bg-[#e99e7c]"
+              />
+            </div>
+
+            {/* NEW: Evaluación comunicativa */}
+            <div className="flex items-center justify-between">
+              <Label htmlFor="evaluacionComunicativa" className="text-gray-700 font-medium">Evaluación comunicativa</Label>
+              <Switch
+                id="evaluacionComunicativa"
+                checked={conclusionsData.evaluacionComunicativa}
+                onCheckedChange={(checked) => handleSwitchChange('evaluacionComunicativa', checked)}
                 className="data-[state=checked]:bg-[#e99e7c]"
               />
             </div>
