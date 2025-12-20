@@ -6,15 +6,33 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Switch } from "@/components/ui/switch";
 import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox"; // Import Checkbox component
 import { toast } from 'sonner';
-import Header from '@/components/Header'; // Import the new Header component
+import Header from '@/components/Header';
+
+const medicalHistoryOptions = [
+  "ACV",
+  "TEC",
+  "Tumor",
+  "TNC menor",
+  "TNC mayor",
+  "EPOC",
+  "COVID-19",
+];
 
 const IdentificationPage = () => {
   const [patientName, setPatientName] = useState('');
   const [age, setAge] = useState('');
   const [medicalHistoryToggle, setMedicalHistoryToggle] = useState(false);
-  const [medicalHistory, setMedicalHistory] = useState('');
+  const [selectedMedicalHistory, setSelectedMedicalHistory] = useState<string[]>([]);
+  const [otherMedicalHistory, setOtherMedicalHistory] = useState('');
   const [swallowingHistory, setSwallowingHistory] = useState('');
+
+  const handleCheckboxChange = (option: string, checked: boolean) => {
+    setSelectedMedicalHistory((prev) =>
+      checked ? [...prev, option] : prev.filter((item) => item !== option)
+    );
+  };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -24,22 +42,27 @@ const IdentificationPage = () => {
       return;
     }
 
+    const finalMedicalHistory = medicalHistoryToggle
+      ? selectedMedicalHistory.includes("OTRO") && otherMedicalHistory
+        ? [...selectedMedicalHistory.filter(item => item !== "OTRO"), `OTRO: ${otherMedicalHistory}`]
+        : selectedMedicalHistory
+      : [];
+
     console.log('Datos de identificación:', {
       patientName,
       age,
       medicalHistoryToggle,
-      medicalHistory,
+      medicalHistory: finalMedicalHistory,
       swallowingHistory
     });
 
     toast.success('Identificación completada. Procediendo a la siguiente etapa...');
     // In a real application, you would navigate to the next stage here.
-    // For now, we'll just log the data.
   };
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <Header /> {/* Use the reusable Header component */}
+      <Header />
 
       <div className="max-w-3xl mx-auto p-6 bg-white rounded-xl shadow-lg my-8">
         <h1 className="text-2xl font-semibold text-[#e99e7c] mb-6">Etapa 1 - Identificación</h1>
@@ -78,19 +101,47 @@ const IdentificationPage = () => {
               <Switch
                 id="medicalHistoryToggle"
                 checked={medicalHistoryToggle}
-                onCheckedChange={setMedicalHistoryToggle}
+                onCheckedChange={(checked) => {
+                  setMedicalHistoryToggle(checked);
+                  if (!checked) {
+                    setSelectedMedicalHistory([]); // Clear selections when toggle is off
+                    setOtherMedicalHistory('');
+                  }
+                }}
               />
               <Label htmlFor="medicalHistoryToggle" className="text-gray-700 font-medium">Antecedentes médicos (opcional):</Label>
             </div>
             {medicalHistoryToggle && (
-              <Textarea
-                id="medicalHistory"
-                rows={3}
-                placeholder="Ingrese antecedentes médicos relevantes..."
-                value={medicalHistory}
-                onChange={(e) => setMedicalHistory(e.target.value)}
-                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
-              />
+              <div className="mt-4 space-y-2">
+                {medicalHistoryOptions.map((option) => (
+                  <div key={option} className="flex items-center space-x-2">
+                    <Checkbox
+                      id={`medical-history-${option}`}
+                      checked={selectedMedicalHistory.includes(option)}
+                      onCheckedChange={(checked) => handleCheckboxChange(option, checked as boolean)}
+                    />
+                    <Label htmlFor={`medical-history-${option}`}>{option}</Label>
+                  </div>
+                ))}
+                <div className="flex items-center space-x-2">
+                  <Checkbox
+                    id="medical-history-other"
+                    checked={selectedMedicalHistory.includes("OTRO")}
+                    onCheckedChange={(checked) => handleCheckboxChange("OTRO", checked as boolean)}
+                  />
+                  <Label htmlFor="medical-history-other">OTRO</Label>
+                </div>
+                {selectedMedicalHistory.includes("OTRO") && (
+                  <Input
+                    id="otherMedicalHistory"
+                    type="text"
+                    placeholder="Especificar otros antecedentes médicos..."
+                    value={otherMedicalHistory}
+                    onChange={(e) => setOtherMedicalHistory(e.target.value)}
+                    className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all mt-2"
+                  />
+                )}
+              </div>
             )}
           </div>
 
