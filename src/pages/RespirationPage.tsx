@@ -53,7 +53,7 @@ const RespirationPage = () => {
     });
 
     toast.success('Etapa 2 - Respiración completada. Procediendo a la siguiente etapa...');
-    // Here you would navigate to the next stage, e.g., navigate('/next-stage');
+    navigate('/nutrition'); // Navigate to the new NutritionPage
   };
 
   return (
