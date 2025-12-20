@@ -62,6 +62,12 @@ export default {
           border: "hsl(var(--sidebar-border))",
           ring: "hsl(var(--sidebar-ring))",
         },
+        // Custom colors from user's HTML
+        primary: '#2563eb',
+        secondary: '#1e40af',
+        success: '#16a34a',
+        warning: '#d97706',
+        danger: '#dc2626'
       },
       borderRadius: {
         lg: "var(--radius)",
