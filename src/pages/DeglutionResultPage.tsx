@@ -63,7 +63,6 @@ const DeglutionResultPage = () => {
           <Button
             type="button"
             onClick={handleStartNutritiveDeglution}
-            disabled={!isLowScore} // Only enable if score is low
             className="p-3 bg-efodea-blue text-white font-medium rounded-lg hover:bg-efodea-blue-hover transition-colors"
           >
             Iniciar Deglución nutritiva
