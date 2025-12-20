@@ -4,7 +4,8 @@ import React, { createContext, useContext, useState, ReactNode } from 'react';
 
 interface AuthContextType {
   isLoggedIn: boolean;
-  login: () => void;
+  userEmail: string | null; // Add userEmail to the context type
+  login: (email: string) => void; // Modify login to accept email
   logout: () => void;
 }
 
@@ -12,22 +13,28 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(() => {
-    // Initialize from localStorage to persist login state across refreshes
     return localStorage.getItem('isLoggedIn') === 'true';
   });
+  const [userEmail, setUserEmail] = useState<string | null>(() => {
+    return localStorage.getItem('userEmail'); // Initialize userEmail from localStorage
+  });
 
-  const login = () => {
+  const login = (email: string) => {
     setIsLoggedIn(true);
+    setUserEmail(email); // Set user email
     localStorage.setItem('isLoggedIn', 'true');
+    localStorage.setItem('userEmail', email); // Store user email in localStorage
   };
 
   const logout = () => {
     setIsLoggedIn(false);
+    setUserEmail(null); // Clear user email
     localStorage.removeItem('isLoggedIn');
+    localStorage.removeItem('userEmail'); // Remove user email from localStorage
   };
 
   return (
-    <AuthContext.Provider value={{ isLoggedIn, login, logout }}>
+    <AuthContext.Provider value={{ isLoggedIn, userEmail, login, logout }}>
       {children}
     </AuthContext.Provider>
   );

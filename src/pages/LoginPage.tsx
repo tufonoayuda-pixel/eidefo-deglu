@@ -32,7 +32,7 @@ const LoginPage = () => {
 
     // Simulate API call for authentication
     if (username === 'test' && password === 'password') {
-      login(); // Call login from AuthContext
+      login(username); // Pass the username (email) to the login function
       toast.success('¡Bienvenido al Sistema EFODEA!');
       // Redirection is now handled by the useEffect in App.tsx or this component
     } else {
