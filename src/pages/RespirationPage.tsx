@@ -4,15 +4,39 @@ import React, { useState } from 'react';
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox"; // Import Checkbox
 import { toast } from 'sonner';
 import Header from '@/components/Header';
 import { useNavigate } from 'react-router-dom';
 
+const respirationOptions = [
+  "FIO2 ambiental",
+  "Con uso de CNAF",
+  "Con uso de cánula nasal",
+  "Con uso de MMV",
+  "Con uso de VMNI sin ventana",
+  "Con uso de VMNI con ventana",
+];
+
 const RespirationPage = () => {
   const navigate = useNavigate();
   const [noArtificialAirway, setNoArtificialAirway] = useState(false);
+  const [selectedRespirationOptions, setSelectedRespirationOptions] = useState<string[]>([]);
   const [orotrachealIntubation, setOrotrachealIntubation] = useState(false);
   const [tracheostomy, setTracheostomy] = useState(false);
+
+  const handleRespirationOptionChange = (option: string, checked: boolean) => {
+    setSelectedRespirationOptions((prev) =>
+      checked ? [...prev, option] : prev.filter((item) => item !== option)
+    );
+  };
+
+  const handleNoArtificialAirwayToggle = (checked: boolean) => {
+    setNoArtificialAirway(checked);
+    if (!checked) {
+      setSelectedRespirationOptions([]); // Clear selections if toggle is off
+    }
+  };
 
   const handleBack = () => {
     navigate('/'); // Navigate back to IdentificationPage
@@ -23,13 +47,13 @@ const RespirationPage = () => {
 
     console.log('Datos de Respiración:', {
       noArtificialAirway,
+      selectedRespirationOptions: noArtificialAirway ? selectedRespirationOptions : [],
       orotrachealIntubation,
       tracheostomy,
     });
 
     toast.success('Etapa 2 - Respiración completada. Procediendo a la siguiente etapa...');
-    // In a real application, you would navigate to the next stage here.
-    // For now, we'll just log the data.
+    // Here you would navigate to the next stage, e.g., navigate('/next-stage');
   };
 
   return (
@@ -46,9 +70,24 @@ const RespirationPage = () => {
               <Switch
                 id="noArtificialAirway"
                 checked={noArtificialAirway}
-                onCheckedChange={setNoArtificialAirway}
+                onCheckedChange={handleNoArtificialAirwayToggle}
               />
             </div>
+
+            {noArtificialAirway && (
+              <div className="ml-8 mt-4 space-y-2">
+                {respirationOptions.map((option) => (
+                  <div key={option} className="flex items-center space-x-2">
+                    <Checkbox
+                      id={`respiration-option-${option}`}
+                      checked={selectedRespirationOptions.includes(option)}
+                      onCheckedChange={(checked) => handleRespirationOptionChange(option, checked as boolean)}
+                    />
+                    <Label htmlFor={`respiration-option-${option}`}>{option}</Label>
+                  </div>
+                ))}
+              </div>
+            )}
 
             <div className="flex items-center justify-between">
               <Label htmlFor="orotrachealIntubation" className="text-gray-700 font-medium">Presentó intubación orotraqueal</Label>
