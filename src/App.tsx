@@ -6,7 +6,8 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Index from "./pages/Index"; // This now renders EfodeaLanding
 import NotFound from "./pages/NotFound";
 import LoginPage from "./pages/LoginPage";
-import IdentificationPage from "./pages/IdentificationPage"; // Import the new IdentificationPage
+import IdentificationPage from "./pages/IdentificationPage";
+import RespirationPage from "./pages/RespirationPage"; // Import the new RespirationPage
 import { AuthProvider, useAuth } from "./context/AuthContext";
 
 const queryClient = new QueryClient();
@@ -31,6 +32,14 @@ const App = () => (
               element={
                 <ProtectedRoute>
                   <IdentificationPage /> {/* The main protected route now shows IdentificationPage */}
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/respiration"
+              element={
+                <ProtectedRoute>
+                  <RespirationPage /> {/* New protected route for RespirationPage */}
                 </ProtectedRoute>
               }
             />

@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox"; // Import Checkbox component
 import { toast } from 'sonner';
 import Header from '@/components/Header';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate
 
 const medicalHistoryOptions = [
   "ACV",
@@ -21,6 +22,7 @@ const medicalHistoryOptions = [
 ];
 
 const IdentificationPage = () => {
+  const navigate = useNavigate(); // Initialize useNavigate
   const [patientName, setPatientName] = useState('');
   const [age, setAge] = useState('');
   const [medicalHistoryToggle, setMedicalHistoryToggle] = useState(false);
@@ -57,7 +59,7 @@ const IdentificationPage = () => {
     });
 
     toast.success('Identificación completada. Procediendo a la siguiente etapa...');
-    // In a real application, you would navigate to the next stage here.
+    navigate('/respiration'); // Navigate to the new RespirationPage
   };
 
   return (
