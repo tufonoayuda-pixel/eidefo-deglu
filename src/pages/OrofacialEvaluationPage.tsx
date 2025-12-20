@@ -72,7 +72,7 @@ const OrofacialEvaluationPage = () => {
 
     console.log('Datos de Evaluación Estructural Orofacial:', evaluacionOrofacialData);
     toast.success('Etapa 6 - Evaluación estructural orofacial completada. Procediendo a la siguiente etapa...');
-    // Navigate to the next stage, e.g., navigate('/next-stage');
+    navigate('/dentition'); // Navigate to the new DentitionPage
   };
 
   return (
@@ -365,4 +365,4 @@ const OrofacialEvaluationPage = () => {
   );
 };
 
-export default OrofacialEvaluationPage;
+export default DentitionPage;
