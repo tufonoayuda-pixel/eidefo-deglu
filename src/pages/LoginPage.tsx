@@ -45,7 +45,9 @@ const LoginPage = () => {
     <div className="flex items-center justify-center min-h-screen bg-[#e99e7c]">
       <div className="login-container bg-white p-8 rounded-xl shadow-lg w-full max-w-md">
         <div className="logo text-right mb-6">
-          <img src="https://via.placeholder.com/150x40?text=NEUROMAV" alt="Neuromav Logo" className="h-10 ml-auto" />
+          <div className="h-10 ml-auto flex items-center text-xl font-bold text-gray-800">
+            🧠👅MiFonoConsulta
+          </div>
         </div>
         <h2 className="form-title text-2xl font-semibold text-center mb-6 text-gray-800">INGRESO SISTEMA EFODEA</h2>
 

@@ -29,7 +29,9 @@ const Header = () => {
           Salir
         </Button>
       </div>
-      <img src="https://via.placeholder.com/150x40?text=NEUROMAV" alt="Neuromav Logo" className="h-10" />
+      <div className="h-10 flex items-center text-lg font-bold text-gray-800">
+        🧠👅MiFonoConsulta
+      </div>
     </div>
   );
 };
