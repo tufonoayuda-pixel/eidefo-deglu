@@ -1,76 +1,37 @@
 "use client";
 
 import React from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } => 'react-router-dom';
 import { Button } from "@/components/ui/button";
 import Header from '@/components/Header';
-
-// Re-using the interface from DeglutionNoNutritivaPage for data consistency
-interface DeglutionNoNutritivaData {
-  sinAlteracion: boolean;
-  acumulacionSaliva: boolean;
-  escapeAnterior: boolean;
-  xerostomia: boolean;
-  noDegluteEspontaneamente: boolean;
-  rmoMasDeUnSegundo: boolean;
-  excursionLaringeaAusente: boolean;
-  odinofagia: boolean;
-  vozHumedaSinAclaramiento: boolean;
-  aclaraVozEspontanea: boolean;
-  aclaraVozSolicitud: boolean;
-  aclaraVozDegluciones: boolean;
-  aclaraVozCarraspeo: boolean;
-  aclaraVozTos: boolean;
-  ascultacionCervicalHumeda: boolean;
-  bdtInmediato: boolean;
-  evaluacionPenetracion: boolean;
-  evaluacionAspiracion: boolean;
-  evaluacionAspiracionSilente: boolean;
-}
+import { EvaluationData } from '@/types/evaluation'; // Import the main interface
 
 const DeglutionResultPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const deglutionNoNutritivaData: DeglutionNoNutritivaData | undefined = location.state?.deglutionNoNutritivaData;
+  const evaluationData: EvaluationData | undefined = location.state?.evaluationData;
 
-  // Function to calculate the score based on the provided data
-  const calculateScore = (data: DeglutionNoNutritivaData): number => {
-    if (data.sinAlteracion) {
-      return 100;
-    }
-
-    let issuesCount = 0;
-    if (data.acumulacionSaliva) issuesCount++;
-    if (data.xerostomia) issuesCount++;
-    if (data.noDegluteEspontaneamente) issuesCount++;
-    if (data.rmoMasDeUnSegundo) issuesCount++;
-    if (data.excursionLaringeaAusente) issuesCount++;
-    if (data.odinofagia) issuesCount++;
-    if (data.vozHumedaSinAclaramiento) issuesCount++;
-    if (data.ascultacionCervicalHumeda) issuesCount++;
-    if (data.bdtInmediato) issuesCount++;
-    if (data.evaluacionPenetracion) issuesCount++;
-    if (data.evaluacionAspiracion) issuesCount++;
-    if (data.evaluacionAspiracionSilente) issuesCount++;
-
-    const totalPossibleIssues = 12; // Based on the 12 boolean fields indicating an issue
-    const score = 100 - (issuesCount / totalPossibleIssues) * 100;
-    return Math.max(0, parseFloat(score.toFixed(1))); // Ensure score is not negative and format to one decimal
-  };
-
-  const percentage = deglutionNoNutritivaData ? calculateScore(deglutionNoNutritivaData) : 0;
+  const percentage = evaluationData?.deglutionNoNutritivaScore ?? 0;
   const isLowScore = percentage < 21; // Based on the image's criteria (BAJO el 20% vs MAYOR o IGUAL al 21%)
 
   const handleStartNutritiveDeglution = () => {
-    navigate('/deglution-nutritiva');
+    const updatedEvaluationData: EvaluationData = {
+      ...evaluationData,
+      deglutionNutritiva: { evaluatedNutritiveDeglution: true }, // Mark as started
+    };
+    navigate('/deglution-nutritiva', { state: { evaluationData: updatedEvaluationData } });
   };
 
   const handleGoToConclusions = () => {
-    navigate('/conclusions');
+    const updatedEvaluationData: EvaluationData = {
+      ...evaluationData,
+      deglutionNutritiva: { evaluatedNutritiveDeglution: false }, // Mark as skipped
+    };
+    navigate('/conclusions', { state: { evaluationData: updatedEvaluationData } });
   };
 
   const handleBack = () => {
-    navigate('/deglution-no-nutritiva');
+    navigate('/deglution-no-nutritiva', { state: { evaluationData } });
   };
 
   return (

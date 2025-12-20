@@ -7,32 +7,14 @@ import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { toast } from 'sonner';
 import Header from '@/components/Header';
-import { useNavigate } from 'react-router-dom';
-
-interface DeglutionNoNutritivaData {
-  sinAlteracion: boolean;
-  acumulacionSaliva: boolean;
-  escapeAnterior: boolean;
-  xerostomia: boolean;
-  noDegluteEspontaneamente: boolean;
-  rmoMasDeUnSegundo: boolean;
-  excursionLaringeaAusente: boolean;
-  odinofagia: boolean;
-  vozHumedaSinAclaramiento: boolean;
-  aclaraVozEspontanea: boolean;
-  aclaraVozSolicitud: boolean;
-  aclaraVozDegluciones: boolean;
-  aclaraVozCarraspeo: boolean;
-  aclaraVozTos: boolean;
-  ascultacionCervicalHumeda: boolean;
-  bdtInmediato: boolean;
-  evaluacionPenetracion: boolean;
-  evaluacionAspiracion: boolean;
-  evaluacionAspiracionSilente: boolean;
-}
+import { useNavigate, useLocation } from 'react-router-dom'; // Import useLocation
+import { DeglutionNoNutritivaData, EvaluationData } from '@/types/evaluation'; // Import interfaces
 
 const DeglutionNoNutritivaPage = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const prevEvaluationData: EvaluationData | undefined = location.state?.evaluationData; // Get previous data
+
   const [deglutionNoNutritivaData, setDeglutionNoNutritivaData] = useState<DeglutionNoNutritivaData>({
     sinAlteracion: false,
     acumulacionSaliva: false,
@@ -110,7 +92,7 @@ const DeglutionNoNutritivaPage = () => {
   };
 
   const handleBack = () => {
-    navigate('/reflexes'); // Navigate back to ReflexesPage
+    navigate('/reflexes', { state: { evaluationData: prevEvaluationData } }); // Navigate back, passing data
   };
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -131,9 +113,41 @@ const DeglutionNoNutritivaPage = () => {
       }
     }
 
-    console.log('Datos de Deglución no nutritiva:', deglutionNoNutritivaData);
+    // Calculate score for DeglutionNoNutritiva
+    const calculateScore = (data: DeglutionNoNutritivaData): number => {
+      if (data.sinAlteracion) {
+        return 100;
+      }
+
+      let issuesCount = 0;
+      if (data.acumulacionSaliva) issuesCount++;
+      if (data.xerostomia) issuesCount++;
+      if (data.noDegluteEspontaneamente) issuesCount++;
+      if (data.rmoMasDeUnSegundo) issuesCount++;
+      if (data.excursionLaringeaAusente) issuesCount++;
+      if (data.odinofagia) issuesCount++;
+      if (data.vozHumedaSinAclaramiento) issuesCount++;
+      if (data.ascultacionCervicalHumeda) issuesCount++;
+      if (data.bdtInmediato) issuesCount++;
+      if (data.evaluacionPenetracion) issuesCount++;
+      if (data.evaluacionAspiracion) issuesCount++;
+      if (data.evaluacionAspiracionSilente) issuesCount++;
+
+      const totalPossibleIssues = 12; // Based on the 12 boolean fields indicating an issue
+      const score = 100 - (issuesCount / totalPossibleIssues) * 100;
+      return Math.max(0, parseFloat(score.toFixed(1)));
+    };
+
+    const score = calculateScore(deglutionNoNutritivaData);
+
+    const evaluationData: EvaluationData = {
+      ...prevEvaluationData, // Spread previous data
+      deglutionNoNutritiva: deglutionNoNutritivaData,
+      deglutionNoNutritivaScore: score, // Add the calculated score
+    };
+
     toast.success('Etapa 9 - Deglución no nutritiva completada. Procediendo a la página de resultados...');
-    navigate('/deglution-result', { state: { deglutionNoNutritivaData } }); // Navigate to the result page, passing data
+    navigate('/deglution-result', { state: { evaluationData } }); // Pass data to the result page
   };
 
   return (

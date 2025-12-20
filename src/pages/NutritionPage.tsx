@@ -4,10 +4,11 @@ import React, { useState } from 'react';
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { Button } from "@/components/ui/button";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"; // Import RadioGroup components
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { toast } from 'sonner';
 import Header from '@/components/Header';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom'; // Import useLocation
+import { NutritionData, EvaluationData } from '@/types/evaluation'; // Import interfaces
 
 const oralFeedingOptions = [
   "Líquido fino",
@@ -19,13 +20,16 @@ const oralFeedingOptions = [
 
 const NutritionPage = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const prevEvaluationData: EvaluationData | undefined = location.state?.evaluationData; // Get previous data
+
   const [hasOralFeeding, setHasOralFeeding] = useState(false);
   const [hasNonOralFeeding, setHasNonOralFeeding] = useState(false);
   const [hasMixedFeeding, setHasMixedFeeding] = useState(false);
   const [selectedOralConsistency, setSelectedOralConsistency] = useState<string | undefined>(undefined);
 
   const handleBack = () => {
-    navigate('/respiration'); // Navigate back to RespirationPage
+    navigate('/respiration', { state: { evaluationData: prevEvaluationData } }); // Navigate back, passing data
   };
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -36,15 +40,20 @@ const NutritionPage = () => {
       return;
     }
 
-    console.log('Datos de Nutrición:', {
+    const currentData: NutritionData = {
       hasOralFeeding,
-      selectedOralConsistency: hasOralFeeding ? selectedOralConsistency : null,
+      selectedOralConsistency: hasOralFeeding ? selectedOralConsistency : undefined,
       hasNonOralFeeding,
       hasMixedFeeding,
-    });
+    };
+
+    const evaluationData: EvaluationData = {
+      ...prevEvaluationData, // Spread previous data
+      nutrition: currentData,
+    };
 
     toast.success('Etapa 3 - Nutrición completada. Procediendo a la siguiente etapa...');
-    navigate('/consciousness'); // Navigate to the new ConsciousnessPage
+    navigate('/consciousness', { state: { evaluationData } }); // Pass data to the next page
   };
 
   return (

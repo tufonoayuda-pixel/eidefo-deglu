@@ -7,7 +7,8 @@ import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { toast } from 'sonner';
 import Header from '@/components/Header';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom'; // Import useLocation
+import { ConsciousnessData, EvaluationData } from '@/types/evaluation'; // Import interfaces
 
 const alteredConsciousnessOptions = [
   "Somnoliento",
@@ -19,6 +20,9 @@ const alteredConsciousnessOptions = [
 
 const ConsciousnessPage = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const prevEvaluationData: EvaluationData | undefined = location.state?.evaluationData; // Get previous data
+
   const [isVigil, setIsVigil] = useState(false);
   const [hasAlteredConsciousness, setHasAlteredConsciousness] = useState(false);
   const [selectedAlteredConsciousness, setSelectedAlteredConsciousness] = useState<string[]>([]);
@@ -47,7 +51,7 @@ const ConsciousnessPage = () => {
   };
 
   const handleBack = () => {
-    navigate('/nutrition'); // Navigate back to NutritionPage
+    navigate('/nutrition', { state: { evaluationData: prevEvaluationData } }); // Navigate back, passing data
   };
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -63,14 +67,19 @@ const ConsciousnessPage = () => {
       return;
     }
 
-    console.log('Datos de Estado de Conciencia:', {
+    const currentData: ConsciousnessData = {
       isVigil,
       hasAlteredConsciousness,
       selectedAlteredConsciousness: hasAlteredConsciousness ? selectedAlteredConsciousness : [],
-    });
+    };
+
+    const evaluationData: EvaluationData = {
+      ...prevEvaluationData, // Spread previous data
+      consciousness: currentData,
+    };
 
     toast.success('Etapa 4 - Estado de conciencia completada. Procediendo a la siguiente etapa...');
-    navigate('/communication'); // Navigate to the new CommunicationPage
+    navigate('/communication', { state: { evaluationData } }); // Pass data to the next page
   };
 
   return (

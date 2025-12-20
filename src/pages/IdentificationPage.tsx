@@ -6,10 +6,11 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Switch } from "@/components/ui/switch";
 import { Button } from "@/components/ui/button";
-import { Checkbox } from "@/components/ui/checkbox"; // Import Checkbox component
+import { Checkbox } from "@/components/ui/checkbox";
 import { toast } from 'sonner';
 import Header from '@/components/Header';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate
+import { useNavigate } from 'react-router-dom';
+import { IdentificationData, EvaluationData } from '@/types/evaluation'; // Import interfaces
 
 const medicalHistoryOptions = [
   "ACV",
@@ -22,7 +23,7 @@ const medicalHistoryOptions = [
 ];
 
 const IdentificationPage = () => {
-  const navigate = useNavigate(); // Initialize useNavigate
+  const navigate = useNavigate();
   const [patientName, setPatientName] = useState('');
   const [age, setAge] = useState('');
   const [medicalHistoryToggle, setMedicalHistoryToggle] = useState(false);
@@ -50,16 +51,21 @@ const IdentificationPage = () => {
         : selectedMedicalHistory
       : [];
 
-    console.log('Datos de identificación:', {
+    const currentData: IdentificationData = {
       patientName,
       age,
       medicalHistoryToggle,
-      medicalHistory: finalMedicalHistory,
+      selectedMedicalHistory: finalMedicalHistory,
+      otherMedicalHistory,
       swallowingHistory
-    });
+    };
+
+    const evaluationData: EvaluationData = {
+      identification: currentData,
+    };
 
     toast.success('Identificación completada. Procediendo a la siguiente etapa...');
-    navigate('/respiration'); // Navigate to the new RespirationPage
+    navigate('/respiration', { state: { evaluationData } }); // Pass data to the next page
   };
 
   return (

@@ -6,7 +6,8 @@ import { Button } from "@/components/ui/button";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { toast } from 'sonner';
 import Header from '@/components/Header';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom'; // Import useLocation
+import { CommunicationData, EvaluationData } from '@/types/evaluation'; // Import interfaces
 
 const mainCommunicationOptions = [
   { value: "cooperador", label: "Cooperador, atento, tranquilo, orientado con seguimiento de instrucciones" },
@@ -29,6 +30,9 @@ const voiceAlterationOptions = [
 
 const CommunicationPage = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const prevEvaluationData: EvaluationData | undefined = location.state?.evaluationData; // Get previous data
+
   const [mainCommunicationOption, setMainCommunicationOption] = useState<string | undefined>(undefined);
 
   // States for sub-options under "Alteración cognitiva-conductual"
@@ -42,7 +46,7 @@ const CommunicationPage = () => {
   const [selectedVoiceAlterationType, setSelectedVoiceAlterationType] = useState<string | undefined>(undefined);
 
   const handleBack = () => {
-    navigate('/consciousness'); // Navigate back to ConsciousnessPage
+    navigate('/consciousness', { state: { evaluationData: prevEvaluationData } }); // Navigate back, passing data
   };
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -67,22 +71,23 @@ const CommunicationPage = () => {
       }
     }
 
-    console.log('Datos de Comunicación:', {
+    const currentData: CommunicationData = {
       mainCommunicationOption,
-      ...(mainCommunicationOption === "alteracion_cognitiva_conductual" && {
-        selectedCooperation,
-        selectedAttention,
-        selectedCalmness,
-        selectedOrientation,
-        selectedInstructionFollowing,
-      }),
-      ...(mainCommunicationOption === "si_alteracion_voz" && {
-        selectedVoiceAlterationType,
-      }),
-    });
+      selectedCooperation: mainCommunicationOption === "alteracion_cognitiva_conductual" ? selectedCooperation : undefined,
+      selectedAttention: mainCommunicationOption === "alteracion_cognitiva_conductual" ? selectedAttention : undefined,
+      selectedCalmness: mainCommunicationOption === "alteracion_cognitiva_conductual" ? selectedCalmness : undefined,
+      selectedOrientation: mainCommunicationOption === "alteracion_cognitiva_conductual" ? selectedOrientation : undefined,
+      selectedInstructionFollowing: mainCommunicationOption === "alteracion_cognitiva_conductual" ? selectedInstructionFollowing : undefined,
+      selectedVoiceAlterationType: mainCommunicationOption === "si_alteracion_voz" ? selectedVoiceAlterationType : undefined,
+    };
+
+    const evaluationData: EvaluationData = {
+      ...prevEvaluationData, // Spread previous data
+      communication: currentData,
+    };
 
     toast.success('Etapa 5 - Comunicación completada. Procediendo a la siguiente etapa...');
-    navigate('/orofacial-evaluation'); // Navigate to the new OrofacialEvaluationPage
+    navigate('/orofacial-evaluation', { state: { evaluationData } }); // Pass data to the next page
   };
 
   return (

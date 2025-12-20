@@ -7,31 +7,15 @@ import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { toast } from 'sonner';
 import Header from '@/components/Header';
-import { useNavigate } from 'react-router-dom';
-import DentitionPage from './DentitionPage'; // Import the DentitionPage
-
-interface EvaluacionOrofacialData {
-  noPresentaAlteracion: boolean;
-  alteracionEstructuras: boolean;
-  alteracionMotora: boolean;
-  rangoFuerzaRostroMandibula: boolean;
-  rangoFuerzaLabios: boolean;
-  rangoFuerzaLengua: boolean;
-  alteracionSensibilidad: boolean;
-  sensibilidadExtraoralDerecha: boolean;
-  sensibilidadExtraoralIzquierda: boolean;
-  sensibilidadIntraoralDerecha: boolean;
-  sensibilidadIntraoralIzquierda: boolean;
-  asimetriaFacial: boolean;
-  higieneOral: boolean;
-  higieneBuena: boolean;
-  higieneMala: boolean;
-  higieneRegular: boolean;
-}
+import { useNavigate, useLocation } from 'react-router-dom'; // Import useLocation
+import { OrofacialEvaluationData, EvaluationData } from '@/types/evaluation'; // Import interfaces
 
 const OrofacialEvaluationPage = () => {
   const navigate = useNavigate();
-  const [evaluacionOrofacialData, setEvaluacionOrofacialData] = useState<EvaluacionOrofacialData>({
+  const location = useLocation();
+  const prevEvaluationData: EvaluationData | undefined = location.state?.evaluationData; // Get previous data
+
+  const [evaluacionOrofacialData, setEvaluacionOrofacialData] = useState<OrofacialEvaluationData>({
     noPresentaAlteracion: false,
     alteracionEstructuras: false,
     alteracionMotora: false,
@@ -51,7 +35,7 @@ const OrofacialEvaluationPage = () => {
   });
 
   const handleBack = () => {
-    navigate('/communication'); // Navigate back to CommunicationPage
+    navigate('/communication', { state: { evaluationData: prevEvaluationData } }); // Navigate back, passing data
   };
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -71,9 +55,13 @@ const OrofacialEvaluationPage = () => {
       return;
     }
 
-    console.log('Datos de Evaluación Estructural Orofacial:', evaluacionOrofacialData);
+    const evaluationData: EvaluationData = {
+      ...prevEvaluationData, // Spread previous data
+      orofacialEvaluation: evaluacionOrofacialData,
+    };
+
     toast.success('Etapa 6 - Evaluación estructural orofacial completada. Procediendo a la siguiente etapa...');
-    navigate('/dentition'); // Navigate to the new DentitionPage
+    navigate('/dentition', { state: { evaluationData } }); // Pass data to the next page
   };
 
   return (

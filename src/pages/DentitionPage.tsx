@@ -7,25 +7,15 @@ import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { toast } from 'sonner';
 import Header from '@/components/Header';
-import { useNavigate } from 'react-router-dom';
-
-interface DenticionData {
-  noPresentaAlteracion: boolean;
-  perdidaPiezas: boolean;
-  superior: boolean;
-  inferior: boolean;
-  adaptada: boolean;
-  noAdaptada: boolean;
-  total: boolean;
-  parcial: boolean;
-  usoAdhesivo: boolean;
-  evaluacionConProtesis: boolean;
-  evaluacionSinProtesis: boolean;
-}
+import { useNavigate, useLocation } from 'react-router-dom'; // Import useLocation
+import { DentitionData, EvaluationData } from '@/types/evaluation'; // Import interfaces
 
 const DentitionPage = () => {
   const navigate = useNavigate();
-  const [denticionData, setDenticionData] = useState<DenticionData>({
+  const location = useLocation();
+  const prevEvaluationData: EvaluationData | undefined = location.state?.evaluationData; // Get previous data
+
+  const [denticionData, setDenticionData] = useState<DentitionData>({
     noPresentaAlteracion: false,
     perdidaPiezas: false,
     superior: false,
@@ -77,7 +67,7 @@ const DentitionPage = () => {
     });
   };
 
-  const handleCheckboxChange = (field: keyof DenticionData, checked: boolean) => {
+  const handleCheckboxChange = (field: keyof DentitionData, checked: boolean) => {
     setDenticionData((prev) => {
       const newState = { ...prev, [field]: checked };
 
@@ -93,7 +83,7 @@ const DentitionPage = () => {
   };
 
   const handleBack = () => {
-    navigate('/orofacial-evaluation'); // Navigate back to OrofacialEvaluationPage
+    navigate('/orofacial-evaluation', { state: { evaluationData: prevEvaluationData } }); // Navigate back, passing data
   };
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -123,9 +113,13 @@ const DentitionPage = () => {
       }
     }
 
-    console.log('Datos de Dentición:', denticionData);
+    const evaluationData: EvaluationData = {
+      ...prevEvaluationData, // Spread previous data
+      dentition: denticionData,
+    };
+
     toast.success('Etapa 7 - Dentición completada. Procediendo a la siguiente etapa...');
-    navigate('/reflexes'); // Navigate to the new ReflexesPage
+    navigate('/reflexes', { state: { evaluationData } }); // Pass data to the next page
   };
 
   return (

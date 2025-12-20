@@ -15,9 +15,10 @@ import OrofacialEvaluationPage from "./pages/OrofacialEvaluationPage";
 import DentitionPage from "./pages/DentitionPage";
 import ReflexesPage from "./pages/ReflexesPage";
 import DeglutionNoNutritivaPage from "./pages/DeglutionNoNutritivaPage";
-import DeglutionResultPage from "./pages/DeglutionResultPage"; // Import the new DeglutionResultPage
-import DeglutionNutritivaPage from "./pages/DeglutionNutritivaPage"; // Import the new DeglutionNutritivaPage
-import ConclusionsPage from "./pages/ConclusionsPage"; // Import the new ConclusionsPage
+import DeglutionResultPage from "./pages/DeglutionResultPage";
+import DeglutionNutritivaPage from "./pages/DeglutionNutritivaPage";
+import ConclusionsPage from "./pages/ConclusionsPage";
+import SummaryPage from "./pages/SummaryPage"; // Import the new SummaryPage
 import { AuthProvider, useAuth } from "./context/AuthContext";
 
 const queryClient = new QueryClient();
@@ -130,6 +131,14 @@ const App = () => (
               element={
                 <ProtectedRoute>
                   <ConclusionsPage /> {/* New protected route for ConclusionsPage */}
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/summary"
+              element={
+                <ProtectedRoute>
+                  <SummaryPage /> {/* New protected route for SummaryPage */}
                 </ProtectedRoute>
               }
             />

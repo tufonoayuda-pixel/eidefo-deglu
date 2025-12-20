@@ -7,22 +7,15 @@ import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { toast } from 'sonner';
 import Header from '@/components/Header';
-import { useNavigate } from 'react-router-dom';
-
-interface ReflejosData {
-  noPresentaAlteracion: boolean;
-  presentaAlteracion: boolean;
-  tosVoluntariaProductiva: boolean;
-  tosVoluntariaNoProductiva: boolean;
-  tosVoluntariaAusente: boolean;
-  tosReflejaProductiva: boolean;
-  tosReflejaNoProductiva: boolean;
-  tosReflejaAusente: boolean;
-}
+import { useNavigate, useLocation } from 'react-router-dom'; // Import useLocation
+import { ReflexesData, EvaluationData } from '@/types/evaluation'; // Import interfaces
 
 const ReflexesPage = () => {
   const navigate = useNavigate();
-  const [reflejosData, setReflejosData] = useState<ReflejosData>({
+  const location = useLocation();
+  const prevEvaluationData: EvaluationData | undefined = location.state?.evaluationData; // Get previous data
+
+  const [reflejosData, setReflejosData] = useState<ReflexesData>({
     noPresentaAlteracion: false,
     presentaAlteracion: false,
     tosVoluntariaProductiva: false,
@@ -65,7 +58,7 @@ const ReflexesPage = () => {
     });
   };
 
-  const handleCheckboxChange = (field: keyof ReflejosData, checked: boolean) => {
+  const handleCheckboxChange = (field: keyof ReflexesData, checked: boolean) => {
     setReflejosData((prev) => {
       const newState = { ...prev, [field]: checked };
 
@@ -98,7 +91,7 @@ const ReflexesPage = () => {
   };
 
   const handleBack = () => {
-    navigate('/dentition'); // Navigate back to DentitionPage
+    navigate('/dentition', { state: { evaluationData: prevEvaluationData } }); // Navigate back, passing data
   };
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -123,9 +116,13 @@ const ReflexesPage = () => {
       }
     }
 
-    console.log('Datos de Reflejos:', reflejosData);
+    const evaluationData: EvaluationData = {
+      ...prevEvaluationData, // Spread previous data
+      reflexes: reflejosData,
+    };
+
     toast.success('Etapa 8 - Reflejos completada. Procediendo a la siguiente etapa...');
-    navigate('/deglution-no-nutritiva'); // Navigate to the new DeglutionNoNutritivaPage
+    navigate('/deglution-no-nutritiva', { state: { evaluationData } }); // Pass data to the next page
   };
 
   return (

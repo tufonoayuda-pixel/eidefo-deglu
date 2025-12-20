@@ -4,10 +4,11 @@ import React, { useState } from 'react';
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { Button } from "@/components/ui/button";
-import { Checkbox } from "@/components/ui/checkbox"; // Import Checkbox
+import { Checkbox } from "@/components/ui/checkbox";
 import { toast } from 'sonner';
 import Header from '@/components/Header';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom'; // Import useLocation
+import { RespirationData, EvaluationData } from '@/types/evaluation'; // Import interfaces
 
 const respirationOptions = [
   "FIO2 ambiental",
@@ -20,6 +21,9 @@ const respirationOptions = [
 
 const RespirationPage = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const prevEvaluationData: EvaluationData | undefined = location.state?.evaluationData; // Get previous data
+
   const [noArtificialAirway, setNoArtificialAirway] = useState(false);
   const [selectedRespirationOptions, setSelectedRespirationOptions] = useState<string[]>([]);
   const [orotrachealIntubation, setOrotrachealIntubation] = useState(false);
@@ -39,21 +43,26 @@ const RespirationPage = () => {
   };
 
   const handleBack = () => {
-    navigate('/'); // Navigate back to IdentificationPage
+    navigate('/', { state: { evaluationData: prevEvaluationData } }); // Navigate back, passing data
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    console.log('Datos de Respiración:', {
+    const currentData: RespirationData = {
       noArtificialAirway,
       selectedRespirationOptions: noArtificialAirway ? selectedRespirationOptions : [],
       orotrachealIntubation,
       tracheostomy,
-    });
+    };
+
+    const evaluationData: EvaluationData = {
+      ...prevEvaluationData, // Spread previous data
+      respiration: currentData,
+    };
 
     toast.success('Etapa 2 - Respiración completada. Procediendo a la siguiente etapa...');
-    navigate('/nutrition'); // Navigate to the new NutritionPage
+    navigate('/nutrition', { state: { evaluationData } }); // Pass data to the next page
   };
 
   return (
