@@ -103,9 +103,26 @@ export interface DeglutionNoNutritivaData {
   evaluacionAspiracionSilente: boolean;
 }
 
+// New interface for individual consistency evaluation
+export interface ConsistencyEvaluation {
+  volume: '3ml' | '5ml' | '10ml' | '20ml' | undefined;
+  cough: boolean;
+  wetVoice: boolean;
+  voiceClearing: boolean;
+  stridor: boolean;
+  dyspnea: boolean;
+  cyanosis: boolean;
+  otherSignsText: string; // Text for other signs, empty if none
+}
+
 export interface DeglutionNutritivaData {
   evaluatedNutritiveDeglution: boolean;
-  // Add more fields here as the page gets implemented
+  liquidFine?: ConsistencyEvaluation;
+  liquidNectar?: ConsistencyEvaluation;
+  liquidHoney?: ConsistencyEvaluation;
+  puree?: ConsistencyEvaluation;
+  softSolid?: ConsistencyEvaluation;
+  solid?: ConsistencyEvaluation;
 }
 
 export interface ConclusionsData {
@@ -179,4 +196,5 @@ export interface EvaluationData {
   deglutionNutritiva?: DeglutionNutritivaData;
   conclusions?: ConclusionsData;
   deglutionNoNutritivaScore?: number; // To pass the calculated score
+  deglutionNutritivaScore?: number; // New: To pass the calculated score for nutritive deglutition
 }

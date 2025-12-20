@@ -4,7 +4,7 @@ import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
 import Header from '@/components/Header';
-import { EvaluationData } from '@/types/evaluation'; // Import the main interface
+import { EvaluationData, ConsistencyEvaluation } from '@/types/evaluation'; // Import the main interface
 
 const SummaryPage = () => {
   const navigate = useNavigate();
@@ -32,6 +32,26 @@ const SummaryPage = () => {
   const renderBoolean = (value: boolean | undefined) => (value ? 'Sí' : 'No');
   const renderString = (value: string | undefined) => value || 'No especificado';
   const renderArray = (arr: string[] | undefined) => arr && arr.length > 0 ? arr.join(', ') : 'Ninguno';
+
+  const renderConsistencyEvaluation = (data: ConsistencyEvaluation | undefined) => {
+    if (!data) return <p className="text-gray-600">No evaluado.</p>;
+    const alarmSignsPresent = [
+      data.cough && 'Tos',
+      data.wetVoice && 'Voz húmeda',
+      data.voiceClearing && 'Aclaramiento de voz',
+      data.stridor && 'Estridor',
+      data.dyspnea && 'Disnea',
+      data.cyanosis && 'Cianosis',
+      data.otherSignsText.trim() !== '' && `Otros: ${data.otherSignsText}`,
+    ].filter(Boolean);
+
+    return (
+      <ul className="list-disc list-inside ml-4 space-y-1 text-gray-600">
+        <li><span className="font-medium">Volumen:</span> {renderString(data.volume)}</li>
+        <li><span className="font-medium">Signos de alarma:</span> {alarmSignsPresent.length > 0 ? alarmSignsPresent.join(', ') : 'Ninguno'}</li>
+      </ul>
+    );
+  };
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -260,8 +280,46 @@ const SummaryPage = () => {
             <h2 className="text-xl font-bold text-gray-800 mb-3">Etapa 10 - Deglución Nutritiva</h2>
             <ul className="list-disc list-inside space-y-1 text-gray-700">
               <li><span className="font-medium">Evaluación de deglución nutritiva realizada:</span> {renderBoolean(evaluationData.deglutionNutritiva.evaluatedNutritiveDeglution)}</li>
-              {/* Add more details for nutritive deglution here if available */}
+              {evaluationData.deglutionNutritiva.liquidFine && (
+                <>
+                  <li className="font-medium mt-2">Consistencia Líquida Fina (Agua):</li>
+                  {renderConsistencyEvaluation(evaluationData.deglutionNutritiva.liquidFine)}
+                </>
+              )}
+              {evaluationData.deglutionNutritiva.liquidNectar && (
+                <>
+                  <li className="font-medium mt-2">Consistencia Líquida Néctar (Espesada):</li>
+                  {renderConsistencyEvaluation(evaluationData.deglutionNutritiva.liquidNectar)}
+                </>
+              )}
+              {evaluationData.deglutionNutritiva.liquidHoney && (
+                <>
+                  <li className="font-medium mt-2">Consistencia Líquida Miel (Espesada):</li>
+                  {renderConsistencyEvaluation(evaluationData.deglutionNutritiva.liquidHoney)}
+                </>
+              )}
+              {evaluationData.deglutionNutritiva.puree && (
+                <>
+                  <li className="font-medium mt-2">Consistencia Puré (Papilla):</li>
+                  {renderConsistencyEvaluation(evaluationData.deglutionNutritiva.puree)}
+                </>
+              )}
+              {evaluationData.deglutionNutritiva.softSolid && (
+                <>
+                  <li className="font-medium mt-2">Consistencia Sólido Blando (Pan de molde):</li>
+                  {renderConsistencyEvaluation(evaluationData.deglutionNutritiva.softSolid)}
+                </>
+              )}
+              {evaluationData.deglutionNutritiva.solid && (
+                <>
+                  <li className="font-medium mt-2">Consistencia Sólido (Galleta):</li>
+                  {renderConsistencyEvaluation(evaluationData.deglutionNutritiva.solid)}
+                </>
+              )}
             </ul>
+            {evaluationData.deglutionNutritivaScore !== undefined && (
+              <p className="mt-4 text-lg font-bold text-gray-800">Puntaje de Deglución Nutritiva: {evaluationData.deglutionNutritivaScore}%</p>
+            )}
           </div>
         )}
 
