@@ -25,8 +25,8 @@ const SummaryPage = () => {
   };
 
   const handleFinishEvaluation = () => {
-    // Navigate to home or a thank you page
-    navigate('/');
+    // Navigate to the final message page
+    navigate('/final-message');
   };
 
   const renderBoolean = (value: boolean | undefined) => (value ? 'Sí' : 'No');

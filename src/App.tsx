@@ -18,7 +18,8 @@ import DeglutionNoNutritivaPage from "./pages/DeglutionNoNutritivaPage";
 import DeglutionResultPage from "./pages/DeglutionResultPage";
 import DeglutionNutritivaPage from "./pages/DeglutionNutritivaPage";
 import ConclusionsPage from "./pages/ConclusionsPage";
-import SummaryPage from "./pages/SummaryPage"; // Import the new SummaryPage
+import SummaryPage from "./pages/SummaryPage";
+import FinalMessagePage from "./pages/FinalMessagePage"; // Import the new FinalMessagePage
 import { AuthProvider, useAuth } from "./context/AuthContext";
 
 const queryClient = new QueryClient();
@@ -139,6 +140,14 @@ const App = () => (
               element={
                 <ProtectedRoute>
                   <SummaryPage /> {/* New protected route for SummaryPage */}
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/final-message"
+              element={
+                <ProtectedRoute>
+                  <FinalMessagePage /> {/* New protected route for FinalMessagePage */}
                 </ProtectedRoute>
               }
             />
