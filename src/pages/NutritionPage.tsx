@@ -61,7 +61,7 @@ const NutritionPage = () => {
       <Header />
 
       <div className="max-w-3xl mx-auto p-6 bg-white rounded-xl shadow-lg my-8">
-        <h1 className="text-2xl font-semibold text-[#e99e7c] mb-6">Etapa 3 - Nutrición</h1>
+        <h1 className="text-2xl font-semibold text-efodea-blue mb-6">Etapa 3 - Nutrición</h1>
 
         <form onSubmit={handleSubmit}>
           <div className="mb-6 space-y-4">
@@ -126,7 +126,7 @@ const NutritionPage = () => {
             </Button>
             <Button
               type="submit"
-              className="p-3 bg-[#e99e7c] text-white font-medium rounded-lg hover:bg-[#ea8a66] transition-colors"
+              className="p-3 bg-efodea-blue text-white font-medium rounded-lg hover:bg-efodea-blue-hover transition-colors"
             >
               Siguiente
             </Button>

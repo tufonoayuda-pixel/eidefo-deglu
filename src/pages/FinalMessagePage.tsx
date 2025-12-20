@@ -20,7 +20,7 @@ const FinalMessagePage = () => {
       <Header />
 
       <div className="max-w-3xl mx-auto p-6 bg-white rounded-xl shadow-lg my-8 text-center">
-        <h1 className="text-3xl font-bold text-[#e99e7c] mb-6">Mensaje final</h1>
+        <h1 className="text-3xl font-bold text-efodea-blue mb-6">Mensaje final</h1>
 
         <p className="text-lg text-gray-700 mb-4">Ha finalizado su evaluación.</p>
         <p className="text-lg text-gray-700 mb-4">El registro de evaluación será enviado al correo registrado en el sistema.</p>

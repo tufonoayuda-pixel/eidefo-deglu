@@ -42,7 +42,7 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-[#e99e7c]">
+    <div className="flex items-center justify-center min-h-screen bg-blue-100"> {/* Changed from bg-[#e99e7c] */}
       <div className="login-container bg-white p-8 rounded-xl shadow-lg w-full max-w-md">
         <div className="logo text-right mb-6">
           <div className="h-10 ml-auto flex items-center text-xl font-bold text-gray-800">
@@ -79,7 +79,7 @@ const LoginPage = () => {
           {errorMessage && (
             <p className="error-message text-red-600 text-sm text-center mb-4">{errorMessage}</p>
           )}
-          <Button type="submit" className="w-full p-3 bg-orange-500 text-white font-medium rounded-lg hover:bg-orange-600 transition-colors">
+          <Button type="submit" className="w-full p-3 bg-efodea-blue text-white font-medium rounded-lg hover:bg-efodea-blue-hover transition-colors"> {/* Changed from bg-orange-500 */}
             Ingresar
           </Button>
         </form>

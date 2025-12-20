@@ -38,7 +38,7 @@ const SummaryPage = () => {
       <Header />
 
       <div className="max-w-4xl mx-auto p-6 bg-white rounded-xl shadow-lg my-8">
-        <h1 className="text-2xl font-semibold text-[#e99e7c] mb-6 text-center">Resumen de la Evaluación</h1>
+        <h1 className="text-2xl font-semibold text-efodea-blue mb-6 text-center">Resumen de la Evaluación</h1>
 
         {/* Etapa 1 - Identificación */}
         {evaluationData.identification && (
@@ -372,7 +372,7 @@ const SummaryPage = () => {
           <Button
             type="button"
             onClick={handleFinishEvaluation}
-            className="p-3 bg-[#e99e7c] text-white font-medium rounded-lg hover:bg-[#ea8a66] transition-colors"
+            className="p-3 bg-efodea-blue text-white font-medium rounded-lg hover:bg-efodea-blue-hover transition-colors"
           >
             Finalizar Evaluación
           </Button>

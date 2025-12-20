@@ -36,7 +36,7 @@ const DeglutionNutritivaPage = () => {
       <Header />
 
       <div className="max-w-3xl mx-auto p-6 bg-white rounded-xl shadow-lg my-8">
-        <h1 className="text-2xl font-semibold text-[#e99e7c] mb-6 text-center">Etapa 10 - Deglución Nutritiva</h1>
+        <h1 className="text-2xl font-semibold text-efodea-blue mb-6 text-center">Etapa 10 - Deglución Nutritiva</h1>
         <p className="text-center text-gray-700 mb-8">
           Esta es la página para la evaluación de la deglución nutritiva.
           Aquí se registrarán los detalles de la evaluación con diferentes consistencias alimentarias.
@@ -53,7 +53,7 @@ const DeglutionNutritivaPage = () => {
           </Button>
           <Button
             type="submit"
-            className="p-3 bg-[#e99e7c] text-white font-medium rounded-lg hover:bg-[#ea8a66] transition-colors"
+            className="p-3 bg-efodea-blue text-white font-medium rounded-lg hover:bg-efodea-blue-hover transition-colors"
             onClick={handleSubmit}
           >
             Siguiente

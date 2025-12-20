@@ -130,7 +130,7 @@ const ReflexesPage = () => {
       <Header />
 
       <div className="max-w-3xl mx-auto p-6 bg-white rounded-xl shadow-lg my-8">
-        <h1 className="text-2xl font-semibold text-[#e99e7c] mb-6">Etapa 8 - Reflejos</h1>
+        <h1 className="text-2xl font-semibold text-efodea-blue mb-6">Etapa 8 - Reflejos</h1>
 
         <form onSubmit={handleSubmit}>
           <div className="mb-6 space-y-4">
@@ -141,7 +141,7 @@ const ReflexesPage = () => {
                 id="noPresentaAlteracion"
                 checked={reflejosData.noPresentaAlteracion}
                 onCheckedChange={handleNoAlterationToggle}
-                className="data-[state=checked]:bg-[#e99e7c]"
+                className="data-[state=checked]:bg-efodea-blue"
               />
             </div>
 
@@ -154,7 +154,7 @@ const ReflexesPage = () => {
                   checked={reflejosData.presentaAlteracion}
                   onCheckedChange={handlePresentaAlteracionToggle}
                   disabled={reflejosData.noPresentaAlteracion}
-                  className="data-[state=checked]:bg-[#e99e7c]"
+                  className="data-[state=checked]:bg-efodea-blue"
                 />
               </div>
 
@@ -169,7 +169,7 @@ const ReflexesPage = () => {
                           id="tosVoluntariaProductiva"
                           checked={reflejosData.tosVoluntariaProductiva}
                           onCheckedChange={(checked) => handleCheckboxChange('tosVoluntariaProductiva', checked as boolean)}
-                          className="data-[state=checked]:bg-[#e99e7c]"
+                          className="data-[state=checked]:bg-efodea-blue"
                         />
                         <Label htmlFor="tosVoluntariaProductiva">Presente productiva</Label>
                       </div>
@@ -178,7 +178,7 @@ const ReflexesPage = () => {
                           id="tosVoluntariaNoProductiva"
                           checked={reflejosData.tosVoluntariaNoProductiva}
                           onCheckedChange={(checked) => handleCheckboxChange('tosVoluntariaNoProductiva', checked as boolean)}
-                          className="data-[state=checked]:bg-[#e99e7c]"
+                          className="data-[state=checked]:bg-efodea-blue"
                         />
                         <Label htmlFor="tosVoluntariaNoProductiva">Presente no productiva</Label>
                       </div>
@@ -187,7 +187,7 @@ const ReflexesPage = () => {
                           id="tosVoluntariaAusente"
                           checked={reflejosData.tosVoluntariaAusente}
                           onCheckedChange={(checked) => handleCheckboxChange('tosVoluntariaAusente', checked as boolean)}
-                          className="data-[state=checked]:bg-[#e99e7c]"
+                          className="data-[state=checked]:bg-efodea-blue"
                         />
                         <Label htmlFor="tosVoluntariaAusente">Ausente</Label>
                       </div>
@@ -203,7 +203,7 @@ const ReflexesPage = () => {
                           id="tosReflejaProductiva"
                           checked={reflejosData.tosReflejaProductiva}
                           onCheckedChange={(checked) => handleCheckboxChange('tosReflejaProductiva', checked as boolean)}
-                          className="data-[state=checked]:bg-[#e99e7c]"
+                          className="data-[state=checked]:bg-efodea-blue"
                         />
                         <Label htmlFor="tosReflejaProductiva">Presente productiva</Label>
                       </div>
@@ -212,7 +212,7 @@ const ReflexesPage = () => {
                           id="tosReflejaNoProductiva"
                           checked={reflejosData.tosReflejaNoProductiva}
                           onCheckedChange={(checked) => handleCheckboxChange('tosReflejaNoProductiva', checked as boolean)}
-                          className="data-[state=checked]:bg-[#e99e7c]"
+                          className="data-[state=checked]:bg-efodea-blue"
                         />
                         <Label htmlFor="tosReflejaNoProductiva">Presente no productiva</Label>
                       </div>
@@ -221,7 +221,7 @@ const ReflexesPage = () => {
                           id="tosReflejaAusente"
                           checked={reflejosData.tosReflejaAusente}
                           onCheckedChange={(checked) => handleCheckboxChange('tosReflejaAusente', checked as boolean)}
-                          className="data-[state=checked]:bg-[#e99e7c]"
+                          className="data-[state=checked]:bg-efodea-blue"
                         />
                         <Label htmlFor="tosReflejaAusente">Ausente</Label>
                       </div>
@@ -243,7 +243,7 @@ const ReflexesPage = () => {
             </Button>
             <Button
               type="submit"
-              className="p-3 bg-[#e99e7c] text-white font-medium rounded-lg hover:bg-[#ea8a66] transition-colors"
+              className="p-3 bg-efodea-blue text-white font-medium rounded-lg hover:bg-efodea-blue-hover transition-colors"
             >
               Siguiente
             </Button>

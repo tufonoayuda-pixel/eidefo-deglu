@@ -288,7 +288,7 @@ const ConclusionsPage = () => {
       <Header />
 
       <div className="max-w-3xl mx-auto p-6 bg-white rounded-xl shadow-lg my-8">
-        <h1 className="text-2xl font-semibold text-[#e99e7c] mb-6 text-center">Etapa 10.4 - Conclusiones</h1>
+        <h1 className="text-2xl font-semibold text-efodea-blue mb-6 text-center">Etapa 10.4 - Conclusiones</h1>
 
         <form onSubmit={handleSubmit}>
           <div className="mb-6 space-y-4">
@@ -299,7 +299,7 @@ const ConclusionsPage = () => {
                 id="sinTrastornoDeglucion"
                 checked={conclusionsData.sinTrastornoDeglucion}
                 onCheckedChange={(checked) => handleSwitchChange('sinTrastornoDeglucion', checked)}
-                className="data-[state=checked]:bg-[#e99e7c]"
+                className="data-[state=checked]:bg-efodea-blue"
               />
             </div>
 
@@ -311,7 +311,7 @@ const ConclusionsPage = () => {
                   id="trastornoDeglucion"
                   checked={conclusionsData.trastornoDeglucion}
                   onCheckedChange={(checked) => handleSwitchChange('trastornoDeglucion', checked)}
-                  className="data-[state=checked]:bg-[#e99e7c]"
+                  className="data-[state=checked]:bg-efodea-blue"
                 />
               </div>
               {conclusionsData.trastornoDeglucion && (
@@ -340,7 +340,7 @@ const ConclusionsPage = () => {
                 id="noEsPosibleDeterminarGeneral"
                 checked={conclusionsData.noEsPosibleDeterminarGeneral}
                 onCheckedChange={(checked) => handleSwitchChange('noEsPosibleDeterminarGeneral', checked)}
-                className="data-[state=checked]:bg-[#e99e7c]"
+                className="data-[state=checked]:bg-efodea-blue"
               />
             </div>
 
@@ -352,7 +352,7 @@ const ConclusionsPage = () => {
                   id="escalaSeveridad"
                   checked={conclusionsData.escalaSeveridad}
                   onCheckedChange={(checked) => handleSwitchChange('escalaSeveridad', checked)}
-                  className="data-[state=checked]:bg-[#e99e7c]"
+                  className="data-[state=checked]:bg-efodea-blue"
                 />
               </div>
               {conclusionsData.escalaSeveridad && (
@@ -418,7 +418,7 @@ const ConclusionsPage = () => {
                   alimentacionEnteral: checked ? false : prev.alimentacionEnteral,
                   alimentacionMixta: checked ? false : prev.alimentacionMixta,
                 }))}
-                className="data-[state=checked]:bg-[#e99e7c]"
+                className="data-[state=checked]:bg-efodea-blue"
               />
             </div>
             <div className="flex items-center justify-between">
@@ -432,7 +432,7 @@ const ConclusionsPage = () => {
                   alimentacionTotalBoca: checked ? false : prev.alimentacionTotalBoca,
                   alimentacionMixta: checked ? false : prev.alimentacionMixta,
                 }))}
-                className="data-[state=checked]:bg-[#e99e7c]"
+                className="data-[state=checked]:bg-efodea-blue"
               />
             </div>
             <div className="flex items-center justify-between">
@@ -446,7 +446,7 @@ const ConclusionsPage = () => {
                   alimentacionTotalBoca: checked ? false : prev.alimentacionTotalBoca,
                   alimentacionEnteral: checked ? false : prev.alimentacionEnteral,
                 }))}
-                className="data-[state=checked]:bg-[#e99e7c]"
+                className="data-[state=checked]:bg-efodea-blue"
               />
             </div>
 
@@ -457,7 +457,7 @@ const ConclusionsPage = () => {
                 id="soloConEspecialista"
                 checked={conclusionsData.soloConEspecialista}
                 onCheckedChange={(checked) => handleSwitchChange('soloConEspecialista', checked)}
-                className="data-[state=checked]:bg-[#e99e7c]"
+                className="data-[state=checked]:bg-efodea-blue"
               />
             </div>
 
@@ -469,7 +469,7 @@ const ConclusionsPage = () => {
                   id="alimentosPermitidos"
                   checked={conclusionsData.alimentosPermitidos}
                   onCheckedChange={(checked) => handleSwitchChange('alimentosPermitidos', checked)}
-                  className="data-[state=checked]:bg-[#e99e7c]"
+                  className="data-[state=checked]:bg-efodea-blue"
                 />
               </div>
               {conclusionsData.alimentosPermitidos && (
@@ -481,7 +481,7 @@ const ConclusionsPage = () => {
                         id={`alimentos-${option.value}`}
                         checked={conclusionsData.alimentosPermitidosConsistencias.includes(option.value)}
                         onCheckedChange={(checked) => handleCheckboxGroupChange('alimentosPermitidosConsistencias', option.value, checked as boolean)}
-                        className="data-[state=checked]:bg-[#e99e7c]"
+                        className="data-[state=checked]:bg-efodea-blue"
                       />
                       <Label htmlFor={`alimentos-${option.value}`}>{option.label}</Label>
                     </div>
@@ -498,7 +498,7 @@ const ConclusionsPage = () => {
                   id="bebidasPermitidas"
                   checked={conclusionsData.bebidasPermitidas}
                   onCheckedChange={(checked) => handleSwitchChange('bebidasPermitidas', checked)}
-                  className="data-[state=checked]:bg-[#e99e7c]"
+                  className="data-[state=checked]:bg-efodea-blue"
                 />
               </div>
               {conclusionsData.bebidasPermitidas && (
@@ -510,7 +510,7 @@ const ConclusionsPage = () => {
                         id={`bebidas-${option.value}`}
                         checked={conclusionsData.bebidasPermitidasConsistencias.includes(option.value)}
                         onCheckedChange={(checked) => handleCheckboxGroupChange('bebidasPermitidasConsistencias', option.value, checked as boolean)}
-                        className="data-[state=checked]:bg-[#e99e7c]"
+                        className="data-[state=checked]:bg-efodea-blue"
                       />
                       <Label htmlFor={`bebidas-${option.value}`}>{option.label}</Label>
                     </div>
@@ -526,7 +526,7 @@ const ConclusionsPage = () => {
                 id="ningunaViscosidadPermitida"
                 checked={conclusionsData.ningunaViscosidadPermitida}
                 onCheckedChange={(checked) => handleSwitchChange('ningunaViscosidadPermitida', checked)}
-                className="data-[state=checked]:bg-[#e99e7c]"
+                className="data-[state=checked]:bg-efodea-blue"
               />
             </div>
 
@@ -539,7 +539,7 @@ const ConclusionsPage = () => {
                 id="asistenciaVigilancia"
                 checked={conclusionsData.asistenciaVigilancia}
                 onCheckedChange={(checked) => handleSwitchChange('asistenciaVigilancia', checked)}
-                className="data-[state=checked]:bg-[#e99e7c]"
+                className="data-[state=checked]:bg-efodea-blue"
               />
             </div>
             <div className="flex items-center justify-between">
@@ -548,7 +548,7 @@ const ConclusionsPage = () => {
                 id="posicion45a90"
                 checked={conclusionsData.posicion45a90}
                 onCheckedChange={(checked) => handleSwitchChange('posicion45a90', checked)}
-                className="data-[state=checked]:bg-[#e99e7c]"
+                className="data-[state=checked]:bg-efodea-blue"
               />
             </div>
             <div className="flex items-center justify-between">
@@ -557,7 +557,7 @@ const ConclusionsPage = () => {
                 id="maniobraDeglutoria"
                 checked={conclusionsData.maniobraDeglutoria}
                 onCheckedChange={(checked) => handleSwitchChange('maniobraDeglutoria', checked)}
-                className="data-[state=checked]:bg-[#e99e7c]"
+                className="data-[state=checked]:bg-efodea-blue"
               />
             </div>
             <div className="flex items-center justify-between">
@@ -566,7 +566,7 @@ const ConclusionsPage = () => {
                 id="verificarResiduosBoca"
                 checked={conclusionsData.verificarResiduosBoca}
                 onCheckedChange={(checked) => handleSwitchChange('verificarResiduosBoca', checked)}
-                className="data-[state=checked]:bg-[#e99e7c]"
+                className="data-[state=checked]:bg-efodea-blue"
               />
             </div>
             <div className="flex items-center justify-between">
@@ -575,7 +575,7 @@ const ConclusionsPage = () => {
                 id="modificacionVolumen"
                 checked={conclusionsData.modificacionVolumen}
                 onCheckedChange={(checked) => handleSwitchChange('modificacionVolumen', checked)}
-                className="data-[state=checked]:bg-[#e99e7c]"
+                className="data-[state=checked]:bg-efodea-blue"
               />
             </div>
             <div className="flex items-center justify-between">
@@ -584,7 +584,7 @@ const ConclusionsPage = () => {
                 id="modificacionVelocidad"
                 checked={conclusionsData.modificacionVelocidad}
                 onCheckedChange={(checked) => handleSwitchChange('modificacionVelocidad', checked)}
-                className="data-[state=checked]:bg-[#e99e7c]"
+                className="data-[state=checked]:bg-efodea-blue"
               />
             </div>
             <div className="flex items-center justify-between">
@@ -593,7 +593,7 @@ const ConclusionsPage = () => {
                 id="modificacionTemperatura"
                 checked={conclusionsData.modificacionTemperatura}
                 onCheckedChange={(checked) => handleSwitchChange('modificacionTemperatura', checked)}
-                className="data-[state=checked]:bg-[#e99e7c]"
+                className="data-[state=checked]:bg-efodea-blue"
               />
             </div>
             <div className="flex items-center justify-between">
@@ -602,7 +602,7 @@ const ConclusionsPage = () => {
                 id="modificacionSabor"
                 checked={conclusionsData.modificacionSabor}
                 onCheckedChange={(checked) => handleSwitchChange('modificacionSabor', checked)}
-                className="data-[state=checked]:bg-[#e99e7c]"
+                className="data-[state=checked]:bg-efodea-blue"
               />
             </div>
             <div className="flex items-center justify-between">
@@ -611,7 +611,7 @@ const ConclusionsPage = () => {
                 id="modificacionTextura"
                 checked={conclusionsData.modificacionTextura}
                 onCheckedChange={(checked) => handleSwitchChange('modificacionTextura', checked)}
-                className="data-[state=checked]:bg-[#e99e7c]"
+                className="data-[state=checked]:bg-efodea-blue"
               />
             </div>
             <div className="flex items-center justify-between">
@@ -620,7 +620,7 @@ const ConclusionsPage = () => {
                 id="modificacionConsistencia"
                 checked={conclusionsData.modificacionConsistencia}
                 onCheckedChange={(checked) => handleSwitchChange('modificacionConsistencia', checked)}
-                className="data-[state=checked]:bg-[#e99e7c]"
+                className="data-[state=checked]:bg-efodea-blue"
               />
             </div>
             <div className="flex items-center justify-between">
@@ -629,7 +629,7 @@ const ConclusionsPage = () => {
                 id="usoEspesante"
                 checked={conclusionsData.usoEspesante}
                 onCheckedChange={(checked) => handleSwitchChange('usoEspesante', checked)}
-                className="data-[state=checked]:bg-[#e99e7c]"
+                className="data-[state=checked]:bg-efodea-blue"
               />
             </div>
             <div className="flex items-center justify-between">
@@ -638,7 +638,7 @@ const ConclusionsPage = () => {
                 id="usoCucharaMedidora"
                 checked={conclusionsData.usoCucharaMedidora}
                 onCheckedChange={(checked) => handleSwitchChange('usoCucharaMedidora', checked)}
-                className="data-[state=checked]:bg-[#e99e7c]"
+                className="data-[state=checked]:bg-efodea-blue"
               />
             </div>
             <div className="flex items-center justify-between">
@@ -647,7 +647,7 @@ const ConclusionsPage = () => {
                 id="usoVasoAdaptado"
                 checked={conclusionsData.usoVasoAdaptado}
                 onCheckedChange={(checked) => handleSwitchChange('usoVasoAdaptado', checked)}
-                className="data-[state=checked]:bg-[#e99e7c]"
+                className="data-[state=checked]:bg-efodea-blue"
               />
             </div>
             <div className="flex items-center justify-between">
@@ -656,7 +656,7 @@ const ConclusionsPage = () => {
                 id="usoJeringa"
                 checked={conclusionsData.usoJeringa}
                 onCheckedChange={(checked) => handleSwitchChange('usoJeringa', checked)}
-                className="data-[state=checked]:bg-[#e99e7c]"
+                className="data-[state=checked]:bg-efodea-blue"
               />
             </div>
             <div className="flex items-center justify-between">
@@ -665,7 +665,7 @@ const ConclusionsPage = () => {
                 id="usoBombilla"
                 checked={conclusionsData.usoBombilla}
                 onCheckedChange={(checked) => handleSwitchChange('usoBombilla', checked)}
-                className="data-[state=checked]:bg-[#e99e7c]"
+                className="data-[state=checked]:bg-efodea-blue"
               />
             </div>
             <div className="flex items-center justify-between">
@@ -674,7 +674,7 @@ const ConclusionsPage = () => {
                 id="usoProtesisDental"
                 checked={conclusionsData.usoProtesisDental}
                 onCheckedChange={(checked) => handleSwitchChange('usoProtesisDental', checked)}
-                className="data-[state=checked]:bg-[#e99e7c]"
+                className="data-[state=checked]:bg-efodea-blue"
               />
             </div>
 
@@ -685,7 +685,7 @@ const ConclusionsPage = () => {
                 id="optimizarHigieneOral"
                 checked={conclusionsData.optimizarHigieneOral}
                 onCheckedChange={(checked) => handleSwitchChange('optimizarHigieneOral', checked)}
-                className="data-[state=checked]:bg-[#e99e7c]"
+                className="data-[state=checked]:bg-efodea-blue"
               />
             </div>
 
@@ -696,7 +696,7 @@ const ConclusionsPage = () => {
                 id="ningunaRecomendacion"
                 checked={conclusionsData.ningunaRecomendacion}
                 onCheckedChange={(checked) => handleSwitchChange('ningunaRecomendacion', checked)}
-                className="data-[state=checked]:bg-[#e99e7c]"
+                className="data-[state=checked]:bg-efodea-blue"
               />
             </div>
 
@@ -708,7 +708,7 @@ const ConclusionsPage = () => {
                   id="instalacionViaAlternativa"
                   checked={conclusionsData.instalacionViaAlternativa}
                   onCheckedChange={(checked) => handleSwitchChange('instalacionViaAlternativa', checked)}
-                  className="data-[state=checked]:bg-[#e99e7c]"
+                  className="data-[state=checked]:bg-efodea-blue"
                 />
               </div>
               {conclusionsData.instalacionViaAlternativa && (
@@ -720,7 +720,7 @@ const ConclusionsPage = () => {
                         id={`via-alternativa-${option.value}`}
                         checked={conclusionsData.viaAlternativaTipos.includes(option.value)}
                         onCheckedChange={(checked) => handleCheckboxGroupChange('viaAlternativaTipos', option.value, checked as boolean)}
-                        className="data-[state=checked]:bg-[#e99e7c]"
+                        className="data-[state=checked]:bg-efodea-blue"
                       />
                       <Label htmlFor={`via-alternativa-${option.value}`}>{option.label}</Label>
                     </div>
@@ -736,7 +736,7 @@ const ConclusionsPage = () => {
                 id="evaluacionComplementaria"
                 checked={conclusionsData.evaluacionComplementaria}
                 onCheckedChange={(checked) => handleSwitchChange('evaluacionComplementaria', checked)}
-                className="data-[state=checked]:bg-[#e99e7c]"
+                className="data-[state=checked]:bg-efodea-blue"
               />
             </div>
 
@@ -747,7 +747,7 @@ const ConclusionsPage = () => {
                 id="terapiaDeglucion"
                 checked={conclusionsData.terapiaDeglucion}
                 onCheckedChange={(checked) => handleSwitchChange('terapiaDeglucion', checked)}
-                className="data-[state=checked]:bg-[#e99e7c]"
+                className="data-[state=checked]:bg-efodea-blue"
               />
             </div>
 
@@ -758,7 +758,7 @@ const ConclusionsPage = () => {
                 id="evaluacionComunicativa"
                 checked={conclusionsData.evaluacionComunicativa}
                 onCheckedChange={(checked) => handleSwitchChange('evaluacionComunicativa', checked)}
-                className="data-[state=checked]:bg-[#e99e7c]"
+                className="data-[state=checked]:bg-efodea-blue"
               />
             </div>
 
@@ -771,7 +771,7 @@ const ConclusionsPage = () => {
                   id="usoEstimulacionSensorial"
                   checked={conclusionsData.usoEstimulacionSensorial}
                   onCheckedChange={(checked) => setConclusionsData(prev => ({ ...prev, usoEstimulacionSensorial: checked }))}
-                  className="data-[state=checked]:bg-[#e99e7c]"
+                  className="data-[state=checked]:bg-efodea-blue"
                 />
               </div>
               <div className="flex items-center justify-between">
@@ -780,7 +780,7 @@ const ConclusionsPage = () => {
                   id="usoEstimulacionTermica"
                   checked={conclusionsData.usoEstimulacionTermica}
                   onCheckedChange={(checked) => setConclusionsData(prev => ({ ...prev, usoEstimulacionTermica: checked }))}
-                  className="data-[state=checked]:bg-[#e99e7c]"
+                  className="data-[state=checked]:bg-efodea-blue"
                 />
               </div>
               <div className="flex items-center justify-between">
@@ -789,7 +789,7 @@ const ConclusionsPage = () => {
                   id="usoEstimulacionMecanica"
                   checked={conclusionsData.usoEstimulacionMecanica}
                   onCheckedChange={(checked) => setConclusionsData(prev => ({ ...prev, usoEstimulacionMecanica: checked }))}
-                  className="data-[state=checked]:bg-[#e99e7c]"
+                  className="data-[state=checked]:bg-efodea-blue"
                 />
               </div>
               <div className="flex items-center justify-between">
@@ -798,7 +798,7 @@ const ConclusionsPage = () => {
                   id="usoEstimulacionElectrica"
                   checked={conclusionsData.usoEstimulacionElectrica}
                   onCheckedChange={(checked) => setConclusionsData(prev => ({ ...prev, usoEstimulacionElectrica: checked }))}
-                  className="data-[state=checked]:bg-[#e99e7c]"
+                  className="data-[state=checked]:bg-efodea-blue"
                 />
               </div>
               <div className="flex items-center justify-between">
@@ -807,7 +807,7 @@ const ConclusionsPage = () => {
                   id="usoEstimulacionFarmacologica"
                   checked={conclusionsData.usoEstimulacionFarmacologica}
                   onCheckedChange={(checked) => setConclusionsData(prev => ({ ...prev, usoEstimulacionFarmacologica: checked }))}
-                  className="data-[state=checked]:bg-[#e99e7c]"
+                  className="data-[state=checked]:bg-efodea-blue"
                 />
               </div>
               <div className="flex items-center justify-between">
@@ -816,7 +816,7 @@ const ConclusionsPage = () => {
                   id="usoEstimulacionOtros"
                   checked={!!conclusionsData.usoEstimulacionOtros}
                   onCheckedChange={(checked) => setConclusionsData(prev => ({ ...prev, usoEstimulacionOtros: checked ? prev.usoEstimulacionOtros : '' }))}
-                  className="data-[state=checked]:bg-[#e99e7c]"
+                  className="data-[state=checked]:bg-efodea-blue"
                 />
               </div>
               {!!conclusionsData.usoEstimulacionOtros && (
@@ -839,7 +839,7 @@ const ConclusionsPage = () => {
                   id="rehabilitacionDeglutoria"
                   checked={conclusionsData.rehabilitacionDeglutoria}
                   onCheckedChange={(checked) => handleSwitchChange('rehabilitacionDeglutoria', checked)}
-                  className="data-[state=checked]:bg-[#e99e7c]"
+                  className="data-[state=checked]:bg-efodea-blue"
                 />
               </div>
               {conclusionsData.rehabilitacionDeglutoria && (
@@ -851,7 +851,7 @@ const ConclusionsPage = () => {
                         id={`rehab-${option.value}`}
                         checked={conclusionsData.rehabilitacionDeglutoriaTipos.includes(option.value)}
                         onCheckedChange={(checked) => handleCheckboxGroupChange('rehabilitacionDeglutoriaTipos', option.value, checked as boolean)}
-                        className="data-[state=checked]:bg-[#e99e7c]"
+                        className="data-[state=checked]:bg-efodea-blue"
                       />
                       <Label htmlFor={`rehab-${option.value}`}>{option.label}</Label>
                     </div>
@@ -879,7 +879,7 @@ const ConclusionsPage = () => {
                   id="derivacionNutricionista"
                   checked={conclusionsData.derivacionNutricionista}
                   onCheckedChange={(checked) => setConclusionsData(prev => ({ ...prev, derivacionNutricionista: checked }))}
-                  className="data-[state=checked]:bg-[#e99e7c]"
+                  className="data-[state=checked]:bg-efodea-blue"
                 />
               </div>
               <div className="flex items-center justify-between">
@@ -888,7 +888,7 @@ const ConclusionsPage = () => {
                   id="derivacionKinesiologo"
                   checked={conclusionsData.derivacionKinesiologo}
                   onCheckedChange={(checked) => setConclusionsData(prev => ({ ...prev, derivacionKinesiologo: checked }))}
-                  className="data-[state=checked]:bg-[#e99e7c]"
+                  className="data-[state=checked]:bg-efodea-blue"
                 />
               </div>
               <div className="flex items-center justify-between">
@@ -897,7 +897,7 @@ const ConclusionsPage = () => {
                   id="derivacionTerapeutaOcupacional"
                   checked={conclusionsData.derivacionTerapeutaOcupacional}
                   onCheckedChange={(checked) => setConclusionsData(prev => ({ ...prev, derivacionTerapeutaOcupacional: checked }))}
-                  className="data-[state=checked]:bg-[#e99e7c]"
+                  className="data-[state=checked]:bg-efodea-blue"
                 />
               </div>
               <div className="flex items-center justify-between">
@@ -906,7 +906,7 @@ const ConclusionsPage = () => {
                   id="derivacionMedico"
                   checked={conclusionsData.derivacionMedico}
                   onCheckedChange={(checked) => setConclusionsData(prev => ({ ...prev, derivacionMedico: checked }))}
-                  className="data-[state=checked]:bg-[#e99e7c]"
+                  className="data-[state=checked]:bg-efodea-blue"
                 />
               </div>
               <div className="flex items-center justify-between">
@@ -915,7 +915,7 @@ const ConclusionsPage = () => {
                   id="derivacionOtros"
                   checked={!!conclusionsData.derivacionOtros}
                   onCheckedChange={(checked) => setConclusionsData(prev => ({ ...prev, derivacionOtros: checked ? prev.derivacionOtros : '' }))}
-                  className="data-[state=checked]:bg-[#e99e7c]"
+                  className="data-[state=checked]:bg-efodea-blue"
                 />
               </div>
               {!!conclusionsData.derivacionOtros && (
@@ -955,7 +955,7 @@ const ConclusionsPage = () => {
             </Button>
             <Button
               type="submit"
-              className="p-3 bg-[#e99e7c] text-white font-medium rounded-lg hover:bg-[#ea8a66] transition-colors"
+              className="p-3 bg-efodea-blue text-white font-medium rounded-lg hover:bg-efodea-blue-hover transition-colors"
             >
               Finalizar Evaluación
             </Button>

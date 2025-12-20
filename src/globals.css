@@ -49,6 +49,10 @@
     --sidebar-border: 220 13% 91%;
 
     --sidebar-ring: 217.2 91.2% 59.8%;
+
+    /* Custom clinical blue colors */
+    --efodea-blue: 200 70% 60%; /* A clinical sky blue */
+    --efodea-blue-hover: 200 70% 50%; /* Slightly darker for hover */
   }
 
   .dark {
@@ -87,6 +91,10 @@
     --sidebar-accent-foreground: 240 4.8% 95.9%;
     --sidebar-border: 240 3.7% 15.9%;
     --sidebar-ring: 217.2 91.2% 59.8%;
+
+    /* Custom clinical blue colors for dark mode */
+    --efodea-blue: 200 70% 60%;
+    --efodea-blue-hover: 200 70% 50%;
   }
 }
 

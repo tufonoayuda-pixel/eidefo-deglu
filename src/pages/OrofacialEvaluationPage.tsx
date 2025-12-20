@@ -69,7 +69,7 @@ const OrofacialEvaluationPage = () => {
       <Header />
 
       <div className="max-w-3xl mx-auto p-6 bg-white rounded-xl shadow-lg my-8">
-        <h1 className="text-2xl font-semibold text-[#e99e7c] mb-6">Etapa 6 - Evaluación estructural orofacial</h1>
+        <h1 className="text-2xl font-semibold text-efodea-blue mb-6">Etapa 6 - Evaluación estructural orofacial</h1>
 
         <form onSubmit={handleSubmit}>
           <div className="mb-6 space-y-4">
@@ -89,7 +89,7 @@ const OrofacialEvaluationPage = () => {
                   asimetriaFacial: checked ? false : evaluacionOrofacialData.asimetriaFacial,
                   higieneOral: checked ? false : evaluacionOrofacialData.higieneOral,
                 })}
-                className="data-[state=checked]:bg-[#e99e7c]"
+                className="data-[state=checked]:bg-efodea-blue"
               />
             </div>
 
@@ -104,7 +104,7 @@ const OrofacialEvaluationPage = () => {
                   alteracionEstructuras: checked,
                   noPresentaAlteracion: checked ? false : evaluacionOrofacialData.noPresentaAlteracion,
                 })}
-                className="data-[state=checked]:bg-[#e99e7c]"
+                className="data-[state=checked]:bg-efodea-blue"
               />
             </div>
 
@@ -125,7 +125,7 @@ const OrofacialEvaluationPage = () => {
                       rangoFuerzaLengua: false,
                     }),
                   })}
-                  className="data-[state=checked]:bg-[#e99e7c]"
+                  className="data-[state=checked]:bg-efodea-blue"
                 />
               </div>
 
@@ -139,7 +139,7 @@ const OrofacialEvaluationPage = () => {
                         ...evaluacionOrofacialData,
                         rangoFuerzaRostroMandibula: checked as boolean
                       })}
-                      className="data-[state=checked]:bg-[#e99e7c]"
+                      className="data-[state=checked]:bg-efodea-blue"
                     />
                     <Label htmlFor="rangoFuerzaRostroMandibula">Rango, fuerza y coordinación rostro y mandíbula</Label>
                   </div>
@@ -151,7 +151,7 @@ const OrofacialEvaluationPage = () => {
                         ...evaluacionOrofacialData,
                         rangoFuerzaLabios: checked as boolean
                       })}
-                      className="data-[state=checked]:bg-[#e99e7c]"
+                      className="data-[state=checked]:bg-efodea-blue"
                     />
                     <Label htmlFor="rangoFuerzaLabios">Rango, fuerza y coordinación labios</Label>
                   </div>
@@ -163,7 +163,7 @@ const OrofacialEvaluationPage = () => {
                         ...evaluacionOrofacialData,
                         rangoFuerzaLengua: checked as boolean
                       })}
-                      className="data-[state=checked]:bg-[#e99e7c]"
+                      className="data-[state=checked]:bg-efodea-blue"
                     />
                     <Label htmlFor="rangoFuerzaLengua">Rango, fuerza y coordinación lengua</Label>
                   </div>
@@ -189,7 +189,7 @@ const OrofacialEvaluationPage = () => {
                       sensibilidadIntraoralIzquierda: false,
                     }),
                   })}
-                  className="data-[state=checked]:bg-[#e99e7c]"
+                  className="data-[state=checked]:bg-efodea-blue"
                 />
               </div>
 
@@ -203,7 +203,7 @@ const OrofacialEvaluationPage = () => {
                         ...evaluacionOrofacialData,
                         sensibilidadExtraoralDerecha: checked as boolean
                       })}
-                      className="data-[state=checked]:bg-[#e99e7c]"
+                      className="data-[state=checked]:bg-efodea-blue"
                     />
                     <Label htmlFor="sensibilidadExtraoralDerecha">Sensibilidad extraoral derecha</Label>
                   </div>
@@ -215,7 +215,7 @@ const OrofacialEvaluationPage = () => {
                         ...evaluacionOrofacialData,
                         sensibilidadExtraoralIzquierda: checked as boolean
                       })}
-                      className="data-[state=checked]:bg-[#e99e7c]"
+                      className="data-[state=checked]:bg-efodea-blue"
                     />
                     <Label htmlFor="sensibilidadExtraoralIzquierda">Sensibilidad extraoral izquierda</Label>
                   </div>
@@ -227,7 +227,7 @@ const OrofacialEvaluationPage = () => {
                         ...evaluacionOrofacialData,
                         sensibilidadIntraoralDerecha: checked as boolean
                       })}
-                      className="data-[state=checked]:bg-[#e99e7c]"
+                      className="data-[state=checked]:bg-efodea-blue"
                     />
                     <Label htmlFor="sensibilidadIntraoralDerecha">Sensibilidad intraoral derecha</Label>
                   </div>
@@ -239,7 +239,7 @@ const OrofacialEvaluationPage = () => {
                         ...evaluacionOrofacialData,
                         sensibilidadIntraoralIzquierda: checked as boolean
                       })}
-                      className="data-[state=checked]:bg-[#e99e7c]"
+                      className="data-[state=checked]:bg-efodea-blue"
                     />
                     <Label htmlFor="sensibilidadIntraoralIzquierda">Sensibilidad intraoral izquierda</Label>
                   </div>
@@ -258,7 +258,7 @@ const OrofacialEvaluationPage = () => {
                   asimetriaFacial: checked,
                   noPresentaAlteracion: checked ? false : evaluacionOrofacialData.noPresentaAlteracion,
                 })}
-                className="data-[state=checked]:bg-[#e99e7c]"
+                className="data-[state=checked]:bg-efodea-blue"
               />
             </div>
 
@@ -279,7 +279,7 @@ const OrofacialEvaluationPage = () => {
                       higieneRegular: false,
                     }),
                   })}
-                  className="data-[state=checked]:bg-[#e99e7c]"
+                  className="data-[state=checked]:bg-efodea-blue"
                 />
               </div>
 
@@ -295,7 +295,7 @@ const OrofacialEvaluationPage = () => {
                         higieneMala: checked ? false : evaluacionOrofacialData.higieneMala,
                         higieneRegular: checked ? false : evaluacionOrofacialData.higieneRegular,
                       })}
-                      className="data-[state=checked]:bg-[#e99e7c]"
+                      className="data-[state=checked]:bg-efodea-blue"
                     />
                     <Label htmlFor="higieneBuena">Buena</Label>
                   </div>
@@ -309,7 +309,7 @@ const OrofacialEvaluationPage = () => {
                         higieneBuena: checked ? false : evaluacionOrofacialData.higieneBuena,
                         higieneRegular: checked ? false : evaluacionOrofacialData.higieneRegular,
                       })}
-                      className="data-[state=checked]:bg-[#e99e7c]"
+                      className="data-[state=checked]:bg-efodea-blue"
                     />
                     <Label htmlFor="higieneMala">Mala</Label>
                   </div>
@@ -323,7 +323,7 @@ const OrofacialEvaluationPage = () => {
                         higieneBuena: checked ? false : evaluacionOrofacialData.higieneBuena,
                         higieneMala: checked ? false : evaluacionOrofacialData.higieneMala,
                       })}
-                      className="data-[state=checked]:bg-[#e99e7c]"
+                      className="data-[state=checked]:bg-efodea-blue"
                     />
                     <Label htmlFor="higieneRegular">Regular</Label>
                   </div>
@@ -343,7 +343,7 @@ const OrofacialEvaluationPage = () => {
             </Button>
             <Button
               type="submit"
-              className="p-3 bg-[#e99e7c] text-white font-medium rounded-lg hover:bg-[#ea8a66] transition-colors"
+              className="p-3 bg-efodea-blue text-white font-medium rounded-lg hover:bg-efodea-blue-hover transition-colors"
             >
               Siguiente
             </Button>

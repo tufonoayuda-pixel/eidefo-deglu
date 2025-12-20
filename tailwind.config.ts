@@ -63,11 +63,17 @@ export default {
           ring: "hsl(var(--sidebar-ring))",
         },
         // Custom colors from user's HTML
-        primary: '#2563eb',
+        // The 'primary' here conflicts with shadcn's primary, but it's not used directly as a class.
+        // Keeping it for now as it was in the original file, but adding new ones.
+        primary: '#2563eb', 
         secondary: '#1e40af',
         success: '#16a34a',
-        warning: '#d97706',
-        danger: '#dc2626'
+        warning: 'hsl(var(--efodea-blue))', // Changed from orange to clinical blue
+        danger: '#dc2626',
+        
+        // New clinical blue colors
+        'efodea-blue': 'hsl(var(--efodea-blue))',
+        'efodea-blue-hover': 'hsl(var(--efodea-blue-hover))',
       },
       borderRadius: {
         lg: "var(--radius)",

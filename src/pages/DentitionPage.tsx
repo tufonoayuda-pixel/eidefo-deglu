@@ -127,7 +127,7 @@ const DentitionPage = () => {
       <Header />
 
       <div className="max-w-3xl mx-auto p-6 bg-white rounded-xl shadow-lg my-8">
-        <h1 className="text-2xl font-semibold text-[#e99e7c] mb-6">Etapa 7 - Dentición</h1>
+        <h1 className="text-2xl font-semibold text-efodea-blue mb-6">Etapa 7 - Dentición</h1>
 
         <form onSubmit={handleSubmit}>
           <div className="mb-6 space-y-4">
@@ -138,7 +138,7 @@ const DentitionPage = () => {
                 id="noPresentaAlteracion"
                 checked={denticionData.noPresentaAlteracion}
                 onCheckedChange={handleNoAlterationToggle}
-                className="data-[state=checked]:bg-[#e99e7c]"
+                className="data-[state=checked]:bg-efodea-blue"
               />
             </div>
 
@@ -151,7 +151,7 @@ const DentitionPage = () => {
                   checked={denticionData.perdidaPiezas}
                   onCheckedChange={handlePerdidaPiezasToggle}
                   disabled={denticionData.noPresentaAlteracion}
-                  className="data-[state=checked]:bg-[#e99e7c]"
+                  className="data-[state=checked]:bg-efodea-blue"
                 />
               </div>
 
@@ -162,7 +162,7 @@ const DentitionPage = () => {
                       id="superior"
                       checked={denticionData.superior}
                       onCheckedChange={(checked) => handleCheckboxChange('superior', checked as boolean)}
-                      className="data-[state=checked]:bg-[#e99e7c]"
+                      className="data-[state=checked]:bg-efodea-blue"
                     />
                     <Label htmlFor="superior">Superior</Label>
                   </div>
@@ -172,7 +172,7 @@ const DentitionPage = () => {
                       id="inferior"
                       checked={denticionData.inferior}
                       onCheckedChange={(checked) => handleCheckboxChange('inferior', checked as boolean)}
-                      className="data-[state=checked]:bg-[#e99e7c]"
+                      className="data-[state=checked]:bg-efodea-blue"
                     />
                     <Label htmlFor="inferior">Inferior</Label>
                   </div>
@@ -182,7 +182,7 @@ const DentitionPage = () => {
                       id="adaptada"
                       checked={denticionData.adaptada}
                       onCheckedChange={(checked) => handleCheckboxChange('adaptada', checked as boolean)}
-                      className="data-[state=checked]:bg-[#e99e7c]"
+                      className="data-[state=checked]:bg-efodea-blue"
                     />
                     <Label htmlFor="adaptada">Adaptada</Label>
                   </div>
@@ -192,7 +192,7 @@ const DentitionPage = () => {
                       id="noAdaptada"
                       checked={denticionData.noAdaptada}
                       onCheckedChange={(checked) => handleCheckboxChange('noAdaptada', checked as boolean)}
-                      className="data-[state=checked]:bg-[#e99e7c]"
+                      className="data-[state=checked]:bg-efodea-blue"
                     />
                     <Label htmlFor="noAdaptada">No adaptada</Label>
                   </div>
@@ -202,7 +202,7 @@ const DentitionPage = () => {
                       id="total"
                       checked={denticionData.total}
                       onCheckedChange={(checked) => handleCheckboxChange('total', checked as boolean)}
-                      className="data-[state=checked]:bg-[#e99e7c]"
+                      className="data-[state=checked]:bg-efodea-blue"
                     />
                     <Label htmlFor="total">Total</Label>
                   </div>
@@ -212,7 +212,7 @@ const DentitionPage = () => {
                       id="parcial"
                       checked={denticionData.parcial}
                       onCheckedChange={(checked) => handleCheckboxChange('parcial', checked as boolean)}
-                      className="data-[state=checked]:bg-[#e99e7c]"
+                      className="data-[state=checked]:bg-efodea-blue"
                     />
                     <Label htmlFor="parcial">Parcial</Label>
                   </div>
@@ -222,7 +222,7 @@ const DentitionPage = () => {
                       id="usoAdhesivo"
                       checked={denticionData.usoAdhesivo}
                       onCheckedChange={(checked) => handleCheckboxChange('usoAdhesivo', checked as boolean)}
-                      className="data-[state=checked]:bg-[#e99e7c]"
+                      className="data-[state=checked]:bg-efodea-blue"
                     />
                     <Label htmlFor="usoAdhesivo">Uso de adhesivo dental</Label>
                   </div>
@@ -232,7 +232,7 @@ const DentitionPage = () => {
                       id="evaluacionConProtesis"
                       checked={denticionData.evaluacionConProtesis}
                       onCheckedChange={(checked) => handleCheckboxChange('evaluacionConProtesis', checked as boolean)}
-                      className="data-[state=checked]:bg-[#e99e7c]"
+                      className="data-[state=checked]:bg-efodea-blue"
                     />
                     <Label htmlFor="evaluacionConProtesis">Evaluación realizada con uso de prótesis dental</Label>
                   </div>
@@ -242,7 +242,7 @@ const DentitionPage = () => {
                       id="evaluacionSinProtesis"
                       checked={denticionData.evaluacionSinProtesis}
                       onCheckedChange={(checked) => handleCheckboxChange('evaluacionSinProtesis', checked as boolean)}
-                      className="data-[state=checked]:bg-[#e99e7c]"
+                      className="data-[state=checked]:bg-efodea-blue"
                     />
                     <Label htmlFor="evaluacionSinProtesis">Evaluación realizada sin uso de prótesis dental</Label>
                   </div>
@@ -262,7 +262,7 @@ const DentitionPage = () => {
             </Button>
             <Button
               type="submit"
-              className="p-3 bg-[#e99e7c] text-white font-medium rounded-lg hover:bg-[#ea8a66] transition-colors"
+              className="p-3 bg-efodea-blue text-white font-medium rounded-lg hover:bg-efodea-blue-hover transition-colors"
             >
               Siguiente
             </Button>

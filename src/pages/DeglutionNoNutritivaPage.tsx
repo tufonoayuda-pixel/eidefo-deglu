@@ -155,7 +155,7 @@ const DeglutionNoNutritivaPage = () => {
       <Header />
 
       <div className="max-w-3xl mx-auto p-6 bg-white rounded-xl shadow-lg my-8">
-        <h1 className="text-2xl font-semibold text-[#e99e7c] mb-6">Etapa 9 - Deglución no nutritiva</h1>
+        <h1 className="text-2xl font-semibold text-efodea-blue mb-6">Etapa 9 - Deglución no nutritiva</h1>
 
         <form onSubmit={handleSubmit}>
           <div className="mb-6 space-y-4">
@@ -166,7 +166,7 @@ const DeglutionNoNutritivaPage = () => {
                 id="sinAlteracion"
                 checked={deglutionNoNutritivaData.sinAlteracion}
                 onCheckedChange={handleSinAlteracionToggle}
-                className="data-[state=checked]:bg-[#e99e7c]"
+                className="data-[state=checked]:bg-efodea-blue"
               />
             </div>
 
@@ -179,7 +179,7 @@ const DeglutionNoNutritivaPage = () => {
                   checked={deglutionNoNutritivaData.acumulacionSaliva}
                   onCheckedChange={(checked) => handleCheckboxChange('acumulacionSaliva', checked as boolean)}
                   disabled={deglutionNoNutritivaData.sinAlteracion}
-                  className="data-[state=checked]:bg-[#e99e7c]"
+                  className="data-[state=checked]:bg-efodea-blue"
                 />
               </div>
 
@@ -190,7 +190,7 @@ const DeglutionNoNutritivaPage = () => {
                       id="escapeAnterior"
                       checked={deglutionNoNutritivaData.escapeAnterior}
                       onCheckedChange={(checked) => handleCheckboxChange('escapeAnterior', checked as boolean)}
-                      className="data-[state=checked]:bg-[#e99e7c]"
+                      className="data-[state=checked]:bg-efodea-blue"
                     />
                     <Label htmlFor="escapeAnterior">Escape anterior</Label>
                   </div>
@@ -206,7 +206,7 @@ const DeglutionNoNutritivaPage = () => {
                 checked={deglutionNoNutritivaData.xerostomia}
                 onCheckedChange={(checked) => handleCheckboxChange('xerostomia', checked as boolean)}
                 disabled={deglutionNoNutritivaData.sinAlteracion}
-                className="data-[state=checked]:bg-[#e99e7c]"
+                className="data-[state=checked]:bg-efodea-blue"
               />
             </div>
 
@@ -218,7 +218,7 @@ const DeglutionNoNutritivaPage = () => {
                 checked={deglutionNoNutritivaData.noDegluteEspontaneamente}
                 onCheckedChange={(checked) => handleCheckboxChange('noDegluteEspontaneamente', checked as boolean)}
                 disabled={deglutionNoNutritivaData.sinAlteracion}
-                className="data-[state=checked]:bg-[#e99e7c]"
+                className="data-[state=checked]:bg-efodea-blue"
               />
             </div>
 
@@ -230,7 +230,7 @@ const DeglutionNoNutritivaPage = () => {
                 checked={deglutionNoNutritivaData.rmoMasDeUnSegundo}
                 onCheckedChange={(checked) => handleCheckboxChange('rmoMasDeUnSegundo', checked as boolean)}
                 disabled={deglutionNoNutritivaData.sinAlteracion}
-                className="data-[state=checked]:bg-[#e99e7c]"
+                className="data-[state=checked]:bg-efodea-blue"
               />
             </div>
 
@@ -242,7 +242,7 @@ const DeglutionNoNutritivaPage = () => {
                 checked={deglutionNoNutritivaData.excursionLaringeaAusente}
                 onCheckedChange={(checked) => handleCheckboxChange('excursionLaringeaAusente', checked as boolean)}
                 disabled={deglutionNoNutritivaData.sinAlteracion}
-                className="data-[state=checked]:bg-[#e99e7c]"
+                className="data-[state=checked]:bg-efodea-blue"
               />
             </div>
 
@@ -254,7 +254,7 @@ const DeglutionNoNutritivaPage = () => {
                 checked={deglutionNoNutritivaData.odinofagia}
                 onCheckedChange={(checked) => handleCheckboxChange('odinofagia', checked as boolean)}
                 disabled={deglutionNoNutritivaData.sinAlteracion}
-                className="data-[state=checked]:bg-[#e99e7c]"
+                className="data-[state=checked]:bg-efodea-blue"
               />
             </div>
 
@@ -267,7 +267,7 @@ const DeglutionNoNutritivaPage = () => {
                   checked={deglutionNoNutritivaData.vozHumedaSinAclaramiento}
                   onCheckedChange={(checked) => handleCheckboxChange('vozHumedaSinAclaramiento', checked as boolean)}
                   disabled={deglutionNoNutritivaData.sinAlteracion}
-                  className="data-[state=checked]:bg-[#e99e7c]"
+                  className="data-[state=checked]:bg-efodea-blue"
                 />
               </div>
 
@@ -279,7 +279,7 @@ const DeglutionNoNutritivaPage = () => {
                       id="aclaraVozEspontanea"
                       checked={deglutionNoNutritivaData.aclaraVozEspontanea}
                       onCheckedChange={(checked) => handleCheckboxChange('aclaraVozEspontanea', checked as boolean)}
-                      className="data-[state=checked]:bg-[#e99e7c]"
+                      className="data-[state=checked]:bg-efodea-blue"
                     />
                     <Label htmlFor="aclaraVozEspontanea">Espontánea</Label>
                   </div>
@@ -288,7 +288,7 @@ const DeglutionNoNutritivaPage = () => {
                       id="aclaraVozSolicitud"
                       checked={deglutionNoNutritivaData.aclaraVozSolicitud}
                       onCheckedChange={(checked) => handleCheckboxChange('aclaraVozSolicitud', checked as boolean)}
-                      className="data-[state=checked]:bg-[#e99e7c]"
+                      className="data-[state=checked]:bg-efodea-blue"
                     />
                     <Label htmlFor="aclaraVozSolicitud">A solicitud</Label>
                   </div>
@@ -297,7 +297,7 @@ const DeglutionNoNutritivaPage = () => {
                       id="aclaraVozDegluciones"
                       checked={deglutionNoNutritivaData.aclaraVozDegluciones}
                       onCheckedChange={(checked) => handleCheckboxChange('aclaraVozDegluciones', checked as boolean)}
-                      className="data-[state=checked]:bg-[#e99e7c]"
+                      className="data-[state=checked]:bg-efodea-blue"
                     />
                     <Label htmlFor="aclaraVozDegluciones">Con degluciones consecutivas</Label>
                   </div>
@@ -306,7 +306,7 @@ const DeglutionNoNutritivaPage = () => {
                       id="aclaraVozCarraspeo"
                       checked={deglutionNoNutritivaData.aclaraVozCarraspeo}
                       onCheckedChange={(checked) => handleCheckboxChange('aclaraVozCarraspeo', checked as boolean)}
-                      className="data-[state=checked]:bg-[#e99e7c]"
+                      className="data-[state=checked]:bg-efodea-blue"
                     />
                     <Label htmlFor="aclaraVozCarraspeo">Con carraspeo</Label>
                   </div>
@@ -315,7 +315,7 @@ const DeglutionNoNutritivaPage = () => {
                       id="aclaraVozTos"
                       checked={deglutionNoNutritivaData.aclaraVozTos}
                       onCheckedChange={(checked) => handleCheckboxChange('aclaraVozTos', checked as boolean)}
-                      className="data-[state=checked]:bg-[#e99e7c]"
+                      className="data-[state=checked]:bg-efodea-blue"
                     />
                     <Label htmlFor="aclaraVozTos">Con tos</Label>
                   </div>
@@ -331,7 +331,7 @@ const DeglutionNoNutritivaPage = () => {
                 checked={deglutionNoNutritivaData.ascultacionCervicalHumeda}
                 onCheckedChange={(checked) => handleCheckboxChange('ascultacionCervicalHumeda', checked as boolean)}
                 disabled={deglutionNoNutritivaData.sinAlteracion}
-                className="data-[state=checked]:bg-[#e99e7c]"
+                className="data-[state=checked]:bg-efodea-blue"
               />
             </div>
 
@@ -342,7 +342,7 @@ const DeglutionNoNutritivaPage = () => {
                 id="bdtInmediato"
                 checked={deglutionNoNutritivaData.bdtInmediato}
                 onCheckedChange={(checked) => handleCheckboxChange('bdtInmediato', checked as boolean)}
-                className="data-[state=checked]:bg-[#e99e7c]"
+                className="data-[state=checked]:bg-efodea-blue"
                 disabled={deglutionNoNutritivaData.sinAlteracion}
               />
             </div>
@@ -355,7 +355,7 @@ const DeglutionNoNutritivaPage = () => {
                 checked={deglutionNoNutritivaData.evaluacionPenetracion}
                 onCheckedChange={(checked) => handleCheckboxChange('evaluacionPenetracion', checked as boolean)}
                 disabled={deglutionNoNutritivaData.sinAlteracion}
-                className="data-[state=checked]:bg-[#e99e7c]"
+                className="data-[state=checked]:bg-efodea-blue"
               />
             </div>
 
@@ -367,7 +367,7 @@ const DeglutionNoNutritivaPage = () => {
                 checked={deglutionNoNutritivaData.evaluacionAspiracion}
                 onCheckedChange={(checked) => handleCheckboxChange('evaluacionAspiracion', checked as boolean)}
                 disabled={deglutionNoNutritivaData.sinAlteracion}
-                className="data-[state=checked]:bg-[#e99e7c]"
+                className="data-[state=checked]:bg-efodea-blue"
               />
             </div>
 
@@ -379,7 +379,7 @@ const DeglutionNoNutritivaPage = () => {
                 checked={deglutionNoNutritivaData.evaluacionAspiracionSilente}
                 onCheckedChange={(checked) => handleCheckboxChange('evaluacionAspiracionSilente', checked as boolean)}
                 disabled={deglutionNoNutritivaData.sinAlteracion}
-                className="data-[state=checked]:bg-[#e99e7c]"
+                className="data-[state=checked]:bg-efodea-blue"
               />
             </div>
           </div>
@@ -395,7 +395,7 @@ const DeglutionNoNutritivaPage = () => {
             </Button>
             <Button
               type="submit"
-              className="p-3 bg-[#e99e7c] text-white font-medium rounded-lg hover:bg-[#ea8a66] transition-colors"
+              className="p-3 bg-efodea-blue text-white font-medium rounded-lg hover:bg-efodea-blue-hover transition-colors"
             >
               Siguiente
             </Button>

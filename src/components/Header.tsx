@@ -15,7 +15,7 @@ const Header = () => {
   };
 
   return (
-    <div className="bg-red-50 p-3 border-b border-gray-200 flex justify-between items-center">
+    <div className="bg-blue-50 p-3 border-b border-gray-200 flex justify-between items-center"> {/* Changed from bg-red-50 */}
       <div className="flex items-center gap-4">
         <span className="text-sm text-gray-700">Usuario: ({userEmail || 'Invitado'})</span> {/* Display dynamic userEmail */}
         <Button

@@ -25,7 +25,7 @@ const EfodeaLanding = () => {
           <div className="bg-blue-50 rounded-xl p-8 mb-12 border border-blue-100">
             <div className="flex items-start">
               <div className="flex-shrink-0">
-                <div className="w-12 h-12 rounded-full bg-primary flex items-center justify-center text-white font-bold text-lg">1</div>
+                <div className="w-12 h-12 rounded-full bg-efodea-blue flex items-center justify-center text-white font-bold text-lg">1</div>
               </div>
               <div className="ml-4">
                 <h3 className="text-xl font-bold text-gray-800 mb-2">Accede con tus credenciales</h3>
@@ -34,7 +34,7 @@ const EfodeaLanding = () => {
             </div>
             <div className="flex items-start mt-6">
               <div className="flex-shrink-0">
-                <div className="w-12 h-12 rounded-full bg-primary flex items-center justify-center text-white font-bold text-lg">2</div>
+                <div className="w-12 h-12 rounded-full bg-efodea-blue flex items-center justify-center text-white font-bold text-lg">2</div>
               </div>
               <div className="ml-4">
                 <h3 className="text-xl font-bold text-gray-800 mb-2">Completa la evaluación por componentes</h3>
@@ -43,7 +43,7 @@ const EfodeaLanding = () => {
             </div>
             <div className="flex items-start mt-6">
               <div className="flex-shrink-0">
-                <div className="w-12 h-12 rounded-full bg-primary flex items-center justify-center text-white font-bold text-lg">3</div>
+                <div className="w-12 h-12 rounded-full bg-efodea-blue flex items-center justify-center text-white font-bold text-lg">3</div>
               </div>
               <div className="ml-4">
                 <h3 className="text-xl font-bold text-gray-800 mb-2">Obtén puntaje y recomendación clínica</h3>
@@ -121,7 +121,7 @@ const EfodeaLanding = () => {
                 <h3 className="text-xl font-bold text-gray-800">Componentes Críticos</h3>
                 <p className="text-gray-600">Evaluación de conciencia, cooperación y reflejos protectores</p>
               </div>
-              <div className="text-3xl font-bold text-primary">≥ 8 puntos</div>
+              <div className="text-3xl font-bold text-efodea-blue">≥ 8 puntos</div>
             </div>
 
             <div className="space-y-6">
@@ -145,9 +145,9 @@ const EfodeaLanding = () => {
               </div>
             </div>
 
-            <div className="mt-8 p-6 bg-amber-50 rounded-lg border border-amber-200">
-              <h4 className="font-bold text-lg text-amber-800 mb-2">Advertencia Clínica</h4>
-              <p className="text-amber-700">
+            <div className="mt-8 p-6 bg-blue-50 rounded-lg border border-blue-200"> {/* Changed from bg-amber-50 border-amber-200 */}
+              <h4 className="font-bold text-lg text-efodea-blue mb-2">Advertencia Clínica</h4> {/* Changed text-amber-800 */}
+              <p className="text-blue-700"> {/* Changed text-amber-700 */}
                 Independiente del puntaje, si existen signos de riesgo de aspiración o compromiso
                 neurológico severo, se debe aplicar criterio clínico profesional para la decisión final.
               </p>
@@ -173,10 +173,10 @@ const EfodeaLanding = () => {
               de acceso a la plataforma clínica
             </p>
             <div className="flex flex-col sm:flex-row justify-center gap-4">
-              <button className="bg-white text-primary font-bold py-3 px-8 rounded-lg hover:bg-gray-100 transition duration-300">
+              <button className="bg-white text-efodea-blue font-bold py-3 px-8 rounded-lg hover:bg-gray-100 transition duration-300"> {/* Changed text-primary */}
                 Inscribirme al Curso
               </button>
-              <button className="bg-transparent border-2 border-white text-white font-bold py-3 px-8 rounded-lg hover:bg-white hover:text-primary transition duration-300">
+              <button className="bg-transparent border-2 border-white text-white font-bold py-3 px-8 rounded-lg hover:bg-white hover:text-efodea-blue transition duration-300"> {/* Changed hover:text-primary */}
                 Más Información
               </button>
             </div>

@@ -39,7 +39,7 @@ const DeglutionResultPage = () => {
       <Header />
 
       <div className="max-w-3xl mx-auto p-6 bg-white rounded-xl shadow-lg my-8">
-        <h1 className="text-2xl font-semibold text-[#e99e7c] mb-6 text-center">Resultado deglución no nutritiva</h1>
+        <h1 className="text-2xl font-semibold text-efodea-blue mb-6 text-center">Resultado deglución no nutritiva</h1>
 
         <div className="text-center mb-8">
           <p className="text-lg text-gray-700 mb-4">El puntaje obtenido luego de evaluar la etapa de deglución no nutritiva fue de un:</p>
@@ -64,7 +64,7 @@ const DeglutionResultPage = () => {
             type="button"
             onClick={handleStartNutritiveDeglution}
             disabled={!isLowScore} // Only enable if score is low
-            className="p-3 bg-[#e99e7c] text-white font-medium rounded-lg hover:bg-[#ea8a66] transition-colors"
+            className="p-3 bg-efodea-blue text-white font-medium rounded-lg hover:bg-efodea-blue-hover transition-colors"
           >
             Iniciar Deglución nutritiva
           </Button>
