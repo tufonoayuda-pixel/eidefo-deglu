@@ -125,7 +125,7 @@ const ReflexesPage = () => {
 
     console.log('Datos de Reflejos:', reflejosData);
     toast.success('Etapa 8 - Reflejos completada. Procediendo a la siguiente etapa...');
-    // Navigate to the next stage, e.g., navigate('/next-stage');
+    navigate('/deglution-no-nutritiva'); // Navigate to the new DeglutionNoNutritivaPage
   };
 
   return (

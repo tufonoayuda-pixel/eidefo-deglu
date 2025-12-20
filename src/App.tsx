@@ -13,7 +13,8 @@ import ConsciousnessPage from "./pages/ConsciousnessPage";
 import CommunicationPage from "./pages/CommunicationPage";
 import OrofacialEvaluationPage from "./pages/OrofacialEvaluationPage";
 import DentitionPage from "./pages/DentitionPage";
-import ReflexesPage from "./pages/ReflexesPage"; // Import the new ReflexesPage
+import ReflexesPage from "./pages/ReflexesPage";
+import DeglutionNoNutritivaPage from "./pages/DeglutionNoNutritivaPage"; // Import the new DeglutionNoNutritivaPage
 import { AuthProvider, useAuth } from "./context/AuthContext";
 
 const queryClient = new QueryClient();
@@ -93,7 +94,15 @@ const App = () => (
               path="/reflexes"
               element={
                 <ProtectedRoute>
-                  <ReflexesPage /> {/* New protected route for ReflexesPage */}
+                  <ReflexesPage /> {/* Protected route for ReflexesPage */}
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/deglution-no-nutritiva"
+              element={
+                <ProtectedRoute>
+                  <DeglutionNoNutritivaPage /> {/* New protected route for DeglutionNoNutritivaPage */}
                 </ProtectedRoute>
               }
             />
