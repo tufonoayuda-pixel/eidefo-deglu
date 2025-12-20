@@ -1,17 +1,25 @@
 "use client";
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
+import { useAuth } from '@/context/AuthContext'; // Import useAuth
 
 const LoginPage = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const navigate = useNavigate();
+  const { login, isLoggedIn } = useAuth(); // Use the auth context
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      navigate('/'); // Redirect to home if already logged in
+    }
+  }, [isLoggedIn, navigate]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -23,11 +31,10 @@ const LoginPage = () => {
     }
 
     // Simulate API call for authentication
-    // In a real application, you would send these credentials to a backend
-    // and handle the response (e.g., JWT token, user data).
     if (username === 'test' && password === 'password') {
+      login(); // Call login from AuthContext
       toast.success('¡Bienvenido al Sistema EFODEA!');
-      navigate('/'); // Redirect to home or dashboard after successful login
+      // Redirection is now handled by the useEffect in App.tsx or this component
     } else {
       setErrorMessage('Credenciales incorrectas. Por favor, inténtelo nuevamente.');
       toast.error('Credenciales incorrectas.');
