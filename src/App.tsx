@@ -8,7 +8,8 @@ import NotFound from "./pages/NotFound";
 import LoginPage from "./pages/LoginPage";
 import IdentificationPage from "./pages/IdentificationPage";
 import RespirationPage from "./pages/RespirationPage";
-import NutritionPage from "./pages/NutritionPage"; // Import the new NutritionPage
+import NutritionPage from "./pages/NutritionPage";
+import ConsciousnessPage from "./pages/ConsciousnessPage"; // Import the new ConsciousnessPage
 import { AuthProvider, useAuth } from "./context/AuthContext";
 
 const queryClient = new QueryClient();
@@ -48,7 +49,15 @@ const App = () => (
               path="/nutrition"
               element={
                 <ProtectedRoute>
-                  <NutritionPage /> {/* New protected route for NutritionPage */}
+                  <NutritionPage /> {/* Protected route for NutritionPage */}
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/consciousness"
+              element={
+                <ProtectedRoute>
+                  <ConsciousnessPage /> {/* New protected route for ConsciousnessPage */}
                 </ProtectedRoute>
               }
             />

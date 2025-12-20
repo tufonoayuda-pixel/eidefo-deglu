@@ -44,7 +44,7 @@ const NutritionPage = () => {
     });
 
     toast.success('Etapa 3 - Nutrición completada. Procediendo a la siguiente etapa...');
-    // Here you would navigate to the next stage, e.g., navigate('/next-stage');
+    navigate('/consciousness'); // Navigate to the new ConsciousnessPage
   };
 
   return (
