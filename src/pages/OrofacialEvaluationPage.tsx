@@ -8,6 +8,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { toast } from 'sonner';
 import Header from '@/components/Header';
 import { useNavigate } from 'react-router-dom';
+import DentitionPage from './DentitionPage'; // Import the DentitionPage
 
 interface EvaluacionOrofacialData {
   noPresentaAlteracion: boolean;
@@ -365,4 +366,4 @@ const OrofacialEvaluationPage = () => {
   );
 };
 
-export default DentitionPage;
+export default OrofacialEvaluationPage;
