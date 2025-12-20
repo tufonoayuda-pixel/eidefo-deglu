@@ -82,7 +82,7 @@ const CommunicationPage = () => {
     });
 
     toast.success('Etapa 5 - Comunicación completada. Procediendo a la siguiente etapa...');
-    // Here you would navigate to the next stage, e.g., navigate('/next-stage');
+    navigate('/orofacial-evaluation'); // Navigate to the new OrofacialEvaluationPage
   };
 
   return (
