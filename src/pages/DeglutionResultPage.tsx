@@ -1,7 +1,7 @@
 "use client";
 
 import React from 'react';
-import { useLocation, useNavigate } => 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
 import Header from '@/components/Header';
 import { EvaluationData } from '@/types/evaluation'; // Import the main interface
