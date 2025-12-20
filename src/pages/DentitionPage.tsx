@@ -125,7 +125,7 @@ const DentitionPage = () => {
 
     console.log('Datos de Dentición:', denticionData);
     toast.success('Etapa 7 - Dentición completada. Procediendo a la siguiente etapa...');
-    // Navigate to the next stage, e.g., navigate('/next-stage');
+    navigate('/reflexes'); // Navigate to the new ReflexesPage
   };
 
   return (

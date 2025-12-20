@@ -12,7 +12,8 @@ import NutritionPage from "./pages/NutritionPage";
 import ConsciousnessPage from "./pages/ConsciousnessPage";
 import CommunicationPage from "./pages/CommunicationPage";
 import OrofacialEvaluationPage from "./pages/OrofacialEvaluationPage";
-import DentitionPage from "./pages/DentitionPage"; // Import the new DentitionPage
+import DentitionPage from "./pages/DentitionPage";
+import ReflexesPage from "./pages/ReflexesPage"; // Import the new ReflexesPage
 import { AuthProvider, useAuth } from "./context/AuthContext";
 
 const queryClient = new QueryClient();
@@ -84,7 +85,15 @@ const App = () => (
               path="/dentition"
               element={
                 <ProtectedRoute>
-                  <DentitionPage /> {/* New protected route for DentitionPage */}
+                  <DentitionPage /> {/* Protected route for DentitionPage */}
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/reflexes"
+              element={
+                <ProtectedRoute>
+                  <ReflexesPage /> {/* New protected route for ReflexesPage */}
                 </ProtectedRoute>
               }
             />
