@@ -33,7 +33,7 @@ const LoginPage = () => {
     // Simulate API call for authentication
     if (username === 'test' && password === 'password') {
       login(username); // Pass the username (email) to the login function
-      toast.success('¡Bienvenido al Sistema EFODEA!');
+      toast.success('¡Bienvenido al Sistema EIDEFO!');
       // Redirection is now handled by the useEffect in App.tsx or this component
     } else {
       setErrorMessage('Credenciales incorrectas. Por favor, inténtelo nuevamente.');
@@ -42,14 +42,14 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-blue-100"> {/* Changed from bg-[#e99e7c] */}
+    <div className="flex items-center justify-center min-h-screen bg-blue-100">
       <div className="login-container bg-white p-8 rounded-xl shadow-lg w-full max-w-md">
         <div className="logo text-right mb-6">
           <div className="h-10 ml-auto flex items-center text-xl font-bold text-gray-800">
             🧠👅MiFonoConsulta
           </div>
         </div>
-        <h2 className="form-title text-2xl font-semibold text-center mb-6 text-gray-800">INGRESO SISTEMA EFODEA</h2>
+        <h2 className="form-title text-2xl font-semibold text-center mb-6 text-gray-800">INGRESO SISTEMA EIDEFO</h2>
 
         <form onSubmit={handleSubmit}>
           <div className="input-group mb-4">
@@ -79,7 +79,7 @@ const LoginPage = () => {
           {errorMessage && (
             <p className="error-message text-red-600 text-sm text-center mb-4">{errorMessage}</p>
           )}
-          <Button type="submit" className="w-full p-3 bg-efodea-blue text-white font-medium rounded-lg hover:bg-efodea-blue-hover transition-colors"> {/* Changed from bg-orange-500 */}
+          <Button type="submit" className="w-full p-3 bg-efodea-blue text-white font-medium rounded-lg hover:bg-efodea-blue-hover transition-colors">
             Ingresar
           </Button>
         </form>

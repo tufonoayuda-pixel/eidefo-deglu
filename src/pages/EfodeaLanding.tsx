@@ -6,8 +6,8 @@ const EfodeaLanding = () => {
       {/* Hero Section */}
       <section className="hero-bg text-white py-20">
         <div className="container mx-auto px-4 max-w-6xl text-center">
-          <h1 className="text-4xl md:text-5xl font-bold mb-4">EFODEA</h1>
-          <p className="text-xl md:text-2xl mb-2">Evaluación Fonoaudiológica de la Deglución en Adultos</p>
+          <h1 className="text-4xl md:text-5xl font-bold mb-4">EIDEFO</h1>
+          <p className="text-xl md:text-2xl mb-2">Evaluacion Informal de la Deglución en Fonoaudiología</p>
           <p className="text-lg opacity-90">Sistema clínico estandarizado para la valoración de la deglución con criterios objetivos</p>
         </div>
       </section>
@@ -16,7 +16,7 @@ const EfodeaLanding = () => {
       <section className="py-16 bg-white">
         <div className="container mx-auto px-4 max-w-6xl">
           <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-4">¿Cómo funciona EFODEA?</h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-4">¿Cómo funciona EIDEFO?</h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
               Documenta, puntúa y toma decisiones clínicas objetivas para la evaluación de la deglución en adultos
             </p>
@@ -145,9 +145,9 @@ const EfodeaLanding = () => {
               </div>
             </div>
 
-            <div className="mt-8 p-6 bg-blue-50 rounded-lg border border-blue-200"> {/* Changed from bg-amber-50 border-amber-200 */}
-              <h4 className="font-bold text-lg text-efodea-blue mb-2">Advertencia Clínica</h4> {/* Changed text-amber-800 */}
-              <p className="text-blue-700"> {/* Changed text-amber-700 */}
+            <div className="mt-8 p-6 bg-blue-50 rounded-lg border border-blue-200">
+              <h4 className="font-bold text-lg text-efodea-blue mb-2">Advertencia Clínica</h4>
+              <p className="text-blue-700">
                 Independiente del puntaje, si existen signos de riesgo de aspiración o compromiso
                 neurológico severo, se debe aplicar criterio clínico profesional para la decisión final.
               </p>
@@ -160,23 +160,23 @@ const EfodeaLanding = () => {
       <section className="py-16 bg-white">
         <div className="container mx-auto px-4 max-w-4xl">
           <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-4">Acceso a la Plataforma EFODEA</h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-4">Acceso a la Plataforma EIDEFO</h2>
             <p className="text-xl text-gray-600">
-              Solo para fonoaudiólogos certificados en el uso de EFODEA
+              Solo para fonoaudiólogos certificados en el uso de EIDEFO
             </p>
           </div>
 
           <div className="bg-gradient-to-r from-primary to-secondary rounded-xl p-8 text-white text-center">
             <h3 className="text-2xl font-bold mb-4">¿Aún no tienes credenciales?</h3>
             <p className="mb-6 text-blue-100 max-w-2xl mx-auto">
-              Completa el curso de certificación EFODEA para obtener tu usuario y contraseña
+              Completa el curso de certificación EIDEFO para obtener tu usuario y contraseña
               de acceso a la plataforma clínica
             </p>
             <div className="flex flex-col sm:flex-row justify-center gap-4">
-              <button className="bg-white text-efodea-blue font-bold py-3 px-8 rounded-lg hover:bg-gray-100 transition duration-300"> {/* Changed text-primary */}
+              <button className="bg-white text-efodea-blue font-bold py-3 px-8 rounded-lg hover:bg-gray-100 transition duration-300">
                 Inscribirme al Curso
               </button>
-              <button className="bg-transparent border-2 border-white text-white font-bold py-3 px-8 rounded-lg hover:bg-white hover:text-efodea-blue transition duration-300"> {/* Changed hover:text-primary */}
+              <button className="bg-transparent border-2 border-white text-white font-bold py-3 px-8 rounded-lg hover:bg-white hover:text-efodea-blue transition duration-300">
                 Más Información
               </button>
             </div>
@@ -222,7 +222,7 @@ const EfodeaLanding = () => {
       <footer className="bg-gray-900 text-white py-12">
         <div className="container mx-auto px-4 max-w-6xl">
           <div className="text-center">
-            <h4 className="font-bold text-xl mb-4">EFODEA</h4>
+            <h4 className="font-bold text-xl mb-4">EIDEFO</h4>
             <p className="text-gray-400 mb-6">Herramienta clínica validada para la evaluación de la deglución en adultos</p>
             <p className="text-gray-500">© 2025 Neuromav. Todos los derechos reservados.</p>
           </div>
