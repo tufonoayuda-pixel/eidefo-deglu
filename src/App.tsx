@@ -9,7 +9,8 @@ import LoginPage from "./pages/LoginPage";
 import IdentificationPage from "./pages/IdentificationPage";
 import RespirationPage from "./pages/RespirationPage";
 import NutritionPage from "./pages/NutritionPage";
-import ConsciousnessPage from "./pages/ConsciousnessPage"; // Import the new ConsciousnessPage
+import ConsciousnessPage from "./pages/ConsciousnessPage";
+import CommunicationPage from "./pages/CommunicationPage"; // Import the new CommunicationPage
 import { AuthProvider, useAuth } from "./context/AuthContext";
 
 const queryClient = new QueryClient();
@@ -57,7 +58,15 @@ const App = () => (
               path="/consciousness"
               element={
                 <ProtectedRoute>
-                  <ConsciousnessPage /> {/* New protected route for ConsciousnessPage */}
+                  <ConsciousnessPage /> {/* Protected route for ConsciousnessPage */}
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/communication"
+              element={
+                <ProtectedRoute>
+                  <CommunicationPage /> {/* New protected route for CommunicationPage */}
                 </ProtectedRoute>
               }
             />

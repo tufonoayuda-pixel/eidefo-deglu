@@ -70,7 +70,7 @@ const ConsciousnessPage = () => {
     });
 
     toast.success('Etapa 4 - Estado de conciencia completada. Procediendo a la siguiente etapa...');
-    // Here you would navigate to the next stage, e.g., navigate('/next-stage');
+    navigate('/communication'); // Navigate to the new CommunicationPage
   };
 
   return (
