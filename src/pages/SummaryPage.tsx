@@ -222,9 +222,27 @@ const SummaryPage = () => {
                   <>
                     <li><span className="font-medium">Alteración motora:</span> {renderBoolean(evaluationData.orofacialEvaluation.alteracionMotora)}</li>
                     <ul className="list-disc list-inside ml-4 space-y-1 text-gray-600">
-                      {evaluationData.orofacialEvaluation.rangoFuerzaRostroMandibula && <li>Rango, fuerza y coordinación rostro y mandíbula</li>}
-                      {evaluationData.orofacialEvaluation.rangoFuerzaLabios && <li>Rango, fuerza y coordinación labios</li>}
-                      {evaluationData.orofacialEvaluation.rangoFuerzaLengua && <li>Rango, fuerza y coordinación lengua</li>}
+                      {evaluationData.orofacialEvaluation.rangoFuerzaRostroMandibula && (
+                        <li>
+                          Rango, fuerza y coordinación rostro y mandíbula:
+                          {evaluationData.orofacialEvaluation.rangoFuerzaRostroMandibulaDerecha && ' Derecha'}
+                          {evaluationData.orofacialEvaluation.rangoFuerzaRostroMandibulaIzquierda && ' Izquierda'}
+                        </li>
+                      )}
+                      {evaluationData.orofacialEvaluation.rangoFuerzaLabios && (
+                        <li>
+                          Rango, fuerza y coordinación labios:
+                          {evaluationData.orofacialEvaluation.rangoFuerzaLabiosDerecha && ' Derecha'}
+                          {evaluationData.orofacialEvaluation.rangoFuerzaLabiosIzquierda && ' Izquierda'}
+                        </li>
+                      )}
+                      {evaluationData.orofacialEvaluation.rangoFuerzaLengua && (
+                        <li>
+                          Rango, fuerza y coordinación lengua:
+                          {evaluationData.orofacialEvaluation.rangoFuerzaLenguaDerecha && ' Derecha'}
+                          {evaluationData.orofacialEvaluation.rangoFuerzaLenguaIzquierda && ' Izquierda'}
+                        </li>
+                      )}
                     </ul>
                   </>
                 )}

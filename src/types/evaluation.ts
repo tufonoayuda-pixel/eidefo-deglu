@@ -42,8 +42,14 @@ export interface OrofacialEvaluationData {
   alteracionEstructuras: boolean;
   alteracionMotora: boolean;
   rangoFuerzaRostroMandibula: boolean;
+  rangoFuerzaRostroMandibulaDerecha: boolean; // New
+  rangoFuerzaRostroMandibulaIzquierda: boolean; // New
   rangoFuerzaLabios: boolean;
+  rangoFuerzaLabiosDerecha: boolean; // New
+  rangoFuerzaLabiosIzquierda: boolean; // New
   rangoFuerzaLengua: boolean;
+  rangoFuerzaLenguaDerecha: boolean; // New
+  rangoFuerzaLenguaIzquierda: boolean; // New
   alteracionSensibilidad: boolean;
   sensibilidadExtraoralDerecha: boolean;
   sensibilidadExtraoralIzquierda: boolean;
