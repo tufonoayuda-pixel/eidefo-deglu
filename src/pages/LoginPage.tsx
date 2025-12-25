@@ -63,6 +63,17 @@ const LoginPage = () => {
         </div>
         <h2 className="form-title text-2xl font-semibold text-center mb-6 text-gray-800">INGRESO SISTEMA EIDEFO</h2>
 
+        {/* New descriptive text block */}
+        <div className="text-center mb-6 p-4 bg-blue-50 rounded-lg border border-blue-100">
+          <p className="text-gray-700 text-sm mb-2">
+            Esta plataforma web es una herramienta diseñada para fonoaudiólogos que realizan evaluaciones de deglución.
+            Permite documentar, puntuar y tomar decisiones clínicas objetivas de manera estandarizada.
+          </p>
+          <p className="text-gray-600 text-xs italic">
+            Creado y adaptado de forma digital por Fonoaudiólogo Cristóbal San Martín
+          </p>
+        </div>
+
         <form onSubmit={handleSubmit}>
           <div className="input-group mb-4">
             <Label htmlFor="professionalName" className="block text-gray-700 font-medium mb-2">Nombre del profesional</Label>
