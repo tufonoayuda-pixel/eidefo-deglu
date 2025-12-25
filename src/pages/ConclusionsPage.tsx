@@ -517,9 +517,8 @@ const ConclusionsPage = () => {
                       <Label htmlFor={`bebidas-${option.value}`}>{option.label}</Label>
                     </div>
                   ))}
-                </RadioGroup>
-              </div>
-            )}
+                </div>
+              )}
             </div>
 
             {/* Ninguna viscosidad permitida */}
