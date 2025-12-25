@@ -69,7 +69,10 @@ const LoginPage = () => {
         <div className="text-center mb-6 p-4 bg-blue-50 rounded-lg border border-blue-100">
           <p className="text-gray-700 text-sm mb-2">
             Esta plataforma web es una herramienta diseñada para fonoaudiólogos que realizan evaluaciones de deglución.
-            Permite documentar, puntuar y tomar decisiones clínicas objetivas de manera estandarizada.
+            <span className="font-bold"> EIDEFO (Evaluación Informal de la Deglución en Fonoaudiología)</span> permite documentar, puntuar y tomar decisiones clínicas objetivas de manera estandarizada.
+          </p>
+          <p className="text-gray-700 text-sm mb-2">
+            Es importante recordar que esta es una <span className="font-bold">evaluación informal</span> y siempre debe complementarse y seguir los protocolos de una <span className="font-bold">evaluación estandarizada</span> completa.
           </p>
           <p className="text-gray-600 text-xs italic">
             Creado y adaptado de forma digital por Fonoaudiólogo Cristóbal San Martín
