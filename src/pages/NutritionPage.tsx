@@ -13,6 +13,8 @@ import { NutritionData, EvaluationData } from '@/types/evaluation'; // Import in
 const oralFeedingOptions = [
   "Líquido fino",
   "Líquido espeso",
+  "Papilla licuada", // Added new option
+  "Papilla espesa",  // Added new option
   "Papilla",
   "Sólido blando",
   "Sólidos",

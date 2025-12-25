@@ -28,6 +28,8 @@ const foisOptions = ['1', '2', '3', '4', '5', '6', '7'];
 const consistenciaOptions = [
   { value: 'liquido_fino', label: 'Líquido fino' },
   { value: 'liquido_espeso', label: 'Líquido espeso' },
+  { value: 'papilla_licuada', label: 'Papilla licuada' }, // Added new option
+  { value: 'papilla_espesa', label: 'Papilla espesa' },  // Added new option
   { value: 'papilla', label: 'Papilla' },
   { value: 'solido_blando', label: 'Sólido blando' },
   { value: 'solidos', label: 'Sólidos' },
@@ -515,8 +517,9 @@ const ConclusionsPage = () => {
                       <Label htmlFor={`bebidas-${option.value}`}>{option.label}</Label>
                     </div>
                   ))}
-                </div>
-              )}
+                </RadioGroup>
+              </div>
+            )}
             </div>
 
             {/* Ninguna viscosidad permitida */}
