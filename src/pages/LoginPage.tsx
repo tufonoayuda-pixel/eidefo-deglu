@@ -4,39 +4,49 @@ import React, { useState, useEffect } from 'react';
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"; // Import Select components
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
-import { useAuth } from '@/context/AuthContext'; // Import useAuth
+import { useAuth } from '@/context/AuthContext';
 
 const LoginPage = () => {
   const [professionalName, setProfessionalName] = useState('');
   const [establishmentType, setEstablishmentType] = useState<string | undefined>(undefined);
+  const [specificEstablishmentName, setSpecificEstablishmentName] = useState(''); // New state for specific name
   const [securityAnswer, setSecurityAnswer] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const navigate = useNavigate();
-  const { login, isLoggedIn } = useAuth(); // Use the auth context
+  const { login, isLoggedIn } = useAuth();
 
   useEffect(() => {
     if (isLoggedIn) {
-      navigate('/'); // Redirect to home if already logged in
+      navigate('/');
     }
   }, [isLoggedIn, navigate]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    setErrorMessage(''); // Clear previous errors
+    setErrorMessage('');
 
     if (!professionalName || !establishmentType || !securityAnswer) {
       setErrorMessage('Por favor, complete todos los campos.');
       return;
     }
 
-    // Validate security question
+    // Validate specific establishment name if applicable
+    if ((establishmentType === 'Centro de salud familiar' || establishmentType === 'Hospital') && !specificEstablishmentName.trim()) {
+      setErrorMessage('Por favor, especifique el nombre del establecimiento.');
+      return;
+    }
+
     if (securityAnswer.toLowerCase() === 'disfagia') {
-      login(professionalName, establishmentType); // Pass professional name and establishment type
+      let finalEstablishmentType = establishmentType;
+      if (establishmentType === 'Centro de salud familiar' || establishmentType === 'Hospital') {
+        finalEstablishmentType = `${establishmentType}: ${specificEstablishmentName.trim()}`;
+      }
+
+      login(professionalName, finalEstablishmentType);
       toast.success('¡Bienvenido al Sistema EIDEFO!');
-      // Redirection is now handled by the useEffect in this component
     } else {
       setErrorMessage('Respuesta incorrecta a la pregunta de seguridad. Por favor, inténtelo nuevamente.');
       toast.error('Respuesta incorrecta.');
@@ -69,7 +79,13 @@ const LoginPage = () => {
 
           <div className="input-group mb-4">
             <Label htmlFor="establishmentType" className="block text-gray-700 font-medium mb-2">Tipo de establecimiento</Label>
-            <Select onValueChange={setEstablishmentType} value={establishmentType}>
+            <Select
+              onValueChange={(value) => {
+                setEstablishmentType(value);
+                setSpecificEstablishmentName(''); // Clear specific name when category changes
+              }}
+              value={establishmentType}
+            >
               <SelectTrigger id="establishmentType" className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all">
                 <SelectValue placeholder="Seleccionar tipo de establecimiento" />
               </SelectTrigger>
@@ -80,6 +96,21 @@ const LoginPage = () => {
               </SelectContent>
             </Select>
           </div>
+
+          {(establishmentType === 'Centro de salud familiar' || establishmentType === 'Hospital') && (
+            <div className="input-group mb-4">
+              <Label htmlFor="specificEstablishmentName" className="block text-gray-700 font-medium mb-2">Especificar nombre del establecimiento</Label>
+              <Input
+                id="specificEstablishmentName"
+                type="text"
+                placeholder="Ej. Hospital Regional de Concepción"
+                value={specificEstablishmentName}
+                onChange={(e) => setSpecificEstablishmentName(e.target.value)}
+                required
+                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
+              />
+            </div>
+          )}
 
           <div className="input-group mb-6">
             <Label htmlFor="securityAnswer" className="block text-gray-700 font-medium mb-2">¿A qué condición corresponde la incapacidad para tragar secreciones, alimentos y/o líquidos?</Label>
