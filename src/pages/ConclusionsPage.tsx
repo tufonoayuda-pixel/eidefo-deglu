@@ -163,13 +163,14 @@ const ConclusionsPage = () => {
     terapiaDeglucionSubManiobrasRehabilitadoras: false,
     terapiaDeglucionSubManiobrasCompensatorias: false,
     rehabilitacionDeglutoriaTipos: [], // Now specific to "Maniobras rehabilitadoras"
-    rehabilitacionDeglutoriaOtros: '', // Now specific to "Maniobras rehabilitadoras - Otros"
+    rehabilitacionDeglutoriaOtros: '', // Custom text for "Maniobras rehabilitadoras - Otros"
 
     derivacionNutricionista: false,
     derivacionKinesiologo: false,
     derivacionTerapeutaOcupacional: false,
     derivacionMedico: false,
-    derivacionOtros: '',
+    derivacionOtros: false, // Initialize as boolean
+    derivacionOtrosText: '', // Initialize new text field
     observaciones: '',
     optimizarHigieneOral: false,
     ningunaRecomendacion: false,
@@ -247,8 +248,9 @@ const ConclusionsPage = () => {
       if (field === 'usoEstimulacionOtros' && !checked) {
         newState.usoEstimulacionOtros = '';
       }
+      // NEW: Clear derivacionOtrosText if derivacionOtros switch is off
       if (field === 'derivacionOtros' && !checked) {
-        newState.derivacionOtros = '';
+        newState.derivacionOtrosText = '';
       }
 
       // Terapia Fonoaudiológica reset logic
@@ -320,7 +322,8 @@ const ConclusionsPage = () => {
           derivacionKinesiologo: false,
           derivacionTerapeutaOcupacional: false,
           derivacionMedico: false,
-          derivacionOtros: '',
+          derivacionOtros: false, // Reset switch
+          derivacionOtrosText: '', // Clear text
           optimizarHigieneOral: false,
           instalacionViaAlternativa: false,
           viaAlternativaTipos: [],
@@ -436,6 +439,12 @@ const ConclusionsPage = () => {
 
     if (conclusionsData.instalacionViaAlternativa && conclusionsData.viaAlternativaTipos.length === 0) {
       toast.error('Por favor, seleccione al menos un tipo de vía alternativa.');
+      return;
+    }
+
+    // NEW: Validation for derivacionOtrosText
+    if (conclusionsData.derivacionOtros && conclusionsData.derivacionOtrosText.trim() === '') {
+      toast.error('Por favor, especifique el profesional a derivar en el campo "Otros".');
       return;
     }
 
@@ -1259,18 +1268,18 @@ const ConclusionsPage = () => {
                 <Label htmlFor="derivacionOtros" className="text-gray-700 font-medium">Otros</Label>
                 <Switch
                   id="derivacionOtros"
-                  checked={!!conclusionsData.derivacionOtros}
-                  onCheckedChange={(checked) => setConclusionsData(prev => ({ ...prev, derivacionOtros: checked ? prev.derivacionOtros : '' }))}
+                  checked={conclusionsData.derivacionOtros} // Use the boolean state
+                  onCheckedChange={(checked) => handleSwitchChange('derivacionOtros', checked)}
                   className="data-[state=checked]:bg-efodea-blue"
                 />
               </div>
-              {!!conclusionsData.derivacionOtros && (
+              {conclusionsData.derivacionOtros && ( // Conditionally render input
                 <Input
                   id="derivacionOtrosText"
                   type="text"
                   placeholder="Especificar otros profesionales..."
-                  value={conclusionsData.derivacionOtros}
-                  onChange={(e) => setConclusionsData(prev => ({ ...prev, derivacionOtros: e.target.value }))}
+                  value={conclusionsData.derivacionOtrosText}
+                  onChange={(e) => setConclusionsData(prev => ({ ...prev, derivacionOtrosText: e.target.value }))}
                   className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all mt-2"
                 />
               )}

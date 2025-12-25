@@ -521,7 +521,7 @@ const SummaryPage = () => {
                   conclusions.derivacionKinesiologo ||
                   conclusions.derivacionTerapeutaOcupacional ||
                   conclusions.derivacionMedico ||
-                  conclusions.derivacionOtros.trim() !== '' ||
+                  conclusions.derivacionOtros || // Check boolean for 'Otros'
                   conclusions.optimizarHigieneOral ||
                   conclusions.ningunaRecomendacion ||
                   conclusions.instalacionViaAlternativa ||
@@ -687,7 +687,7 @@ const SummaryPage = () => {
                   conclusions.derivacionKinesiologo ||
                   conclusions.derivacionTerapeutaOcupacional ||
                   conclusions.derivacionMedico ||
-                  conclusions.derivacionOtros.trim() !== '') && (
+                  conclusions.derivacionOtros) && ( // Check boolean for 'derivacionOtros'
                     <li className="font-bold mt-4">Derivación a:</li>
                   )}
                 <ul className="list-disc list-inside ml-4 space-y-1 text-gray-600">
@@ -695,7 +695,8 @@ const SummaryPage = () => {
                   {conclusions.derivacionKinesiologo && <li><span className="font-medium">Kinesiólogo:</span> {renderBoolean(conclusions.derivacionKinesiologo)}</li>}
                   {conclusions.derivacionTerapeutaOcupacional && <li><span className="font-medium">Terapeuta Ocupacional:</span> {renderBoolean(conclusions.derivacionTerapeutaOcupacional)}</li>}
                   {conclusions.derivacionMedico && <li><span className="font-medium">Médico:</span> {renderBoolean(conclusions.derivacionMedico)}</li>}
-                  {conclusions.derivacionOtros.trim() !== '' && <li><span className="font-medium">Otros:</span> {renderString(conclusions.derivacionOtros)}</li>}
+                  {conclusions.derivacionOtros && conclusions.derivacionOtrosText.trim() !== '' && <li><span className="font-medium">Otros:</span> {renderString(conclusions.derivacionOtrosText)}</li>}
+                  {conclusions.derivacionOtros && conclusions.derivacionOtrosText.trim() === '' && <li><span className="font-medium">Otros:</span> No especificado</li>} {/* Handle case where switch is on but text is empty */}
                 </ul>
 
                 {conclusions.observaciones.trim() !== '' && (

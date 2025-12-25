@@ -212,7 +212,8 @@ export interface ConclusionsData {
   derivacionKinesiologo: boolean;
   derivacionTerapeutaOcupacional: boolean;
   derivacionMedico: boolean;
-  derivacionOtros: string;
+  derivacionOtros: boolean; // Changed to boolean to toggle text input
+  derivacionOtrosText: string; // New: Text input for other professionals
   observaciones: string;
   optimizarHigieneOral: boolean;
   ningunaRecomendacion: boolean;
