@@ -8,6 +8,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
 import { useAuth } from '@/context/AuthContext';
+import FallingDeglutitionIcons from '@/components/FallingDeglutitionIcons'; // New import
 
 const LoginPage = () => {
   const [professionalName, setProfessionalName] = useState('');
@@ -54,8 +55,9 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-blue-100">
-      <div className="login-container bg-white p-8 rounded-xl shadow-lg w-full max-w-md">
+    <div className="relative flex items-center justify-center min-h-screen bg-blue-100 overflow-hidden"> {/* Add relative and overflow-hidden */}
+      <FallingDeglutitionIcons /> {/* Render the falling icons component */}
+      <div className="login-container bg-white p-8 rounded-xl shadow-lg w-full max-w-md relative z-10"> {/* Add relative z-10 to keep content above icons */}
         <div className="logo text-right mb-6">
           <div className="h-10 ml-auto flex items-center text-xl font-bold text-gray-800">
             🧠👅MiFonoConsulta
