@@ -4,13 +4,15 @@ import React, { useState, useEffect } from 'react';
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"; // Import Select components
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
 import { useAuth } from '@/context/AuthContext'; // Import useAuth
 
 const LoginPage = () => {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  const [professionalName, setProfessionalName] = useState('');
+  const [establishmentType, setEstablishmentType] = useState<string | undefined>(undefined);
+  const [securityAnswer, setSecurityAnswer] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const navigate = useNavigate();
   const { login, isLoggedIn } = useAuth(); // Use the auth context
@@ -25,19 +27,19 @@ const LoginPage = () => {
     e.preventDefault();
     setErrorMessage(''); // Clear previous errors
 
-    if (!username || !password) {
-      setErrorMessage('Por favor, ingrese usuario y contraseña.');
+    if (!professionalName || !establishmentType || !securityAnswer) {
+      setErrorMessage('Por favor, complete todos los campos.');
       return;
     }
 
-    // Simulate API call for authentication
-    if (username === 'test' && password === 'password') {
-      login(username); // Pass the username (email) to the login function
+    // Validate security question
+    if (securityAnswer.toLowerCase() === 'disfagia') {
+      login(professionalName, establishmentType); // Pass professional name and establishment type
       toast.success('¡Bienvenido al Sistema EIDEFO!');
-      // Redirection is now handled by the useEffect in App.tsx or this component
+      // Redirection is now handled by the useEffect in this component
     } else {
-      setErrorMessage('Credenciales incorrectas. Por favor, inténtelo nuevamente.');
-      toast.error('Credenciales incorrectas.');
+      setErrorMessage('Respuesta incorrecta a la pregunta de seguridad. Por favor, inténtelo nuevamente.');
+      toast.error('Respuesta incorrecta.');
     }
   };
 
@@ -53,29 +55,45 @@ const LoginPage = () => {
 
         <form onSubmit={handleSubmit}>
           <div className="input-group mb-4">
-            <Label htmlFor="username" className="sr-only">Usuario</Label>
+            <Label htmlFor="professionalName" className="block text-gray-700 font-medium mb-2">Nombre del profesional</Label>
             <Input
-              id="username"
+              id="professionalName"
               type="text"
-              placeholder="Ingresar usuario..."
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
+              placeholder="Ingresar nombre completo"
+              value={professionalName}
+              onChange={(e) => setProfessionalName(e.target.value)}
               required
               className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
             />
           </div>
+
+          <div className="input-group mb-4">
+            <Label htmlFor="establishmentType" className="block text-gray-700 font-medium mb-2">Tipo de establecimiento</Label>
+            <Select onValueChange={setEstablishmentType} value={establishmentType}>
+              <SelectTrigger id="establishmentType" className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all">
+                <SelectValue placeholder="Seleccionar tipo de establecimiento" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="Centro de salud familiar">Centro de salud familiar</SelectItem>
+                <SelectItem value="Hospital">Hospital</SelectItem>
+                <SelectItem value="Atención particular">Atención particular</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+
           <div className="input-group mb-6">
-            <Label htmlFor="password" className="sr-only">Contraseña</Label>
+            <Label htmlFor="securityAnswer" className="block text-gray-700 font-medium mb-2">¿A qué condición corresponde la incapacidad para tragar secreciones, alimentos y/o líquidos?</Label>
             <Input
-              id="password"
-              type="password"
-              placeholder="Ingresar contraseña..."
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              id="securityAnswer"
+              type="text"
+              placeholder="Ingresar respuesta"
+              value={securityAnswer}
+              onChange={(e) => setSecurityAnswer(e.target.value)}
               required
               className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
             />
           </div>
+
           {errorMessage && (
             <p className="error-message text-red-600 text-sm text-center mb-4">{errorMessage}</p>
           )}

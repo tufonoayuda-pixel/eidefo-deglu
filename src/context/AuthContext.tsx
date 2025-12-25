@@ -4,8 +4,9 @@ import React, { createContext, useContext, useState, ReactNode } from 'react';
 
 interface AuthContextType {
   isLoggedIn: boolean;
-  userEmail: string | null; // Add userEmail to the context type
-  login: (email: string) => void; // Modify login to accept email
+  professionalName: string | null; // Changed from userEmail
+  establishmentType: string | null; // New field
+  login: (professionalName: string, establishmentType: string) => void; // Modified login signature
   logout: () => void;
 }
 
@@ -15,26 +16,33 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(() => {
     return localStorage.getItem('isLoggedIn') === 'true';
   });
-  const [userEmail, setUserEmail] = useState<string | null>(() => {
-    return localStorage.getItem('userEmail'); // Initialize userEmail from localStorage
+  const [professionalName, setProfessionalName] = useState<string | null>(() => {
+    return localStorage.getItem('professionalName'); // Initialize from localStorage
+  });
+  const [establishmentType, setEstablishmentType] = useState<string | null>(() => {
+    return localStorage.getItem('establishmentType'); // Initialize from localStorage
   });
 
-  const login = (email: string) => {
+  const login = (name: string, type: string) => {
     setIsLoggedIn(true);
-    setUserEmail(email); // Set user email
+    setProfessionalName(name);
+    setEstablishmentType(type);
     localStorage.setItem('isLoggedIn', 'true');
-    localStorage.setItem('userEmail', email); // Store user email in localStorage
+    localStorage.setItem('professionalName', name);
+    localStorage.setItem('establishmentType', type);
   };
 
   const logout = () => {
     setIsLoggedIn(false);
-    setUserEmail(null); // Clear user email
+    setProfessionalName(null);
+    setEstablishmentType(null);
     localStorage.removeItem('isLoggedIn');
-    localStorage.removeItem('userEmail'); // Remove user email from localStorage
+    localStorage.removeItem('professionalName');
+    localStorage.removeItem('establishmentType');
   };
 
   return (
-    <AuthContext.Provider value={{ isLoggedIn, userEmail, login, logout }}>
+    <AuthContext.Provider value={{ isLoggedIn, professionalName, establishmentType, login, logout }}>
       {children}
     </AuthContext.Provider>
   );

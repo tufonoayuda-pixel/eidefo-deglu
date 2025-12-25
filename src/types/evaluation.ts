@@ -5,6 +5,8 @@ export interface IdentificationData {
   selectedMedicalHistory: string[];
   otherMedicalHistory: string;
   swallowingHistory: string;
+  professionalName: string; // New field
+  establishmentType: string; // New field
 }
 
 export interface RespirationData {

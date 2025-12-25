@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 
 const Header = () => {
-  const { logout, userEmail } = useAuth(); // Get userEmail from context
+  const { logout, professionalName, establishmentType } = useAuth(); // Get professionalName and establishmentType from context
   const navigate = useNavigate();
 
   const handleLogout = () => {
@@ -15,9 +15,10 @@ const Header = () => {
   };
 
   return (
-    <div className="bg-blue-50 p-3 border-b border-gray-200 flex justify-between items-center"> {/* Changed from bg-red-50 */}
+    <div className="bg-blue-50 p-3 border-b border-gray-200 flex justify-between items-center">
       <div className="flex items-center gap-4">
-        <span className="text-sm text-gray-700">Usuario: ({userEmail || 'Invitado'})</span> {/* Display dynamic userEmail */}
+        <span className="text-sm text-gray-700">Profesional: ({professionalName || 'Invitado'})</span> {/* Display dynamic professionalName */}
+        {establishmentType && <span className="text-sm text-gray-700">Establecimiento: ({establishmentType})</span>} {/* Display establishmentType */}
         <Button
           variant="ghost"
           onClick={handleLogout}

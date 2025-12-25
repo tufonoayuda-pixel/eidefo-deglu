@@ -9,8 +9,9 @@ import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { toast } from 'sonner';
 import Header from '@/components/Header';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { IdentificationData, EvaluationData } from '@/types/evaluation'; // Import interfaces
+import { useAuth } from '@/context/AuthContext'; // Import useAuth
 
 const medicalHistoryOptions = [
   "ACV",
@@ -24,6 +25,10 @@ const medicalHistoryOptions = [
 
 const IdentificationPage = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const prevEvaluationData: EvaluationData | undefined = location.state?.evaluationData; // Get previous data
+  const { professionalName, establishmentType } = useAuth(); // Get professionalName and establishmentType from AuthContext
+
   const [patientName, setPatientName] = useState('');
   const [age, setAge] = useState('');
   const [medicalHistoryToggle, setMedicalHistoryToggle] = useState(false);
@@ -57,7 +62,9 @@ const IdentificationPage = () => {
       medicalHistoryToggle,
       selectedMedicalHistory: finalMedicalHistory,
       otherMedicalHistory,
-      swallowingHistory
+      swallowingHistory,
+      professionalName: professionalName || 'Desconocido', // Include professionalName
+      establishmentType: establishmentType || 'Desconocido', // Include establishmentType
     };
 
     const evaluationData: EvaluationData = {
@@ -74,6 +81,11 @@ const IdentificationPage = () => {
 
       <div className="max-w-3xl mx-auto p-6 bg-white rounded-xl shadow-lg my-8">
         <h1 className="text-2xl font-semibold text-efodea-blue mb-6">Etapa 1 - Identificación</h1>
+
+        <div className="mb-6 p-4 bg-blue-50 rounded-lg border border-blue-100 text-gray-700">
+          <p><span className="font-medium">Profesional:</span> {professionalName || 'N/A'}</p>
+          <p><span className="font-medium">Establecimiento:</span> {establishmentType || 'N/A'}</p>
+        </div>
 
         <form onSubmit={handleSubmit}>
           <div className="mb-6">
