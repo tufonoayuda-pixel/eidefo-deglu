@@ -40,6 +40,12 @@ const rehabilitacionTiposOptions = [
   { value: 'ejercicios_rango', label: 'Ejercicios de rango' },
   { value: 'maniobras_compensatorias', label: 'Maniobras compensatorias' },
   { value: 'terapia_miofuncional', label: 'Terapia miofuncional' },
+  // NEW: Specific deglutition maneuver types integrated here
+  { value: 'deglucion_con_esfuerzo', label: 'Deglución con esfuerzo' },
+  { value: 'maniobra_de_masako', label: 'Maniobra de Masako' },
+  { value: 'maniobra_de_mendelsonh', label: 'Maniobra de Mendelsonh' },
+  { value: 'maniobra_de_shaker', label: 'Maniobra de Shaker' },
+  { value: 'ctar_joar', label: 'CTAR-JOAR' },
   { value: 'otros', label: 'Otros' },
 ];
 
@@ -50,14 +56,6 @@ const viaAlternativaOptions = [
   { value: 'GTT', label: 'GTT' },
   { value: 'YTT', label: 'YTT' },
   { value: 'NPT', label: 'NPT' },
-];
-
-const maniobraDeglutoriaTiposOptions = [
-  { value: 'deglucion_con_esfuerzo', label: 'Deglución con esfuerzo' },
-  { value: 'maniobra_de_masako', label: 'Maniobra de Masako' },
-  { value: 'maniobra_de_mendelsonh', label: 'Maniobra de Mendelsonh' },
-  { value: 'maniobra_de_shaker', label: 'Maniobra de Shaker' },
-  { value: 'ctar_joar', label: 'CTAR-JOAR' },
 ];
 
 const ConclusionsPage = () => {
@@ -84,8 +82,8 @@ const ConclusionsPage = () => {
     bebidasPermitidasConsistencias: [],
     ningunaViscosidadPermitida: false,
     asistenciaVigilancia: false,
-    maniobraDeglutoria: false,
-    maniobraDeglutoriaTipos: [], // Initialize new field
+    // maniobraDeglutoria: false, // REMOVED
+    // maniobraDeglutoriaTipos: [], // REMOVED
     posicion45a90: false,
     verificarResiduosBoca: false,
     modificacionVolumen: false,
@@ -175,10 +173,7 @@ const ConclusionsPage = () => {
       if (field === 'derivacionOtros' && !checked) {
         newState.derivacionOtros = '';
       }
-      // NEW: Clear specific maneuver types if general maneuver switch is off
-      if (field === 'maniobraDeglutoria' && !checked) {
-        newState.maniobraDeglutoriaTipos = [];
-      }
+      // Removed old maniobraDeglutoriaTipos reset
 
       // New logic for "Ninguna recomendación"
       if (field === 'ningunaRecomendacion' && checked) {
@@ -188,8 +183,8 @@ const ConclusionsPage = () => {
           ningunaRecomendacion: true,
           asistenciaVigilancia: false,
           posicion45a90: false,
-          maniobraDeglutoria: false,
-          maniobraDeglutoriaTipos: [], // Clear specific types too
+          // maniobraDeglutoria: false, // REMOVED
+          // maniobraDeglutoriaTipos: [], // REMOVED
           verificarResiduosBoca: false,
           modificacionVolumen: false,
           modificacionVelocidad: false,
@@ -281,10 +276,7 @@ const ConclusionsPage = () => {
       toast.error('Por favor, seleccione al menos una consistencia de bebidas permitidas.');
       return;
     }
-    if (conclusionsData.maniobraDeglutoria && conclusionsData.maniobraDeglutoriaTipos.length === 0) { // NEW VALIDATION
-      toast.error('Por favor, seleccione al menos un tipo de maniobra deglutoria.');
-      return;
-    }
+    // Removed old maniobraDeglutoria validation
     if (conclusionsData.rehabilitacionDeglutoria && conclusionsData.rehabilitacionDeglutoriaTipos.length === 0 && !conclusionsData.rehabilitacionDeglutoriaOtros) {
       toast.error('Por favor, seleccione al menos un tipo de rehabilitación deglutoria o especifique "Otros".');
       return;
@@ -572,8 +564,8 @@ const ConclusionsPage = () => {
               />
             </div>
 
-            {/* Maniobra deglutoria */}
-            <div className="space-y-3">
+            {/* REMOVED: Old Maniobra deglutoria switch and its sub-options */}
+            {/* <div className="space-y-3">
               <div className="flex items-center justify-between">
                 <Label htmlFor="maniobraDeglutoria" className="text-gray-700 font-medium">Maniobra deglutoria</Label>
                 <Switch
@@ -599,7 +591,7 @@ const ConclusionsPage = () => {
                   ))}
                 </div>
               )}
-            </div>
+            </div> */}
 
             <div className="flex items-center justify-between">
               <Label htmlFor="verificarResiduosBoca" className="text-gray-700 font-medium">Verificar residuos en boca</Label>

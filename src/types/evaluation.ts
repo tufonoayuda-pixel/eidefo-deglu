@@ -151,8 +151,8 @@ export interface ConclusionsData {
   ningunaViscosidadPermitida: boolean;
   asistenciaVigilancia: boolean;
   posicion45a90: boolean;
-  maniobraDeglutoria: boolean;
-  maniobraDeglutoriaTipos: string[]; // NEW: Specific deglutition maneuver types
+  // maniobraDeglutoria: boolean; // REMOVED
+  // maniobraDeglutoriaTipos: string[]; // REMOVED
   verificarResiduosBoca: boolean;
   modificacionVolumen: boolean;
   modificacionVelocidad: boolean;
