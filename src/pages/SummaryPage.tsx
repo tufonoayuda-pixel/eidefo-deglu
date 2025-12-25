@@ -517,7 +517,16 @@ const SummaryPage = () => {
                   )}
                 {evaluationData.conclusions.asistenciaVigilancia && <li><span className="font-medium">Asistencia/Vigilancia:</span> {renderBoolean(evaluationData.conclusions.asistenciaVigilancia)}</li>}
                 {evaluationData.conclusions.posicion45a90 && <li><span className="font-medium">Posición de 45° a 90°:</span> {renderBoolean(evaluationData.conclusions.posicion45a90)}</li>}
-                {evaluationData.conclusions.maniobraDeglutoria && <li><span className="font-medium">Maniobra deglutoria:</span> {renderBoolean(evaluationData.conclusions.maniobraDeglutoria)}</li>}
+                {evaluationData.conclusions.maniobraDeglutoria && (
+                  <>
+                    <li><span className="font-medium">Maniobra deglutoria:</span> {renderBoolean(evaluationData.conclusions.maniobraDeglutoria)}</li>
+                    {evaluationData.conclusions.maniobraDeglutoriaTipos.length > 0 && (
+                      <ul className="list-disc list-inside ml-4 space-y-1 text-gray-600">
+                        <li><span className="font-medium">Tipos:</span> {renderArray(evaluationData.conclusions.maniobraDeglutoriaTipos)}</li>
+                      </ul>
+                    )}
+                  </>
+                )}
                 {evaluationData.conclusions.verificarResiduosBoca && <li><span className="font-medium">Verificar residuos en boca:</span> {renderBoolean(evaluationData.conclusions.verificarResiduosBoca)}</li>}
                 {evaluationData.conclusions.modificacionVolumen && <li><span className="font-medium">Modificación de volumen:</span> {renderBoolean(evaluationData.conclusions.modificacionVolumen)}</li>}
                 {evaluationData.conclusions.modificacionVelocidad && <li><span className="font-medium">Modificación de velocidad:</span> {renderBoolean(evaluationData.conclusions.modificacionVelocidad)}</li>}

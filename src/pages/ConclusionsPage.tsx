@@ -28,8 +28,8 @@ const foisOptions = ['1', '2', '3', '4', '5', '6', '7'];
 const consistenciaOptions = [
   { value: 'liquido_fino', label: 'Líquido fino' },
   { value: 'liquido_espeso', label: 'Líquido espeso' },
-  { value: 'papilla_licuada', label: 'Papilla licuada' }, // Added new option
-  { value: 'papilla_espesa', label: 'Papilla espesa' },  // Added new option
+  { value: 'papilla_licuada', label: 'Papilla licuada' },
+  { value: 'papilla_espesa', label: 'Papilla espesa' },
   { value: 'papilla', label: 'Papilla' },
   { value: 'solido_blando', label: 'Sólido blando' },
   { value: 'solidos', label: 'Sólidos' },
@@ -50,6 +50,14 @@ const viaAlternativaOptions = [
   { value: 'GTT', label: 'GTT' },
   { value: 'YTT', label: 'YTT' },
   { value: 'NPT', label: 'NPT' },
+];
+
+const maniobraDeglutoriaTiposOptions = [
+  { value: 'deglucion_con_esfuerzo', label: 'Deglución con esfuerzo' },
+  { value: 'maniobra_de_masako', label: 'Maniobra de Masako' },
+  { value: 'maniobra_de_mendelsonh', label: 'Maniobra de Mendelsonh' },
+  { value: 'maniobra_de_shaker', label: 'Maniobra de Shaker' },
+  { value: 'ctar_joar', label: 'CTAR-JOAR' },
 ];
 
 const ConclusionsPage = () => {
@@ -76,8 +84,9 @@ const ConclusionsPage = () => {
     bebidasPermitidasConsistencias: [],
     ningunaViscosidadPermitida: false,
     asistenciaVigilancia: false,
-    posicion45a90: false,
     maniobraDeglutoria: false,
+    maniobraDeglutoriaTipos: [], // Initialize new field
+    posicion45a90: false,
     verificarResiduosBoca: false,
     modificacionVolumen: false,
     modificacionVelocidad: false,
@@ -166,6 +175,10 @@ const ConclusionsPage = () => {
       if (field === 'derivacionOtros' && !checked) {
         newState.derivacionOtros = '';
       }
+      // NEW: Clear specific maneuver types if general maneuver switch is off
+      if (field === 'maniobraDeglutoria' && !checked) {
+        newState.maniobraDeglutoriaTipos = [];
+      }
 
       // New logic for "Ninguna recomendación"
       if (field === 'ningunaRecomendacion' && checked) {
@@ -176,6 +189,7 @@ const ConclusionsPage = () => {
           asistenciaVigilancia: false,
           posicion45a90: false,
           maniobraDeglutoria: false,
+          maniobraDeglutoriaTipos: [], // Clear specific types too
           verificarResiduosBoca: false,
           modificacionVolumen: false,
           modificacionVelocidad: false,
@@ -265,6 +279,10 @@ const ConclusionsPage = () => {
     }
     if (conclusionsData.bebidasPermitidas && conclusionsData.bebidasPermitidasConsistencias.length === 0) {
       toast.error('Por favor, seleccione al menos una consistencia de bebidas permitidas.');
+      return;
+    }
+    if (conclusionsData.maniobraDeglutoria && conclusionsData.maniobraDeglutoriaTipos.length === 0) { // NEW VALIDATION
+      toast.error('Por favor, seleccione al menos un tipo de maniobra deglutoria.');
       return;
     }
     if (conclusionsData.rehabilitacionDeglutoria && conclusionsData.rehabilitacionDeglutoriaTipos.length === 0 && !conclusionsData.rehabilitacionDeglutoriaOtros) {
@@ -553,15 +571,36 @@ const ConclusionsPage = () => {
                 className="data-[state=checked]:bg-efodea-blue"
               />
             </div>
-            <div className="flex items-center justify-between">
-              <Label htmlFor="maniobraDeglutoria" className="text-gray-700 font-medium">Maniobra deglutoria</Label>
-              <Switch
-                id="maniobraDeglutoria"
-                checked={conclusionsData.maniobraDeglutoria}
-                onCheckedChange={(checked) => handleSwitchChange('maniobraDeglutoria', checked)}
-                className="data-[state=checked]:bg-efodea-blue"
-              />
+
+            {/* Maniobra deglutoria */}
+            <div className="space-y-3">
+              <div className="flex items-center justify-between">
+                <Label htmlFor="maniobraDeglutoria" className="text-gray-700 font-medium">Maniobra deglutoria</Label>
+                <Switch
+                  id="maniobraDeglutoria"
+                  checked={conclusionsData.maniobraDeglutoria}
+                  onCheckedChange={(checked) => handleSwitchChange('maniobraDeglutoria', checked)}
+                  className="data-[state=checked]:bg-efodea-blue"
+                />
+              </div>
+              {conclusionsData.maniobraDeglutoria && (
+                <div className="ml-8 mt-4 space-y-2 p-4 border rounded-lg bg-gray-50">
+                  <h3 className="text-lg font-semibold text-gray-800 mb-2">Tipos de maniobra deglutoria:</h3>
+                  {maniobraDeglutoriaTiposOptions.map((option) => (
+                    <div key={option.value} className="flex items-center space-x-2">
+                      <Checkbox
+                        id={`maniobra-${option.value}`}
+                        checked={conclusionsData.maniobraDeglutoriaTipos.includes(option.value)}
+                        onCheckedChange={(checked) => handleCheckboxGroupChange('maniobraDeglutoriaTipos', option.value, checked as boolean)}
+                        className="data-[state=checked]:bg-efodea-blue"
+                      />
+                      <Label htmlFor={`maniobra-${option.value}`}>{option.label}</Label>
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
+
             <div className="flex items-center justify-between">
               <Label htmlFor="verificarResiduosBoca" className="text-gray-700 font-medium">Verificar residuos en boca</Label>
               <Switch

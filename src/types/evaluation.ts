@@ -152,6 +152,7 @@ export interface ConclusionsData {
   asistenciaVigilancia: boolean;
   posicion45a90: boolean;
   maniobraDeglutoria: boolean;
+  maniobraDeglutoriaTipos: string[]; // NEW: Specific deglutition maneuver types
   verificarResiduosBoca: boolean;
   modificacionVolumen: boolean;
   modificacionVelocidad: boolean;
