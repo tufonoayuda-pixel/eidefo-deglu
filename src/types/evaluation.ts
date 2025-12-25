@@ -151,15 +151,42 @@ export interface ConclusionsData {
   ningunaViscosidadPermitida: boolean;
   asistenciaVigilancia: boolean;
   posicion45a90: boolean;
-  // maniobraDeglutoria: boolean; // REMOVED
-  // maniobraDeglutoriaTipos: string[]; // REMOVED
   verificarResiduosBoca: boolean;
-  modificacionVolumen: boolean;
-  modificacionVelocidad: boolean;
-  modificacionTemperatura: boolean;
-  modificacionSabor: boolean;
-  modificacionTextura: boolean;
-  modificacionConsistencia: boolean;
+
+  // Maniobras Posturales
+  maniobrasPosturales: boolean;
+  maniobrasPosturalesTipos: string[]; // 'chin_up', 'chin_down', etc.
+
+  // Modificación Sensorial
+  modificacionSensorial: boolean;
+  modificacionSensorialTipos: string[]; // 'uso_chip_hielo', 'aplicacion_termo_tactil'
+
+  // Modificación de Volumen
+  modificacionVolumen: boolean; // Keep existing switch
+  modificacionVolumenCustom: string; // Optional text input
+
+  // Modificación de Velocidad
+  modificacionVelocidad: boolean; // Keep existing switch
+  modificacionVelocidadOpciones: '3s' | '5s' | '7s' | '10s' | 'post_deglucion' | undefined;
+
+  // Modificación de Temperatura
+  modificacionTemperatura: boolean; // Keep existing switch
+  modificacionTemperaturaCustom: string; // Optional text input
+
+  // Modificación de Sabor
+  modificacionSabor: boolean; // Keep existing switch
+
+  // Modificación de Textura
+  modificacionTextura: boolean; // Keep existing switch
+
+  // Modificación de Consistencia
+  modificacionConsistencia: boolean; // Keep existing switch
+  modificacionConsistenciaTipos: string[]; // 'liquidos', 'semiliquidos', 'semisolidos', 'solidos'
+
+  // Modificación de Viscosidad
+  modificacionViscosidad: boolean;
+  modificacionViscosidadTipos: string[]; // 'liquido_fino', 'nectar', 'miel', 'pudding'
+
   usoEspesante: boolean;
   usoCucharaMedidora: boolean;
   usoVasoAdaptado: boolean;
@@ -172,9 +199,15 @@ export interface ConclusionsData {
   usoEstimulacionElectrica: boolean;
   usoEstimulacionFarmacologica: boolean;
   usoEstimulacionOtros: string;
-  rehabilitacionDeglutoria: boolean;
-  rehabilitacionDeglutoriaTipos: string[];
-  rehabilitacionDeglutoriaOtros: string;
+
+  // Terapia Fonoaudiológica (replaces old rehabilitacionDeglutoria and terapiaDeglucion)
+  terapiaFonoaudiologica: boolean;
+  terapiaFonoaudiologicaTipos: string[]; // 'terapia_deglucion', 'terapia_voz', 'terapia_motricidad_orofacial', 'terapia_lenguaje', 'terapia_cognitivo_comunicativa', 'terapia_habla'
+  terapiaDeglucionSubManiobrasRehabilitadoras: boolean; // If 'terapia_deglucion' is selected, this enables specific rehab maneuvers
+  terapiaDeglucionSubManiobrasCompensatorias: boolean; // If 'terapia_deglucion' is selected, this enables specific comp. maneuvers
+  rehabilitacionDeglutoriaTipos: string[]; // Specific types under "Maniobras rehabilitadoras" (ejercicios_fuerza, deglucion_con_esfuerzo, etc.)
+  rehabilitacionDeglutoriaOtros: string; // Custom text for "Maniobras rehabilitadoras - Otros"
+
   derivacionNutricionista: boolean;
   derivacionKinesiologo: boolean;
   derivacionTerapeutaOcupacional: boolean;
@@ -186,7 +219,7 @@ export interface ConclusionsData {
   instalacionViaAlternativa: boolean;
   viaAlternativaTipos: string[];
   evaluacionComplementaria: boolean;
-  terapiaDeglucion: boolean;
+  // terapiaDeglucion: boolean; // REMOVED, now part of terapiaFonoaudiologicaTipos
   evaluacionComunicativa: boolean;
 }
 

@@ -25,7 +25,7 @@ const dossOptions = ['1', '2', '3', '4', '5', '6', '7'];
 const filsOptions = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'];
 const foisOptions = ['1', '2', '3', '4', '5', '6', '7'];
 
-const consistenciaOptions = [
+const consistenciaAlimentosBebidasOptions = [
   { value: 'liquido_fino', label: 'Líquido fino' },
   { value: 'liquido_espeso', label: 'Líquido espeso' },
   { value: 'papilla_licuada', label: 'Papilla licuada' },
@@ -35,12 +35,54 @@ const consistenciaOptions = [
   { value: 'solidos', label: 'Sólidos' },
 ];
 
-const rehabilitacionTiposOptions = [
+const maniobrasPosturalesOptions = [
+  { value: 'chin_up', label: 'Chin-up' },
+  { value: 'chin_down', label: 'Chin-down' },
+  { value: 'rotacion_cabeza_afectado', label: 'Rotación de cabeza al lado afectado' },
+  { value: 'inclinacion_cabeza_sano', label: 'Inclinación de cabeza al lado sano' },
+  { value: 'chin_tuck', label: 'Chin-tuck (flexión de la cabeza)' },
+  { value: 'cabeza_hacia_atras', label: 'Cabeza hacia atrás' },
+];
+
+const modificacionSensorialTiposOptions = [
+  { value: 'uso_chip_hielo', label: 'Uso de chip de hielo' },
+  { value: 'aplicacion_termo_tactil', label: 'Aplicación termo-táctil' },
+];
+
+const modificacionVelocidadRadioOptions = [
+  { value: '3s', label: '3 segundos' },
+  { value: '5s', label: '5 segundos' },
+  { value: '7s', label: '7 segundos' },
+  { value: '10s', label: '10 segundos' },
+  { value: 'post_deglucion', label: 'Post-deglución' },
+];
+
+const modificacionConsistenciaTiposOptions = [
+  { value: 'liquidos', label: 'Líquidos' },
+  { value: 'semiliquidos', label: 'Semilíquidos' },
+  { value: 'semisolidos', label: 'Semisólidos' },
+  { value: 'solidos', label: 'Sólidos' },
+];
+
+const modificacionViscosidadTiposOptions = [
+  { value: 'liquido_fino', label: 'Líquido fino (agua, té, café, jugo en polvo disuelto en agua)' },
+  { value: 'nectar', label: 'Néctar (líquido que se acerca mucho al néctar espeso de durazno)' },
+  { value: 'miel', label: 'Miel (yogurt batido)' },
+  { value: 'pudding', label: 'Pudding (flan batido, yogur tipo griego)' },
+];
+
+const terapiaFonoaudiologicaMainOptions = [
+  { value: 'terapia_deglucion', label: 'Terapia de deglución' },
+  { value: 'terapia_voz', label: 'Terapia de voz' },
+  { value: 'terapia_motricidad_orofacial', label: 'Terapia de motricidad orofacial' },
+  { value: 'terapia_lenguaje', label: 'Terapia de lenguaje' },
+  { value: 'terapia_cognitivo_comunicativa', label: 'Terapia cognitivo-comunicativa' },
+  { value: 'terapia_habla', label: 'Terapia de habla' },
+];
+
+const rehabilitacionDeglutoriaTiposOptions = [
   { value: 'ejercicios_fuerza', label: 'Ejercicios de fuerza' },
   { value: 'ejercicios_rango', label: 'Ejercicios de rango' },
-  { value: 'maniobras_compensatorias', label: 'Maniobras compensatorias' },
-  { value: 'terapia_miofuncional', label: 'Terapia miofuncional' },
-  // NEW: Specific deglutition maneuver types integrated here
   { value: 'deglucion_con_esfuerzo', label: 'Deglución con esfuerzo' },
   { value: 'maniobra_de_masako', label: 'Maniobra de Masako' },
   { value: 'maniobra_de_mendelsonh', label: 'Maniobra de Mendelsonh' },
@@ -82,16 +124,27 @@ const ConclusionsPage = () => {
     bebidasPermitidasConsistencias: [],
     ningunaViscosidadPermitida: false,
     asistenciaVigilancia: false,
-    // maniobraDeglutoria: false, // REMOVED
-    // maniobraDeglutoriaTipos: [], // REMOVED
     posicion45a90: false,
     verificarResiduosBoca: false,
+
+    // New fields
+    maniobrasPosturales: false,
+    maniobrasPosturalesTipos: [],
+    modificacionSensorial: false,
+    modificacionSensorialTipos: [],
     modificacionVolumen: false,
+    modificacionVolumenCustom: '',
     modificacionVelocidad: false,
+    modificacionVelocidadOpciones: undefined,
     modificacionTemperatura: false,
+    modificacionTemperaturaCustom: '',
     modificacionSabor: false,
     modificacionTextura: false,
     modificacionConsistencia: false,
+    modificacionConsistenciaTipos: [],
+    modificacionViscosidad: false,
+    modificacionViscosidadTipos: [],
+
     usoEspesante: false,
     usoCucharaMedidora: false,
     usoVasoAdaptado: false,
@@ -104,9 +157,14 @@ const ConclusionsPage = () => {
     usoEstimulacionElectrica: false,
     usoEstimulacionFarmacologica: false,
     usoEstimulacionOtros: '',
-    rehabilitacionDeglutoria: false,
-    rehabilitacionDeglutoriaTipos: [],
-    rehabilitacionDeglutoriaOtros: '',
+
+    terapiaFonoaudiologica: false, // Replaces old rehabilitacionDeglutoria
+    terapiaFonoaudiologicaTipos: [],
+    terapiaDeglucionSubManiobrasRehabilitadoras: false,
+    terapiaDeglucionSubManiobrasCompensatorias: false,
+    rehabilitacionDeglutoriaTipos: [], // Now specific to "Maniobras rehabilitadoras"
+    rehabilitacionDeglutoriaOtros: '', // Now specific to "Maniobras rehabilitadoras - Otros"
+
     derivacionNutricionista: false,
     derivacionKinesiologo: false,
     derivacionTerapeutaOcupacional: false,
@@ -118,7 +176,6 @@ const ConclusionsPage = () => {
     instalacionViaAlternativa: false,
     viaAlternativaTipos: [],
     evaluacionComplementaria: false,
-    terapiaDeglucion: false,
     evaluacionComunicativa: false,
   });
 
@@ -163,17 +220,58 @@ const ConclusionsPage = () => {
       } else if ((field === 'alimentosPermitidos' || field === 'bebidasPermitidas') && checked) {
         newState.ningunaViscosidadPermitida = false;
       }
-      if (field === 'rehabilitacionDeglutoria' && !checked) {
-        newState.rehabilitacionDeglutoriaTipos = [];
-        newState.rehabilitacionDeglutoriaOtros = '';
+
+      // New fields reset logic
+      if (field === 'maniobrasPosturales' && !checked) {
+        newState.maniobrasPosturalesTipos = [];
       }
+      if (field === 'modificacionSensorial' && !checked) {
+        newState.modificacionSensorialTipos = [];
+      }
+      if (field === 'modificacionVolumen' && !checked) {
+        newState.modificacionVolumenCustom = '';
+      }
+      if (field === 'modificacionVelocidad' && !checked) {
+        newState.modificacionVelocidadOpciones = undefined;
+      }
+      if (field === 'modificacionTemperatura' && !checked) {
+        newState.modificacionTemperaturaCustom = '';
+      }
+      if (field === 'modificacionConsistencia' && !checked) {
+        newState.modificacionConsistenciaTipos = [];
+      }
+      if (field === 'modificacionViscosidad' && !checked) {
+        newState.modificacionViscosidadTipos = [];
+      }
+
       if (field === 'usoEstimulacionOtros' && !checked) {
         newState.usoEstimulacionOtros = '';
       }
       if (field === 'derivacionOtros' && !checked) {
         newState.derivacionOtros = '';
       }
-      // Removed old maniobraDeglutoriaTipos reset
+
+      // Terapia Fonoaudiológica reset logic
+      if (field === 'terapiaFonoaudiologica' && !checked) {
+        newState.terapiaFonoaudiologicaTipos = [];
+        newState.terapiaDeglucionSubManiobrasRehabilitadoras = false;
+        newState.terapiaDeglucionSubManiobrasCompensatorias = false;
+        newState.rehabilitacionDeglutoriaTipos = [];
+        newState.rehabilitacionDeglutoriaOtros = '';
+      }
+      // If 'terapia_deglucion' is unchecked within terapiaFonoaudiologicaTipos, clear its sub-options
+      if (field === 'terapiaFonoaudiologicaTipos' && !checked && !newState.terapiaFonoaudiologicaTipos.includes('terapia_deglucion')) {
+        newState.terapiaDeglucionSubManiobrasRehabilitadoras = false;
+        newState.terapiaDeglucionSubManiobrasCompensatorias = false;
+        newState.rehabilitacionDeglutoriaTipos = [];
+        newState.rehabilitacionDeglutoriaOtros = '';
+      }
+      if ((field === 'terapiaDeglucionSubManiobrasRehabilitadoras' && !checked) || (field === 'terapiaDeglucionSubManiobrasCompensatorias' && !checked)) {
+        if (!newState.terapiaDeglucionSubManiobrasRehabilitadoras) {
+          newState.rehabilitacionDeglutoriaTipos = [];
+          newState.rehabilitacionDeglutoriaOtros = '';
+        }
+      }
 
       // New logic for "Ninguna recomendación"
       if (field === 'ningunaRecomendacion' && checked) {
@@ -183,15 +281,23 @@ const ConclusionsPage = () => {
           ningunaRecomendacion: true,
           asistenciaVigilancia: false,
           posicion45a90: false,
-          // maniobraDeglutoria: false, // REMOVED
-          // maniobraDeglutoriaTipos: [], // REMOVED
           verificarResiduosBoca: false,
+          maniobrasPosturales: false,
+          maniobrasPosturalesTipos: [],
+          modificacionSensorial: false,
+          modificacionSensorialTipos: [],
           modificacionVolumen: false,
+          modificacionVolumenCustom: '',
           modificacionVelocidad: false,
+          modificacionVelocidadOpciones: undefined,
           modificacionTemperatura: false,
+          modificacionTemperaturaCustom: '',
           modificacionSabor: false,
           modificacionTextura: false,
           modificacionConsistencia: false,
+          modificacionConsistenciaTipos: [],
+          modificacionViscosidad: false,
+          modificacionViscosidadTipos: [],
           usoEspesante: false,
           usoCucharaMedidora: false,
           usoVasoAdaptado: false,
@@ -204,7 +310,10 @@ const ConclusionsPage = () => {
           usoEstimulacionElectrica: false,
           usoEstimulacionFarmacologica: false,
           usoEstimulacionOtros: '',
-          rehabilitacionDeglutoria: false,
+          terapiaFonoaudiologica: false,
+          terapiaFonoaudiologicaTipos: [],
+          terapiaDeglucionSubManiobrasRehabilitadoras: false,
+          terapiaDeglucionSubManiobrasCompensatorias: false,
           rehabilitacionDeglutoriaTipos: [],
           rehabilitacionDeglutoriaOtros: '',
           derivacionNutricionista: false,
@@ -216,7 +325,6 @@ const ConclusionsPage = () => {
           instalacionViaAlternativa: false,
           viaAlternativaTipos: [],
           evaluacionComplementaria: false,
-          terapiaDeglucion: false,
           evaluacionComunicativa: false,
         };
       } else if (field !== 'ningunaRecomendacion' && checked) {
@@ -243,7 +351,19 @@ const ConclusionsPage = () => {
       const newArray = checked
         ? [...currentArray, optionValue]
         : currentArray.filter((item) => item !== optionValue);
-      return { ...prev, [field]: newArray };
+
+      const newState = { ...prev, [field]: newArray };
+
+      // Special handling for terapiaFonoaudiologicaTipos to manage sub-options
+      if (field === 'terapiaFonoaudiologicaTipos') {
+        if (!newArray.includes('terapia_deglucion')) {
+          newState.terapiaDeglucionSubManiobrasRehabilitadoras = false;
+          newState.terapiaDeglucionSubManiobrasCompensatorias = false;
+          newState.rehabilitacionDeglutoriaTipos = [];
+          newState.rehabilitacionDeglutoriaOtros = '';
+        }
+      }
+      return newState;
     });
   };
 
@@ -276,11 +396,44 @@ const ConclusionsPage = () => {
       toast.error('Por favor, seleccione al menos una consistencia de bebidas permitidas.');
       return;
     }
-    // Removed old maniobraDeglutoria validation
-    if (conclusionsData.rehabilitacionDeglutoria && conclusionsData.rehabilitacionDeglutoriaTipos.length === 0 && !conclusionsData.rehabilitacionDeglutoriaOtros) {
-      toast.error('Por favor, seleccione al menos un tipo de rehabilitación deglutoria o especifique "Otros".');
+    if (conclusionsData.maniobrasPosturales && conclusionsData.maniobrasPosturalesTipos.length === 0) {
+      toast.error('Por favor, seleccione al menos un tipo de maniobra postural.');
       return;
     }
+    if (conclusionsData.modificacionSensorial && conclusionsData.modificacionSensorialTipos.length === 0) {
+      toast.error('Por favor, seleccione al menos un tipo de modificación sensorial.');
+      return;
+    }
+    if (conclusionsData.modificacionVelocidad && !conclusionsData.modificacionVelocidadOpciones) {
+      toast.error('Por favor, seleccione una opción para la modificación de velocidad.');
+      return;
+    }
+    if (conclusionsData.modificacionConsistencia && conclusionsData.modificacionConsistenciaTipos.length === 0) {
+      toast.error('Por favor, seleccione al menos un tipo de modificación de consistencia.');
+      return;
+    }
+    if (conclusionsData.modificacionViscosidad && conclusionsData.modificacionViscosidadTipos.length === 0) {
+      toast.error('Por favor, seleccione al menos un tipo de modificación de viscosidad.');
+      return;
+    }
+
+    if (conclusionsData.terapiaFonoaudiologica) {
+      if (conclusionsData.terapiaFonoaudiologicaTipos.length === 0) {
+        toast.error('Por favor, seleccione al menos un tipo de terapia fonoaudiológica.');
+        return;
+      }
+      if (conclusionsData.terapiaFonoaudiologicaTipos.includes('terapia_deglucion')) {
+        if (!conclusionsData.terapiaDeglucionSubManiobrasRehabilitadoras && !conclusionsData.terapiaDeglucionSubManiobrasCompensatorias) {
+          toast.error('Por favor, seleccione al menos un tipo de maniobra (rehabilitadora o compensatoria) para la terapia de deglución.');
+          return;
+        }
+        if (conclusionsData.terapiaDeglucionSubManiobrasRehabilitadoras && conclusionsData.rehabilitacionDeglutoriaTipos.length === 0 && !conclusionsData.rehabilitacionDeglutoriaOtros) {
+          toast.error('Por favor, seleccione al menos un tipo de maniobra rehabilitadora o especifique "Otros".');
+          return;
+        }
+      }
+    }
+
     if (conclusionsData.instalacionViaAlternativa && conclusionsData.viaAlternativaTipos.length === 0) {
       toast.error('Por favor, seleccione al menos un tipo de vía alternativa.');
       return;
@@ -487,7 +640,7 @@ const ConclusionsPage = () => {
               {conclusionsData.alimentosPermitidos && (
                 <div className="ml-8 mt-4 space-y-2 p-4 border rounded-lg bg-gray-50">
                   <h3 className="text-lg font-semibold text-gray-800 mb-2">Consistencias:</h3>
-                  {consistenciaOptions.map((option) => (
+                  {consistenciaAlimentosBebidasOptions.map((option) => (
                     <div key={option.value} className="flex items-center space-x-2">
                       <Checkbox
                         id={`alimentos-${option.value}`}
@@ -516,7 +669,7 @@ const ConclusionsPage = () => {
               {conclusionsData.bebidasPermitidas && (
                 <div className="ml-8 mt-4 space-y-2 p-4 border rounded-lg bg-gray-50">
                   <h3 className="text-lg font-semibold text-gray-800 mb-2">Consistencias:</h3>
-                  {consistenciaOptions.map((option) => (
+                  {consistenciaAlimentosBebidasOptions.map((option) => (
                     <div key={option.value} className="flex items-center space-x-2">
                       <Checkbox
                         id={`bebidas-${option.value}`}
@@ -564,34 +717,34 @@ const ConclusionsPage = () => {
               />
             </div>
 
-            {/* REMOVED: Old Maniobra deglutoria switch and its sub-options */}
-            {/* <div className="space-y-3">
+            {/* Maniobras Posturales */}
+            <div className="space-y-3">
               <div className="flex items-center justify-between">
-                <Label htmlFor="maniobraDeglutoria" className="text-gray-700 font-medium">Maniobra deglutoria</Label>
+                <Label htmlFor="maniobrasPosturales" className="text-gray-700 font-medium">Maniobras posturales</Label>
                 <Switch
-                  id="maniobraDeglutoria"
-                  checked={conclusionsData.maniobraDeglutoria}
-                  onCheckedChange={(checked) => handleSwitchChange('maniobraDeglutoria', checked)}
+                  id="maniobrasPosturales"
+                  checked={conclusionsData.maniobrasPosturales}
+                  onCheckedChange={(checked) => handleSwitchChange('maniobrasPosturales', checked)}
                   className="data-[state=checked]:bg-efodea-blue"
                 />
               </div>
-              {conclusionsData.maniobraDeglutoria && (
+              {conclusionsData.maniobrasPosturales && (
                 <div className="ml-8 mt-4 space-y-2 p-4 border rounded-lg bg-gray-50">
-                  <h3 className="text-lg font-semibold text-gray-800 mb-2">Tipos de maniobra deglutoria:</h3>
-                  {maniobraDeglutoriaTiposOptions.map((option) => (
+                  <h3 className="text-lg font-semibold text-gray-800 mb-2">Tipos de maniobras posturales:</h3>
+                  {maniobrasPosturalesOptions.map((option) => (
                     <div key={option.value} className="flex items-center space-x-2">
                       <Checkbox
-                        id={`maniobra-${option.value}`}
-                        checked={conclusionsData.maniobraDeglutoriaTipos.includes(option.value)}
-                        onCheckedChange={(checked) => handleCheckboxGroupChange('maniobraDeglutoriaTipos', option.value, checked as boolean)}
+                        id={`maniobra-postural-${option.value}`}
+                        checked={conclusionsData.maniobrasPosturalesTipos.includes(option.value)}
+                        onCheckedChange={(checked) => handleCheckboxGroupChange('maniobrasPosturalesTipos', option.value, checked as boolean)}
                         className="data-[state=checked]:bg-efodea-blue"
                       />
-                      <Label htmlFor={`maniobra-${option.value}`}>{option.label}</Label>
+                      <Label htmlFor={`maniobra-postural-${option.value}`}>{option.label}</Label>
                     </div>
                   ))}
                 </div>
               )}
-            </div> */}
+            </div>
 
             <div className="flex items-center justify-between">
               <Label htmlFor="verificarResiduosBoca" className="text-gray-700 font-medium">Verificar residuos en boca</Label>
@@ -602,33 +755,83 @@ const ConclusionsPage = () => {
                 className="data-[state=checked]:bg-efodea-blue"
               />
             </div>
-            <div className="flex items-center justify-between">
-              <Label htmlFor="modificacionVolumen" className="text-gray-700 font-medium">Modificación de volumen</Label>
-              <Switch
-                id="modificacionVolumen"
-                checked={conclusionsData.modificacionVolumen}
-                onCheckedChange={(checked) => handleSwitchChange('modificacionVolumen', checked)}
-                className="data-[state=checked]:bg-efodea-blue"
-              />
+
+            {/* Modificación de Volumen */}
+            <div className="space-y-3">
+              <div className="flex items-center justify-between">
+                <Label htmlFor="modificacionVolumen" className="text-gray-700 font-medium">Modificación de volumen</Label>
+                <Switch
+                  id="modificacionVolumen"
+                  checked={conclusionsData.modificacionVolumen}
+                  onCheckedChange={(checked) => handleSwitchChange('modificacionVolumen', checked)}
+                  className="data-[state=checked]:bg-efodea-blue"
+                />
+              </div>
+              {conclusionsData.modificacionVolumen && (
+                <Input
+                  id="modificacionVolumenCustom"
+                  type="text"
+                  placeholder="Especificar volumen (opcional)"
+                  value={conclusionsData.modificacionVolumenCustom}
+                  onChange={(e) => setConclusionsData(prev => ({ ...prev, modificacionVolumenCustom: e.target.value }))}
+                  className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all mt-2 ml-8"
+                />
+              )}
             </div>
-            <div className="flex items-center justify-between">
-              <Label htmlFor="modificacionVelocidad" className="text-gray-700 font-medium">Modificación de velocidad</Label>
-              <Switch
-                id="modificacionVelocidad"
-                checked={conclusionsData.modificacionVelocidad}
-                onCheckedChange={(checked) => handleSwitchChange('modificacionVelocidad', checked)}
-                className="data-[state=checked]:bg-efodea-blue"
-              />
+
+            {/* Modificación de Velocidad */}
+            <div className="space-y-3">
+              <div className="flex items-center justify-between">
+                <Label htmlFor="modificacionVelocidad" className="text-gray-700 font-medium">Modificación de velocidad</Label>
+                <Switch
+                  id="modificacionVelocidad"
+                  checked={conclusionsData.modificacionVelocidad}
+                  onCheckedChange={(checked) => handleSwitchChange('modificacionVelocidad', checked)}
+                  className="data-[state=checked]:bg-efodea-blue"
+                />
+              </div>
+              {conclusionsData.modificacionVelocidad && (
+                <div className="ml-8 mt-4 space-y-2 p-4 border rounded-lg bg-gray-50">
+                  <h3 className="text-lg font-semibold text-gray-800 mb-2">Opciones de velocidad:</h3>
+                  <RadioGroup
+                    onValueChange={(value) => handleRadioChange('modificacionVelocidadOpciones', value as any)}
+                    value={conclusionsData.modificacionVelocidadOpciones}
+                    className="flex flex-wrap gap-x-4 gap-y-2"
+                  >
+                    {modificacionVelocidadRadioOptions.map((option) => (
+                      <div key={option.value} className="flex items-center space-x-2">
+                        <RadioGroupItem value={option.value} id={`velocidad-${option.value}`} />
+                        <Label htmlFor={`velocidad-${option.value}`}>{option.label}</Label>
+                      </div>
+                    ))}
+                  </RadioGroup>
+                </div>
+              )}
             </div>
-            <div className="flex items-center justify-between">
-              <Label htmlFor="modificacionTemperatura" className="text-gray-700 font-medium">Modificación de temperatura</Label>
-              <Switch
-                id="modificacionTemperatura"
-                checked={conclusionsData.modificacionTemperatura}
-                onCheckedChange={(checked) => handleSwitchChange('modificacionTemperatura', checked)}
-                className="data-[state=checked]:bg-efodea-blue"
-              />
+
+            {/* Modificación de Temperatura */}
+            <div className="space-y-3">
+              <div className="flex items-center justify-between">
+                <Label htmlFor="modificacionTemperatura" className="text-gray-700 font-medium">Modificación de temperatura</Label>
+                <Switch
+                  id="modificacionTemperatura"
+                  checked={conclusionsData.modificacionTemperatura}
+                  onCheckedChange={(checked) => handleSwitchChange('modificacionTemperatura', checked)}
+                  className="data-[state=checked]:bg-efodea-blue"
+                />
+              </div>
+              {conclusionsData.modificacionTemperatura && (
+                <Input
+                  id="modificacionTemperaturaCustom"
+                  type="text"
+                  placeholder="Especificar temperatura (opcional)"
+                  value={conclusionsData.modificacionTemperaturaCustom}
+                  onChange={(e) => setConclusionsData(prev => ({ ...prev, modificacionTemperaturaCustom: e.target.value }))}
+                  className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all mt-2 ml-8"
+                />
+              )}
             </div>
+
             <div className="flex items-center justify-between">
               <Label htmlFor="modificacionSabor" className="text-gray-700 font-medium">Modificación de sabor</Label>
               <Switch
@@ -647,15 +850,65 @@ const ConclusionsPage = () => {
                 className="data-[state=checked]:bg-efodea-blue"
               />
             </div>
-            <div className="flex items-center justify-between">
-              <Label htmlFor="modificacionConsistencia" className="text-gray-700 font-medium">Modificación de consistencia</Label>
-              <Switch
-                id="modificacionConsistencia"
-                checked={conclusionsData.modificacionConsistencia}
-                onCheckedChange={(checked) => handleSwitchChange('modificacionConsistencia', checked)}
-                className="data-[state=checked]:bg-efodea-blue"
-              />
+
+            {/* Modificación de Consistencia */}
+            <div className="space-y-3">
+              <div className="flex items-center justify-between">
+                <Label htmlFor="modificacionConsistencia" className="text-gray-700 font-medium">Modificación de consistencia</Label>
+                <Switch
+                  id="modificacionConsistencia"
+                  checked={conclusionsData.modificacionConsistencia}
+                  onCheckedChange={(checked) => handleSwitchChange('modificacionConsistencia', checked)}
+                  className="data-[state=checked]:bg-efodea-blue"
+                />
+              </div>
+              {conclusionsData.modificacionConsistencia && (
+                <div className="ml-8 mt-4 space-y-2 p-4 border rounded-lg bg-gray-50">
+                  <h3 className="text-lg font-semibold text-gray-800 mb-2">Tipos de consistencia:</h3>
+                  {modificacionConsistenciaTiposOptions.map((option) => (
+                    <div key={option.value} className="flex items-center space-x-2">
+                      <Checkbox
+                        id={`consistencia-${option.value}`}
+                        checked={conclusionsData.modificacionConsistenciaTipos.includes(option.value)}
+                        onCheckedChange={(checked) => handleCheckboxGroupChange('modificacionConsistenciaTipos', option.value, checked as boolean)}
+                        className="data-[state=checked]:bg-efodea-blue"
+                      />
+                      <Label htmlFor={`consistencia-${option.value}`}>{option.label}</Label>
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
+
+            {/* Modificación de Viscosidad */}
+            <div className="space-y-3">
+              <div className="flex items-center justify-between">
+                <Label htmlFor="modificacionViscosidad" className="text-gray-700 font-medium">Modificación de viscosidad</Label>
+                <Switch
+                  id="modificacionViscosidad"
+                  checked={conclusionsData.modificacionViscosidad}
+                  onCheckedChange={(checked) => handleSwitchChange('modificacionViscosidad', checked)}
+                  className="data-[state=checked]:bg-efodea-blue"
+                />
+              </div>
+              {conclusionsData.modificacionViscosidad && (
+                <div className="ml-8 mt-4 space-y-2 p-4 border rounded-lg bg-gray-50">
+                  <h3 className="text-lg font-semibold text-gray-800 mb-2">Tipos de viscosidad:</h3>
+                  {modificacionViscosidadTiposOptions.map((option) => (
+                    <div key={option.value} className="flex items-center space-x-2">
+                      <Checkbox
+                        id={`viscosidad-${option.value}`}
+                        checked={conclusionsData.modificacionViscosidadTipos.includes(option.value)}
+                        onCheckedChange={(checked) => handleCheckboxGroupChange('modificacionViscosidadTipos', option.value, checked as boolean)}
+                        className="data-[state=checked]:bg-efodea-blue"
+                      />
+                      <Label htmlFor={`viscosidad-${option.value}`}>{option.label}</Label>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+
             <div className="flex items-center justify-between">
               <Label htmlFor="usoEspesante" className="text-gray-700 font-medium">Uso espesante</Label>
               <Switch
@@ -711,88 +964,33 @@ const ConclusionsPage = () => {
               />
             </div>
 
-            {/* NEW: Optimizar higiene oral */}
-            <div className="flex items-center justify-between">
-              <Label htmlFor="optimizarHigieneOral" className="text-gray-700 font-medium">Optimizar higiene oral</Label>
-              <Switch
-                id="optimizarHigieneOral"
-                checked={conclusionsData.optimizarHigieneOral}
-                onCheckedChange={(checked) => handleSwitchChange('optimizarHigieneOral', checked)}
-                className="data-[state=checked]:bg-efodea-blue"
-              />
-            </div>
-
-            {/* NEW: Ninguna recomendación */}
-            <div className="flex items-center justify-between">
-              <Label htmlFor="ningunaRecomendacion" className="text-gray-700 font-medium">Ninguna recomendación</Label>
-              <Switch
-                id="ningunaRecomendacion"
-                checked={conclusionsData.ningunaRecomendacion}
-                onCheckedChange={(checked) => handleSwitchChange('ningunaRecomendacion', checked)}
-                className="data-[state=checked]:bg-efodea-blue"
-              />
-            </div>
-
-            {/* NEW: Instalación de vía alternativa */}
+            {/* Modificación Sensorial */}
             <div className="space-y-3">
               <div className="flex items-center justify-between">
-                <Label htmlFor="instalacionViaAlternativa" className="text-gray-700 font-medium">Instalación de vía alternativa</Label>
+                <Label htmlFor="modificacionSensorial" className="text-gray-700 font-medium">Modificación sensorial</Label>
                 <Switch
-                  id="instalacionViaAlternativa"
-                  checked={conclusionsData.instalacionViaAlternativa}
-                  onCheckedChange={(checked) => handleSwitchChange('instalacionViaAlternativa', checked)}
+                  id="modificacionSensorial"
+                  checked={conclusionsData.modificacionSensorial}
+                  onCheckedChange={(checked) => handleSwitchChange('modificacionSensorial', checked)}
                   className="data-[state=checked]:bg-efodea-blue"
                 />
               </div>
-              {conclusionsData.instalacionViaAlternativa && (
+              {conclusionsData.modificacionSensorial && (
                 <div className="ml-8 mt-4 space-y-2 p-4 border rounded-lg bg-gray-50">
-                  <h3 className="text-lg font-semibold text-gray-800 mb-2">Tipos de vía alternativa:</h3>
-                  {viaAlternativaOptions.map((option) => (
+                  <h3 className="text-lg font-semibold text-gray-800 mb-2">Tipos de modificación sensorial:</h3>
+                  {modificacionSensorialTiposOptions.map((option) => (
                     <div key={option.value} className="flex items-center space-x-2">
                       <Checkbox
-                        id={`via-alternativa-${option.value}`}
-                        checked={conclusionsData.viaAlternativaTipos.includes(option.value)}
-                        onCheckedChange={(checked) => handleCheckboxGroupChange('viaAlternativaTipos', option.value, checked as boolean)}
+                        id={`sensorial-${option.value}`}
+                        checked={conclusionsData.modificacionSensorialTipos.includes(option.value)}
+                        onCheckedChange={(checked) => handleCheckboxGroupChange('modificacionSensorialTipos', option.value, checked as boolean)}
                         className="data-[state=checked]:bg-efodea-blue"
                       />
-                      <Label htmlFor={`via-alternativa-${option.value}`}>{option.label}</Label>
+                      <Label htmlFor={`sensorial-${option.value}`}>{option.label}</Label>
                     </div>
                   ))}
                 </div>
               )}
-            </div>
-
-            {/* NEW: Evaluación complementaria */}
-            <div className="flex items-center justify-between">
-              <Label htmlFor="evaluacionComplementaria" className="text-gray-700 font-medium">Evaluación complementaria</Label>
-              <Switch
-                id="evaluacionComplementaria"
-                checked={conclusionsData.evaluacionComplementaria}
-                onCheckedChange={(checked) => handleSwitchChange('evaluacionComplementaria', checked)}
-                className="data-[state=checked]:bg-efodea-blue"
-              />
-            </div>
-
-            {/* NEW: Terapia de deglución */}
-            <div className="flex items-center justify-between">
-              <Label htmlFor="terapiaDeglucion" className="text-gray-700 font-medium">Terapia de deglución</Label>
-              <Switch
-                id="terapiaDeglucion"
-                checked={conclusionsData.terapiaDeglucion}
-                onCheckedChange={(checked) => handleSwitchChange('terapiaDeglucion', checked)}
-                className="data-[state=checked]:bg-efodea-blue"
-              />
-            </div>
-
-            {/* NEW: Evaluación comunicativa */}
-            <div className="flex items-center justify-between">
-              <Label htmlFor="evaluacionComunicativa" className="text-gray-700 font-medium">Evaluación comunicativa</Label>
-              <Switch
-                id="evaluacionComunicativa"
-                checked={conclusionsData.evaluacionComunicativa}
-                onCheckedChange={(checked) => handleSwitchChange('evaluacionComunicativa', checked)}
-                className="data-[state=checked]:bg-efodea-blue"
-              />
             </div>
 
             {/* Uso de estimulación */}
@@ -864,43 +1062,158 @@ const ConclusionsPage = () => {
               )}
             </div>
 
-            {/* Rehabilitación deglutoria */}
+            {/* NEW: Terapia Fonoaudiológica */}
             <div className="space-y-3">
               <div className="flex items-center justify-between">
-                <Label htmlFor="rehabilitacionDeglutoria" className="text-gray-700 font-medium">Rehabilitación deglutoria</Label>
+                <Label htmlFor="terapiaFonoaudiologica" className="text-gray-700 font-medium">Terapia Fonoaudiológica</Label>
                 <Switch
-                  id="rehabilitacionDeglutoria"
-                  checked={conclusionsData.rehabilitacionDeglutoria}
-                  onCheckedChange={(checked) => handleSwitchChange('rehabilitacionDeglutoria', checked)}
+                  id="terapiaFonoaudiologica"
+                  checked={conclusionsData.terapiaFonoaudiologica}
+                  onCheckedChange={(checked) => handleSwitchChange('terapiaFonoaudiologica', checked)}
                   className="data-[state=checked]:bg-efodea-blue"
                 />
               </div>
-              {conclusionsData.rehabilitacionDeglutoria && (
-                <div className="ml-8 mt-4 space-y-2 p-4 border rounded-lg bg-gray-50">
-                  <h3 className="text-lg font-semibold text-gray-800 mb-2">Tipos:</h3>
-                  {rehabilitacionTiposOptions.map((option) => (
-                    <div key={option.value} className="flex items-center space-x-2">
-                      <Checkbox
-                        id={`rehab-${option.value}`}
-                        checked={conclusionsData.rehabilitacionDeglutoriaTipos.includes(option.value)}
-                        onCheckedChange={(checked) => handleCheckboxGroupChange('rehabilitacionDeglutoriaTipos', option.value, checked as boolean)}
-                        className="data-[state=checked]:bg-efodea-blue"
-                      />
-                      <Label htmlFor={`rehab-${option.value}`}>{option.label}</Label>
+              {conclusionsData.terapiaFonoaudiologica && (
+                <div className="ml-8 mt-4 space-y-4 p-4 border rounded-lg bg-gray-50">
+                  <h3 className="text-lg font-semibold text-gray-800 mb-2">Tipos de Terapia Fonoaudiológica:</h3>
+                  {terapiaFonoaudiologicaMainOptions.map((option) => (
+                    <div key={option.value} className="flex flex-col space-y-2">
+                      <div className="flex items-center space-x-2">
+                        <Checkbox
+                          id={`terapia-fono-${option.value}`}
+                          checked={conclusionsData.terapiaFonoaudiologicaTipos.includes(option.value)}
+                          onCheckedChange={(checked) => handleCheckboxGroupChange('terapiaFonoaudiologicaTipos', option.value, checked as boolean)}
+                          className="data-[state=checked]:bg-efodea-blue"
+                        />
+                        <Label htmlFor={`terapia-fono-${option.value}`}>{option.label}</Label>
+                      </div>
+
+                      {/* Sub-options for Terapia de deglución */}
+                      {option.value === 'terapia_deglucion' && conclusionsData.terapiaFonoaudiologicaTipos.includes('terapia_deglucion') && (
+                        <div className="ml-8 mt-2 space-y-2 p-3 border rounded-lg bg-gray-100">
+                          <h4 className="text-md font-semibold text-gray-700 mb-2">Sub-tipos de Terapia de Deglución:</h4>
+                          <div className="flex items-center space-x-2">
+                            <Checkbox
+                              id="maniobras-rehabilitadoras"
+                              checked={conclusionsData.terapiaDeglucionSubManiobrasRehabilitadoras}
+                              onCheckedChange={(checked) => setConclusionsData(prev => ({ ...prev, terapiaDeglucionSubManiobrasRehabilitadoras: checked as boolean }))}
+                              className="data-[state=checked]:bg-efodea-blue"
+                            />
+                            <Label htmlFor="maniobras-rehabilitadoras">Maniobras rehabilitadoras</Label>
+                          </div>
+                          {conclusionsData.terapiaDeglucionSubManiobrasRehabilitadoras && (
+                            <div className="ml-8 mt-2 space-y-2">
+                              {rehabilitacionDeglutoriaTiposOptions.map((rehabOption) => (
+                                <div key={rehabOption.value} className="flex items-center space-x-2">
+                                  <Checkbox
+                                    id={`rehab-deglu-${rehabOption.value}`}
+                                    checked={conclusionsData.rehabilitacionDeglutoriaTipos.includes(rehabOption.value)}
+                                    onCheckedChange={(checked) => handleCheckboxGroupChange('rehabilitacionDeglutoriaTipos', rehabOption.value, checked as boolean)}
+                                    className="data-[state=checked]:bg-efodea-blue"
+                                  />
+                                  <Label htmlFor={`rehab-deglu-${rehabOption.value}`}>{rehabOption.label}</Label>
+                                </div>
+                              ))}
+                              {conclusionsData.rehabilitacionDeglutoriaTipos.includes('otros') && (
+                                <Input
+                                  id="rehabilitacionDeglutoriaOtros"
+                                  type="text"
+                                  placeholder="Especificar otros tipos de rehabilitación..."
+                                  value={conclusionsData.rehabilitacionDeglutoriaOtros}
+                                  onChange={(e) => setConclusionsData(prev => ({ ...prev, rehabilitacionDeglutoriaOtros: e.target.value }))}
+                                  className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all mt-2"
+                                />
+                              )}
+                            </div>
+                          )}
+                          <div className="flex items-center space-x-2 mt-2">
+                            <Checkbox
+                              id="maniobras-compensatorias"
+                              checked={conclusionsData.terapiaDeglucionSubManiobrasCompensatorias}
+                              onCheckedChange={(checked) => setConclusionsData(prev => ({ ...prev, terapiaDeglucionSubManiobrasCompensatorias: checked as boolean }))}
+                              className="data-[state=checked]:bg-efodea-blue"
+                            />
+                            <Label htmlFor="maniobras-compensatorias">Maniobras compensatorias</Label>
+                          </div>
+                        </div>
+                      )}
                     </div>
                   ))}
-                  {conclusionsData.rehabilitacionDeglutoriaTipos.includes('otros') && (
-                    <Input
-                      id="rehabilitacionDeglutoriaOtros"
-                      type="text"
-                      placeholder="Especificar otros tipos de rehabilitación..."
-                      value={conclusionsData.rehabilitacionDeglutoriaOtros}
-                      onChange={(e) => setConclusionsData(prev => ({ ...prev, rehabilitacionDeglutoriaOtros: e.target.value }))}
-                      className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all mt-2"
-                    />
-                  )}
                 </div>
               )}
+            </div>
+
+            {/* NEW: Optimizar higiene oral */}
+            <div className="flex items-center justify-between">
+              <Label htmlFor="optimizarHigieneOral" className="text-gray-700 font-medium">Optimizar higiene oral</Label>
+              <Switch
+                id="optimizarHigieneOral"
+                checked={conclusionsData.optimizarHigieneOral}
+                onCheckedChange={(checked) => handleSwitchChange('optimizarHigieneOral', checked)}
+                className="data-[state=checked]:bg-efodea-blue"
+              />
+            </div>
+
+            {/* NEW: Ninguna recomendación */}
+            <div className="flex items-center justify-between">
+              <Label htmlFor="ningunaRecomendacion" className="text-gray-700 font-medium">Ninguna recomendación</Label>
+              <Switch
+                id="ningunaRecomendacion"
+                checked={conclusionsData.ningunaRecomendacion}
+                onCheckedChange={(checked) => handleSwitchChange('ningunaRecomendacion', checked)}
+                className="data-[state=checked]:bg-efodea-blue"
+              />
+            </div>
+
+            {/* NEW: Instalación de vía alternativa */}
+            <div className="space-y-3">
+              <div className="flex items-center justify-between">
+                <Label htmlFor="instalacionViaAlternativa" className="text-gray-700 font-medium">Instalación de vía alternativa</Label>
+                <Switch
+                  id="instalacionViaAlternativa"
+                  checked={conclusionsData.instalacionViaAlternativa}
+                  onCheckedChange={(checked) => handleSwitchChange('instalacionViaAlternativa', checked)}
+                  className="data-[state=checked]:bg-efodea-blue"
+                />
+              </div>
+              {conclusionsData.instalacionViaAlternativa && (
+                <div className="ml-8 mt-4 space-y-2 p-4 border rounded-lg bg-gray-50">
+                  <h3 className="text-lg font-semibold text-gray-800 mb-2">Tipos de vía alternativa:</h3>
+                  {viaAlternativaOptions.map((option) => (
+                    <div key={option.value} className="flex items-center space-x-2">
+                      <Checkbox
+                        id={`via-alternativa-${option.value}`}
+                        checked={conclusionsData.viaAlternativaTipos.includes(option.value)}
+                        onCheckedChange={(checked) => handleCheckboxGroupChange('viaAlternativaTipos', option.value, checked as boolean)}
+                        className="data-[state=checked]:bg-efodea-blue"
+                      />
+                      <Label htmlFor={`via-alternativa-${option.value}`}>{option.label}</Label>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            {/* NEW: Evaluación complementaria */}
+            <div className="flex items-center justify-between">
+              <Label htmlFor="evaluacionComplementaria" className="text-gray-700 font-medium">Evaluación complementaria</Label>
+              <Switch
+                id="evaluacionComplementaria"
+                checked={conclusionsData.evaluacionComplementaria}
+                onCheckedChange={(checked) => handleSwitchChange('evaluacionComplementaria', checked)}
+                className="data-[state=checked]:bg-efodea-blue"
+              />
+            </div>
+
+            {/* NEW: Evaluación comunicativa */}
+            <div className="flex items-center justify-between">
+              <Label htmlFor="evaluacionComunicativa" className="text-gray-700 font-medium">Evaluación comunicativa</Label>
+              <Switch
+                id="evaluacionComunicativa"
+                checked={conclusionsData.evaluacionComunicativa}
+                onCheckedChange={(checked) => handleSwitchChange('evaluacionComunicativa', checked)}
+                className="data-[state=checked]:bg-efodea-blue"
+              />
             </div>
 
             {/* Derivación a otros profesionales */}

@@ -82,6 +82,19 @@ const SummaryPage = () => {
     );
   };
 
+  // Helper to map internal values to display labels
+  const mapValueToLabel = (value: string, options: { value: string; label: string }[]) => {
+    const option = options.find(opt => opt.value === value);
+    return option ? option.label : value;
+  };
+
+  const mapArrayToLabels = (values: string[] | undefined, options: { value: string; label: string }[]) => {
+    if (!values || values.length === 0) return 'Ninguno';
+    return values.map(value => mapValueToLabel(value, options)).join(', ');
+  };
+
+  const { conclusions } = evaluationData;
+
   return (
     <div className="min-h-screen bg-gray-50">
       <Header />
@@ -432,178 +445,261 @@ const SummaryPage = () => {
           )}
 
           {/* Etapa 10.4 - Conclusiones */}
-          {evaluationData.conclusions && (
+          {conclusions && (
             <div className="mb-8 p-4 border rounded-lg bg-gray-200">
               <h2 className="text-xl font-bold text-gray-800 mb-3">Etapa 10.4 - Conclusiones</h2>
               <ul className="list-disc list-inside space-y-1 text-gray-700">
-                {evaluationData.conclusions.sinTrastornoDeglucion && <li><span className="font-medium">Sin trastorno de la deglución:</span> {renderBoolean(evaluationData.conclusions.sinTrastornoDeglucion)}</li>}
-                {evaluationData.conclusions.trastornoDeglucion && (
+                {conclusions.sinTrastornoDeglucion && <li><span className="font-medium">Sin trastorno de la deglución:</span> {renderBoolean(conclusions.sinTrastornoDeglucion)}</li>}
+                {conclusions.trastornoDeglucion && (
                   <>
-                    <li><span className="font-medium">Trastorno de la deglución:</span> {renderBoolean(evaluationData.conclusions.trastornoDeglucion)}</li>
-                    {evaluationData.conclusions.trastornoOrigen && (
-                      <li><span className="font-medium">Origen del trastorno:</span> {renderString(evaluationData.conclusions.trastornoOrigen)}</li>
+                    <li><span className="font-medium">Trastorno de la deglución:</span> {renderBoolean(conclusions.trastornoDeglucion)}</li>
+                    {conclusions.trastornoOrigen && (
+                      <li><span className="font-medium">Origen del trastorno:</span> {renderString(conclusions.trastornoOrigen)}</li>
                     )}
                   </>
                 )}
-                {evaluationData.conclusions.noEsPosibleDeterminarGeneral && <li><span className="font-medium">No es posible determinar (general):</span> {renderBoolean(evaluationData.conclusions.noEsPosibleDeterminarGeneral)}</li>}
-                {evaluationData.conclusions.escalaSeveridad && (
+                {conclusions.noEsPosibleDeterminarGeneral && <li><span className="font-medium">No es posible determinar (general):</span> {renderBoolean(conclusions.noEsPosibleDeterminarGeneral)}</li>}
+                {conclusions.escalaSeveridad && (
                   <>
-                    <li><span className="font-medium">Escala de severidad:</span> {renderBoolean(evaluationData.conclusions.escalaSeveridad)}</li>
+                    <li><span className="font-medium">Escala de severidad:</span> {renderBoolean(conclusions.escalaSeveridad)}</li>
                     <ul className="list-disc list-inside ml-4 space-y-1 text-gray-600">
-                      {evaluationData.conclusions.doss && <li><span className="font-medium">DOSS:</span> {renderString(evaluationData.conclusions.doss)}</li>}
-                      {evaluationData.conclusions.fils && <li><span className="font-medium">FILS:</span> {renderString(evaluationData.conclusions.fils)}</li>}
-                      {evaluationData.conclusions.fois && <li><span className="font-medium">FOIS:</span> {renderString(evaluationData.conclusions.fois)}</li>}
+                      {conclusions.doss && <li><span className="font-medium">DOSS:</span> {renderString(conclusions.doss)}</li>}
+                      {conclusions.fils && <li><span className="font-medium">FILS:</span> {renderString(conclusions.fils)}</li>}
+                      {conclusions.fois && <li><span className="font-medium">FOIS:</span> {renderString(conclusions.fois)}</li>}
                     </ul>
                   </>
                 )}
-                {evaluationData.conclusions.alimentacionTotalBoca && <li><span className="font-medium">Alimentación total por boca:</span> {renderBoolean(evaluationData.conclusions.alimentacionTotalBoca)}</li>}
-                {evaluationData.conclusions.alimentacionEnteral && <li><span className="font-medium">Alimentación enteral:</span> {renderBoolean(evaluationData.conclusions.alimentacionEnteral)}</li>}
-                {evaluationData.conclusions.alimentacionMixta && <li><span className="font-medium">Alimentación mixta:</span> {renderBoolean(evaluationData.conclusions.alimentacionMixta)}</li>}
-                {evaluationData.conclusions.soloConEspecialista && <li><span className="font-medium">Sólo con especialista:</span> {renderBoolean(evaluationData.conclusions.soloConEspecialista)}</li>}
-                {evaluationData.conclusions.alimentosPermitidos && (
+                {conclusions.alimentacionTotalBoca && <li><span className="font-medium">Alimentación total por boca:</span> {renderBoolean(conclusions.alimentacionTotalBoca)}</li>}
+                {conclusions.alimentacionEnteral && <li><span className="font-medium">Alimentación enteral:</span> {renderBoolean(conclusions.alimentacionEnteral)}</li>}
+                {conclusions.alimentacionMixta && <li><span className="font-medium">Alimentación mixta:</span> {renderBoolean(conclusions.alimentacionMixta)}</li>}
+                {conclusions.soloConEspecialista && <li><span className="font-medium">Sólo con especialista:</span> {renderBoolean(conclusions.soloConEspecialista)}</li>}
+                {conclusions.alimentosPermitidos && (
                   <>
-                    <li><span className="font-medium">Alimentos permitidos:</span> {renderBoolean(evaluationData.conclusions.alimentosPermitidos)}</li>
-                    {evaluationData.conclusions.alimentosPermitidosConsistencias.length > 0 && (
-                      <li><span className="font-medium">Consistencias de alimentos permitidos:</span> {renderArray(evaluationData.conclusions.alimentosPermitidosConsistencias)}</li>
+                    <li><span className="font-medium">Alimentos permitidos:</span> {renderBoolean(conclusions.alimentosPermitidos)}</li>
+                    {conclusions.alimentosPermitidosConsistencias.length > 0 && (
+                      <li><span className="font-medium">Consistencias de alimentos permitidos:</span> {mapArrayToLabels(conclusions.alimentosPermitidosConsistencias, consistenciaAlimentosBebidasOptions)}</li>
                     )}
                   </>
                 )}
-                {evaluationData.conclusions.bebidasPermitidas && (
+                {conclusions.bebidasPermitidas && (
                   <>
-                    <li><span className="font-medium">Bebidas permitidas:</span> {renderBoolean(evaluationData.conclusions.bebidasPermitidas)}</li>
-                    {evaluationData.conclusions.bebidasPermitidasConsistencias.length > 0 && (
-                      <li><span className="font-medium">Consistencias de bebidas permitidas:</span> {renderArray(evaluationData.conclusions.bebidasPermitidasConsistencias)}</li>
+                    <li><span className="font-medium">Bebidas permitidas:</span> {renderBoolean(conclusions.bebidasPermitidas)}</li>
+                    {conclusions.bebidasPermitidasConsistencias.length > 0 && (
+                      <li><span className="font-medium">Consistencias de bebidas permitidas:</span> {mapArrayToLabels(conclusions.bebidasPermitidasConsistencias, consistenciaAlimentosBebidasOptions)}</li>
                     )}
                   </>
                 )}
-                {evaluationData.conclusions.ningunaViscosidadPermitida && <li><span className="font-medium">Ninguna viscosidad permitida:</span> {renderBoolean(evaluationData.conclusions.ningunaViscosidadPermitida)}</li>}
+                {conclusions.ningunaViscosidadPermitida && <li><span className="font-medium">Ninguna viscosidad permitida:</span> {renderBoolean(conclusions.ningunaViscosidadPermitida)}</li>}
 
                 {/* Otras Recomendaciones */}
-                {(evaluationData.conclusions.asistenciaVigilancia ||
-                  evaluationData.conclusions.posicion45a90 ||
-                  // evaluationData.conclusions.maniobraDeglutoria || // REMOVED
-                  evaluationData.conclusions.verificarResiduosBoca ||
-                  evaluationData.conclusions.modificacionVolumen ||
-                  evaluationData.conclusions.modificacionVelocidad ||
-                  evaluationData.conclusions.modificacionTemperatura ||
-                  evaluationData.conclusions.modificacionSabor ||
-                  evaluationData.conclusions.modificacionTextura ||
-                  evaluationData.conclusions.modificacionConsistencia ||
-                  evaluationData.conclusions.usoEspesante ||
-                  evaluationData.conclusions.usoCucharaMedidora ||
-                  evaluationData.conclusions.usoVasoAdaptado ||
-                  evaluationData.conclusions.usoJeringa ||
-                  evaluationData.conclusions.usoBombilla ||
-                  evaluationData.conclusions.usoProtesisDental ||
-                  evaluationData.conclusions.optimizarHigieneOral ||
-                  evaluationData.conclusions.ningunaRecomendacion ||
-                  evaluationData.conclusions.instalacionViaAlternativa ||
-                  evaluationData.conclusions.evaluacionComplementaria ||
-                  evaluationData.conclusions.terapiaDeglucion ||
-                  evaluationData.conclusions.evaluacionComunicativa ||
-                  evaluationData.conclusions.usoEstimulacionSensorial ||
-                  evaluationData.conclusions.usoEstimulacionTermica ||
-                  evaluationData.conclusions.usoEstimulacionMecanica ||
-                  evaluationData.conclusions.usoEstimulacionElectrica ||
-                  evaluationData.conclusions.usoEstimulacionFarmacologica ||
-                  evaluationData.conclusions.usoEstimulacionOtros.trim() !== '' ||
-                  evaluationData.conclusions.rehabilitacionDeglutoria ||
-                  evaluationData.conclusions.derivacionNutricionista ||
-                  evaluationData.conclusions.derivacionKinesiologo ||
-                  evaluationData.conclusions.derivacionTerapeutaOcupacional ||
-                  evaluationData.conclusions.derivacionMedico ||
-                  evaluationData.conclusions.derivacionOtros.trim() !== '') && (
+                {(conclusions.asistenciaVigilancia ||
+                  conclusions.posicion45a90 ||
+                  conclusions.maniobrasPosturales ||
+                  conclusions.verificarResiduosBoca ||
+                  conclusions.modificacionVolumen ||
+                  conclusions.modificacionVelocidad ||
+                  conclusions.modificacionTemperatura ||
+                  conclusions.modificacionSabor ||
+                  conclusions.modificacionTextura ||
+                  conclusions.modificacionConsistencia ||
+                  conclusions.modificacionViscosidad ||
+                  conclusions.usoEspesante ||
+                  conclusions.usoCucharaMedidora ||
+                  conclusions.usoVasoAdaptado ||
+                  conclusions.usoJeringa ||
+                  conclusions.usoBombilla ||
+                  conclusions.usoProtesisDental ||
+                  conclusions.modificacionSensorial ||
+                  conclusions.usoEstimulacionSensorial ||
+                  conclusions.usoEstimulacionTermica ||
+                  conclusions.usoEstimulacionMecanica ||
+                  conclusions.usoEstimulacionElectrica ||
+                  conclusions.usoEstimulacionFarmacologica ||
+                  conclusions.usoEstimulacionOtros.trim() !== '' ||
+                  conclusions.terapiaFonoaudiologica ||
+                  conclusions.derivacionNutricionista ||
+                  conclusions.derivacionKinesiologo ||
+                  conclusions.derivacionTerapeutaOcupacional ||
+                  conclusions.derivacionMedico ||
+                  conclusions.derivacionOtros.trim() !== '' ||
+                  conclusions.optimizarHigieneOral ||
+                  conclusions.ningunaRecomendacion ||
+                  conclusions.instalacionViaAlternativa ||
+                  conclusions.evaluacionComplementaria ||
+                  conclusions.evaluacionComunicativa) && (
                     <li className="font-bold mt-4">Otras Recomendaciones:</li>
                   )}
-                {evaluationData.conclusions.asistenciaVigilancia && <li><span className="font-medium">Asistencia/Vigilancia:</span> {renderBoolean(evaluationData.conclusions.asistenciaVigilancia)}</li>}
-                {evaluationData.conclusions.posicion45a90 && <li><span className="font-medium">Posición de 45° a 90°:</span> {renderBoolean(evaluationData.conclusions.posicion45a90)}</li>}
-                {/* REMOVED: Old Maniobra deglutoria display */}
-                {/* {evaluationData.conclusions.maniobraDeglutoria && (
+                {conclusions.asistenciaVigilancia && <li><span className="font-medium">Asistencia/Vigilancia:</span> {renderBoolean(conclusions.asistenciaVigilancia)}</li>}
+                {conclusions.posicion45a90 && <li><span className="font-medium">Posición de 45° a 90°:</span> {renderBoolean(conclusions.posicion45a90)}</li>}
+                
+                {conclusions.maniobrasPosturales && (
                   <>
-                    <li><span className="font-medium">Maniobra deglutoria:</span> {renderBoolean(evaluationData.conclusions.maniobraDeglutoria)}</li>
-                    {evaluationData.conclusions.maniobraDeglutoriaTipos.length > 0 && (
+                    <li><span className="font-medium">Maniobras posturales:</span> {renderBoolean(conclusions.maniobrasPosturales)}</li>
+                    {conclusions.maniobrasPosturalesTipos.length > 0 && (
                       <ul className="list-disc list-inside ml-4 space-y-1 text-gray-600">
-                        <li><span className="font-medium">Tipos:</span> {renderArray(evaluationData.conclusions.maniobraDeglutoriaTipos)}</li>
+                        <li><span className="font-medium">Tipos:</span> {mapArrayToLabels(conclusions.maniobrasPosturalesTipos, maniobrasPosturalesOptions)}</li>
                       </ul>
                     )}
                   </>
-                )} */}
-                {evaluationData.conclusions.verificarResiduosBoca && <li><span className="font-medium">Verificar residuos en boca:</span> {renderBoolean(evaluationData.conclusions.verificarResiduosBoca)}</li>}
-                {evaluationData.conclusions.modificacionVolumen && <li><span className="font-medium">Modificación de volumen:</span> {renderBoolean(evaluationData.conclusions.modificacionVolumen)}</li>}
-                {evaluationData.conclusions.modificacionVelocidad && <li><span className="font-medium">Modificación de velocidad:</span> {renderBoolean(evaluationData.conclusions.modificacionVelocidad)}</li>}
-                {evaluationData.conclusions.modificacionTemperatura && <li><span className="font-medium">Modificación de temperatura:</span> {renderBoolean(evaluationData.conclusions.modificacionTemperatura)}</li>}
-                {evaluationData.conclusions.modificacionSabor && <li><span className="font-medium">Modificación de sabor:</span> {renderBoolean(evaluationData.conclusions.modificacionSabor)}</li>}
-                {evaluationData.conclusions.modificacionTextura && <li><span className="font-medium">Modificación de textura:</span> {renderBoolean(evaluationData.conclusions.modificacionTextura)}</li>}
-                {evaluationData.conclusions.modificacionConsistencia && <li><span className="font-medium">Modificación de consistencia:</span> {renderBoolean(evaluationData.conclusions.modificacionConsistencia)}</li>}
-                {evaluationData.conclusions.usoEspesante && <li><span className="font-medium">Uso espesante:</span> {renderBoolean(evaluationData.conclusions.usoEspesante)}</li>}
-                {evaluationData.conclusions.usoCucharaMedidora && <li><span className="font-medium">Uso cuchara medidora:</span> {renderBoolean(evaluationData.conclusions.usoCucharaMedidora)}</li>}
-                {evaluationData.conclusions.usoVasoAdaptado && <li><span className="font-medium">Uso vaso adaptado:</span> {renderBoolean(evaluationData.conclusions.usoVasoAdaptado)}</li>}
-                {evaluationData.conclusions.usoJeringa && <li><span className="font-medium">Uso jeringa:</span> {renderBoolean(evaluationData.conclusions.usoJeringa)}</li>}
-                {evaluationData.conclusions.usoBombilla && <li><span className="font-medium">Uso bombilla:</span> {renderBoolean(evaluationData.conclusions.usoBombilla)}</li>}
-                {evaluationData.conclusions.usoProtesisDental && <li><span className="font-medium">Uso prótesis dental:</span> {renderBoolean(evaluationData.conclusions.usoProtesisDental)}</li>}
-                {evaluationData.conclusions.optimizarHigieneOral && <li><span className="font-medium">Optimizar higiene oral:</span> {renderBoolean(evaluationData.conclusions.optimizarHigieneOral)}</li>}
-                {evaluationData.conclusions.ningunaRecomendacion && <li><span className="font-medium">Ninguna recomendación:</span> {renderBoolean(evaluationData.conclusions.ningunaRecomendacion)}</li>}
-                {evaluationData.conclusions.instalacionViaAlternativa && (
+                )}
+
+                {conclusions.verificarResiduosBoca && <li><span className="font-medium">Verificar residuos en boca:</span> {renderBoolean(conclusions.verificarResiduosBoca)}</li>}
+                
+                {conclusions.modificacionVolumen && (
                   <>
-                    <li><span className="font-medium">Instalación de vía alternativa:</span> {renderBoolean(evaluationData.conclusions.instalacionViaAlternativa)}</li>
-                    {evaluationData.conclusions.viaAlternativaTipos.length > 0 && (
-                      <li><span className="font-medium">Tipos de vía alternativa:</span> {renderArray(evaluationData.conclusions.viaAlternativaTipos)}</li>
+                    <li><span className="font-medium">Modificación de volumen:</span> {renderBoolean(conclusions.modificacionVolumen)}</li>
+                    {conclusions.modificacionVolumenCustom.trim() !== '' && (
+                      <ul className="list-disc list-inside ml-4 space-y-1 text-gray-600">
+                        <li><span className="font-medium">Especificación:</span> {renderString(conclusions.modificacionVolumenCustom)}</li>
+                      </ul>
                     )}
                   </>
                 )}
-                {evaluationData.conclusions.evaluacionComplementaria && <li><span className="font-medium">Evaluación complementaria:</span> {renderBoolean(evaluationData.conclusions.evaluacionComplementaria)}</li>}
-                {evaluationData.conclusions.terapiaDeglucion && <li><span className="font-medium">Terapia de deglución:</span> {renderBoolean(evaluationData.conclusions.terapiaDeglucion)}</li>}
-                {evaluationData.conclusions.evaluacionComunicativa && <li><span className="font-medium">Evaluación comunicativa:</span> {renderBoolean(evaluationData.conclusions.evaluacionComunicativa)}</li>}
 
-                {(evaluationData.conclusions.usoEstimulacionSensorial ||
-                  evaluationData.conclusions.usoEstimulacionTermica ||
-                  evaluationData.conclusions.usoEstimulacionMecanica ||
-                  evaluationData.conclusions.usoEstimulacionElectrica ||
-                  evaluationData.conclusions.usoEstimulacionFarmacologica ||
-                  evaluationData.conclusions.usoEstimulacionOtros.trim() !== '') && (
-                    <li className="font-bold mt-4">Uso de estimulación:</li>
-                  )}
-                <ul className="list-disc list-inside ml-4 space-y-1 text-gray-600">
-                  {evaluationData.conclusions.usoEstimulacionSensorial && <li><span className="font-medium">Sensorial:</span> {renderBoolean(evaluationData.conclusions.usoEstimulacionSensorial)}</li>}
-                  {evaluationData.conclusions.usoEstimulacionTermica && <li><span className="font-medium">Térmica:</span> {renderBoolean(evaluationData.conclusions.usoEstimulacionTermica)}</li>}
-                  {evaluationData.conclusions.usoEstimulacionMecanica && <li><span className="font-medium">Mecánica:</span> {renderBoolean(evaluationData.conclusions.usoEstimulacionMecanica)}</li>}
-                  {evaluationData.conclusions.usoEstimulacionElectrica && <li><span className="font-medium">Eléctrica:</span> {renderBoolean(evaluationData.conclusions.usoEstimulacionElectrica)}</li>}
-                  {evaluationData.conclusions.usoEstimulacionFarmacologica && <li><span className="font-medium">Farmacológica:</span> {renderBoolean(evaluationData.conclusions.usoEstimulacionFarmacologica)}</li>}
-                  {evaluationData.conclusions.usoEstimulacionOtros.trim() !== '' && <li><span className="font-medium">Otros:</span> {renderString(evaluationData.conclusions.usoEstimulacionOtros)}</li>}
-                </ul>
-
-                {evaluationData.conclusions.rehabilitacionDeglutoria && (
+                {conclusions.modificacionVelocidad && (
                   <>
-                    <li className="font-bold mt-4">Rehabilitación deglutoria:</li>
-                    <li><span className="font-medium">Requiere rehabilitación:</span> {renderBoolean(evaluationData.conclusions.rehabilitacionDeglutoria)}</li>
-                    <ul className="list-disc list-inside ml-4 space-y-1 text-gray-600">
-                      {evaluationData.conclusions.rehabilitacionDeglutoriaTipos.length > 0 && (
-                        <li><span className="font-medium">Tipos:</span> {renderArray(evaluationData.conclusions.rehabilitacionDeglutoriaTipos)}</li>
-                      )}
-                      {evaluationData.conclusions.rehabilitacionDeglutoriaTipos.includes('otros') && evaluationData.conclusions.rehabilitacionDeglutoriaOtros.trim() !== '' && (
-                        <li><span className="font-medium">Otros (especificado):</span> {renderString(evaluationData.conclusions.rehabilitacionDeglutoriaOtros)}</li>
-                      )}
-                    </ul>
+                    <li><span className="font-medium">Modificación de velocidad:</span> {renderBoolean(conclusions.modificacionVelocidad)}</li>
+                    {conclusions.modificacionVelocidadOpciones && (
+                      <ul className="list-disc list-inside ml-4 space-y-1 text-gray-600">
+                        <li><span className="font-medium">Opciones:</span> {mapValueToLabel(conclusions.modificacionVelocidadOpciones, modificacionVelocidadRadioOptions)}</li>
+                      </ul>
+                    )}
                   </>
                 )}
 
-                {(evaluationData.conclusions.derivacionNutricionista ||
-                  evaluationData.conclusions.derivacionKinesiologo ||
-                  evaluationData.conclusions.derivacionTerapeutaOcupacional ||
-                  evaluationData.conclusions.derivacionMedico ||
-                  evaluationData.conclusions.derivacionOtros.trim() !== '') && (
+                {conclusions.modificacionTemperatura && (
+                  <>
+                    <li><span className="font-medium">Modificación de temperatura:</span> {renderBoolean(conclusions.modificacionTemperatura)}</li>
+                    {conclusions.modificacionTemperaturaCustom.trim() !== '' && (
+                      <ul className="list-disc list-inside ml-4 space-y-1 text-gray-600">
+                        <li><span className="font-medium">Especificación:</span> {renderString(conclusions.modificacionTemperaturaCustom)}</li>
+                      </ul>
+                    )}
+                  </>
+                )}
+
+                {conclusions.modificacionSabor && <li><span className="font-medium">Modificación de sabor:</span> {renderBoolean(conclusions.modificacionSabor)}</li>}
+                {conclusions.modificacionTextura && <li><span className="font-medium">Modificación de textura:</span> {renderBoolean(conclusions.modificacionTextura)}</li>}
+                
+                {conclusions.modificacionConsistencia && (
+                  <>
+                    <li><span className="font-medium">Modificación de consistencia:</span> {renderBoolean(conclusions.modificacionConsistencia)}</li>
+                    {conclusions.modificacionConsistenciaTipos.length > 0 && (
+                      <ul className="list-disc list-inside ml-4 space-y-1 text-gray-600">
+                        <li><span className="font-medium">Tipos:</span> {mapArrayToLabels(conclusions.modificacionConsistenciaTipos, modificacionConsistenciaTiposOptions)}</li>
+                      </ul>
+                    )}
+                  </>
+                )}
+
+                {conclusions.modificacionViscosidad && (
+                  <>
+                    <li><span className="font-medium">Modificación de viscosidad:</span> {renderBoolean(conclusions.modificacionViscosidad)}</li>
+                    {conclusions.modificacionViscosidadTipos.length > 0 && (
+                      <ul className="list-disc list-inside ml-4 space-y-1 text-gray-600">
+                        <li><span className="font-medium">Tipos:</span> {mapArrayToLabels(conclusions.modificacionViscosidadTipos, modificacionViscosidadTiposOptions)}</li>
+                      </ul>
+                    )}
+                  </>
+                )}
+
+                {conclusions.usoEspesante && <li><span className="font-medium">Uso espesante:</span> {renderBoolean(conclusions.usoEspesante)}</li>}
+                {conclusions.usoCucharaMedidora && <li><span className="font-medium">Uso cuchara medidora:</span> {renderBoolean(conclusions.usoCucharaMedidora)}</li>}
+                {conclusions.usoVasoAdaptado && <li><span className="font-medium">Uso vaso adaptado:</span> {renderBoolean(conclusions.usoVasoAdaptado)}</li>}
+                {conclusions.usoJeringa && <li><span className="font-medium">Uso jeringa:</span> {renderBoolean(conclusions.usoJeringa)}</li>}
+                {conclusions.usoBombilla && <li><span className="font-medium">Uso bombilla:</span> {renderBoolean(conclusions.usoBombilla)}</li>}
+                {conclusions.usoProtesisDental && <li><span className="font-medium">Uso prótesis dental:</span> {renderBoolean(conclusions.usoProtesisDental)}</li>}
+                
+                {conclusions.modificacionSensorial && (
+                  <>
+                    <li><span className="font-medium">Modificación sensorial:</span> {renderBoolean(conclusions.modificacionSensorial)}</li>
+                    {conclusions.modificacionSensorialTipos.length > 0 && (
+                      <ul className="list-disc list-inside ml-4 space-y-1 text-gray-600">
+                        <li><span className="font-medium">Tipos:</span> {mapArrayToLabels(conclusions.modificacionSensorialTipos, modificacionSensorialTiposOptions)}</li>
+                      </ul>
+                    )}
+                  </>
+                )}
+
+                {(conclusions.usoEstimulacionSensorial ||
+                  conclusions.usoEstimulacionTermica ||
+                  conclusions.usoEstimulacionMecanica ||
+                  conclusions.usoEstimulacionElectrica ||
+                  conclusions.usoEstimulacionFarmacologica ||
+                  conclusions.usoEstimulacionOtros.trim() !== '') && (
+                    <li className="font-bold mt-4">Uso de estimulación:</li>
+                  )}
+                <ul className="list-disc list-inside ml-4 space-y-1 text-gray-600">
+                  {conclusions.usoEstimulacionSensorial && <li><span className="font-medium">Sensorial:</span> {renderBoolean(conclusions.usoEstimulacionSensorial)}</li>}
+                  {conclusions.usoEstimulacionTermica && <li><span className="font-medium">Térmica:</span> {renderBoolean(conclusions.usoEstimulacionTermica)}</li>}
+                  {conclusions.usoEstimulacionMecanica && <li><span className="font-medium">Mecánica:</span> {renderBoolean(conclusions.usoEstimulacionMecanica)}</li>}
+                  {conclusions.usoEstimulacionElectrica && <li><span className="font-medium">Eléctrica:</span> {renderBoolean(conclusions.usoEstimulacionElectrica)}</li>}
+                  {conclusions.usoEstimulacionFarmacologica && <li><span className="font-medium">Farmacológica:</span> {renderBoolean(conclusions.usoEstimulacionFarmacologica)}</li>}
+                  {conclusions.usoEstimulacionOtros.trim() !== '' && <li><span className="font-medium">Otros:</span> {renderString(conclusions.usoEstimulacionOtros)}</li>}
+                </ul>
+
+                {conclusions.terapiaFonoaudiologica && (
+                  <>
+                    <li className="font-bold mt-4">Terapia Fonoaudiológica:</li>
+                    <li><span className="font-medium">Requiere terapia:</span> {renderBoolean(conclusions.terapiaFonoaudiologica)}</li>
+                    {conclusions.terapiaFonoaudiologicaTipos.length > 0 && (
+                      <ul className="list-disc list-inside ml-4 space-y-1 text-gray-600">
+                        <li><span className="font-medium">Tipos de terapia:</span> {mapArrayToLabels(conclusions.terapiaFonoaudiologicaTipos, terapiaFonoaudiologicaMainOptions)}</li>
+                        {conclusions.terapiaFonoaudiologicaTipos.includes('terapia_deglucion') && (
+                          <>
+                            {conclusions.terapiaDeglucionSubManiobrasRehabilitadoras && (
+                              <>
+                                <li><span className="font-medium">Maniobras rehabilitadoras:</span> {renderBoolean(conclusions.terapiaDeglucionSubManiobrasRehabilitadoras)}</li>
+                                {conclusions.rehabilitacionDeglutoriaTipos.length > 0 && (
+                                  <ul className="list-disc list-inside ml-4 space-y-1 text-gray-600">
+                                    <li><span className="font-medium">Tipos:</span> {mapArrayToLabels(conclusions.rehabilitacionDeglutoriaTipos, rehabilitacionDeglutoriaTiposOptions)}</li>
+                                  </ul>
+                                )}
+                                {conclusions.rehabilitacionDeglutoriaTipos.includes('otros') && conclusions.rehabilitacionDeglutoriaOtros.trim() !== '' && (
+                                  <ul className="list-disc list-inside ml-4 space-y-1 text-gray-600">
+                                    <li><span className="font-medium">Otros (especificado):</span> {renderString(conclusions.rehabilitacionDeglutoriaOtros)}</li>
+                                  </ul>
+                                )}
+                              </>
+                            )}
+                            {conclusions.terapiaDeglucionSubManiobrasCompensatorias && <li><span className="font-medium">Maniobras compensatorias:</span> {renderBoolean(conclusions.terapiaDeglucionSubManiobrasCompensatorias)}</li>}
+                          </>
+                        )}
+                      </ul>
+                    )}
+                  </>
+                )}
+
+                {conclusions.optimizarHigieneOral && <li><span className="font-medium">Optimizar higiene oral:</span> {renderBoolean(conclusions.optimizarHigieneOral)}</li>}
+                {conclusions.ningunaRecomendacion && <li><span className="font-medium">Ninguna recomendación:</span> {renderBoolean(conclusions.ningunaRecomendacion)}</li>}
+                {conclusions.instalacionViaAlternativa && (
+                  <>
+                    <li><span className="font-medium">Instalación de vía alternativa:</span> {renderBoolean(conclusions.instalacionViaAlternativa)}</li>
+                    {conclusions.viaAlternativaTipos.length > 0 && (
+                      <li><span className="font-medium">Tipos de vía alternativa:</span> {renderArray(conclusions.viaAlternativaTipos)}</li>
+                    )}
+                  </>
+                )}
+                {conclusions.evaluacionComplementaria && <li><span className="font-medium">Evaluación complementaria:</span> {renderBoolean(conclusions.evaluacionComplementaria)}</li>}
+                {conclusions.evaluacionComunicativa && <li><span className="font-medium">Evaluación comunicativa:</span> {renderBoolean(conclusions.evaluacionComunicativa)}</li>}
+
+                {(conclusions.derivacionNutricionista ||
+                  conclusions.derivacionKinesiologo ||
+                  conclusions.derivacionTerapeutaOcupacional ||
+                  conclusions.derivacionMedico ||
+                  conclusions.derivacionOtros.trim() !== '') && (
                     <li className="font-bold mt-4">Derivación a:</li>
                   )}
                 <ul className="list-disc list-inside ml-4 space-y-1 text-gray-600">
-                  {evaluationData.conclusions.derivacionNutricionista && <li><span className="font-medium">Nutricionista:</span> {renderBoolean(evaluationData.conclusions.derivacionNutricionista)}</li>}
-                  {evaluationData.conclusions.derivacionKinesiologo && <li><span className="font-medium">Kinesiólogo:</span> {renderBoolean(evaluationData.conclusions.derivacionKinesiologo)}</li>}
-                  {evaluationData.conclusions.derivacionTerapeutaOcupacional && <li><span className="font-medium">Terapeuta Ocupacional:</span> {renderBoolean(evaluationData.conclusions.derivacionTerapeutaOcupacional)}</li>}
-                  {evaluationData.conclusions.derivacionMedico && <li><span className="font-medium">Médico:</span> {renderBoolean(evaluationData.conclusions.derivacionMedico)}</li>}
-                  {evaluationData.conclusions.derivacionOtros.trim() !== '' && <li><span className="font-medium">Otros:</span> {renderString(evaluationData.conclusions.derivacionOtros)}</li>}
+                  {conclusions.derivacionNutricionista && <li><span className="font-medium">Nutricionista:</span> {renderBoolean(conclusions.derivacionNutricionista)}</li>}
+                  {conclusions.derivacionKinesiologo && <li><span className="font-medium">Kinesiólogo:</span> {renderBoolean(conclusions.derivacionKinesiologo)}</li>}
+                  {conclusions.derivacionTerapeutaOcupacional && <li><span className="font-medium">Terapeuta Ocupacional:</span> {renderBoolean(conclusions.derivacionTerapeutaOcupacional)}</li>}
+                  {conclusions.derivacionMedico && <li><span className="font-medium">Médico:</span> {renderBoolean(conclusions.derivacionMedico)}</li>}
+                  {conclusions.derivacionOtros.trim() !== '' && <li><span className="font-medium">Otros:</span> {renderString(conclusions.derivacionOtros)}</li>}
                 </ul>
 
-                {evaluationData.conclusions.observaciones.trim() !== '' && (
-                  <li className="font-medium mt-4">Observaciones: {renderString(evaluationData.conclusions.observaciones)}</li>
+                {conclusions.observaciones.trim() !== '' && (
+                  <li className="font-medium mt-4">Observaciones: {renderString(conclusions.observaciones)}</li>
                 )}
               </ul>
             </div>
