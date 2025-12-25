@@ -1,10 +1,10 @@
 "use client";
 
 import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { Syringe, Droplet, Soup, Cookie, Apple, Milk, Water, LucideIcon } from 'lucide-react';
+import { Syringe, Droplet, Soup, Cookie, Apple, Milk, GlassWater, LucideIcon } from 'lucide-react'; // Changed 'Water' to 'GlassWater'
 
 // Array of icon components to choose from
-const iconComponents: LucideIcon[] = [Syringe, Droplet, Soup, Cookie, Apple, Milk, Water];
+const iconComponents: LucideIcon[] = [Syringe, Droplet, Soup, Cookie, Apple, Milk, GlassWater]; // Updated to use GlassWater
 
 interface FallingIconProps {
   id: string;
