@@ -14,7 +14,10 @@ const SummaryPage = () => {
   const evaluationData: EvaluationData | undefined = location.state?.evaluationData;
   const [isDownloading, setIsDownloading] = useState(false);
 
-  if (!evaluationData) {
+  console.log("SummaryPage received evaluationData:", evaluationData); // Log data for debugging
+
+  // Check if evaluationData is undefined or an empty object
+  if (!evaluationData || Object.keys(evaluationData).length === 0) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <p className="text-xl text-gray-700">No hay datos de evaluación para mostrar.</p>
@@ -95,6 +98,74 @@ const SummaryPage = () => {
 
   const { conclusions } = evaluationData;
 
+  // Options for mapping labels in conclusions
+  const trastornoOrigenOptions = [
+    { value: 'neurogenico', label: 'Origen neurogénico' },
+    { value: 'mecanico', label: 'Origen mecánico' },
+    { value: 'iatrogenico', label: 'Origen iatrogénico' },
+    { value: 'mixto', label: 'Origen mixto' },
+    { value: 'no_determinar', label: 'No es posible determinar' },
+  ];
+  const consistenciaAlimentosBebidasOptions = [
+    { value: 'liquido_fino', label: 'Líquido fino' },
+    { value: 'liquido_espeso', label: 'Líquido espeso' },
+    { value: 'papilla_licuada', label: 'Papilla licuada' },
+    { value: 'papilla_espesa', label: 'Papilla espesa' },
+    { value: 'papilla', label: 'Papilla' },
+    { value: 'solido_blando', label: 'Sólido blando' },
+    { value: 'solidos', label: 'Sólidos' },
+  ];
+  const maniobrasPosturalesOptions = [
+    { value: 'chin_up', label: 'Chin-up' },
+    { value: 'chin_down', label: 'Chin-down' },
+    { value: 'rotacion_cabeza_afectado', label: 'Rotación de cabeza al lado afectado' },
+    { value: 'inclinacion_cabeza_sano', label: 'Inclinación de cabeza al lado sano' },
+    { value: 'chin_tuck', label: 'Chin-tuck (flexión de la cabeza)' },
+    { value: 'cabeza_hacia_atras', label: 'Cabeza hacia atrás' },
+  ];
+  const modificacionSensorialTiposOptions = [
+    { value: 'uso_chip_hielo', label: 'Uso de chip de hielo' },
+    { value: 'aplicacion_termo_tactil', label: 'Aplicación termo-táctil' },
+  ];
+  const modificacionVelocidadRadioOptions = [
+    { value: '3s', label: '3 segundos' },
+    { value: '5s', label: '5 segundos' },
+    { value: '7s', label: '7 segundos' },
+    { value: '10s', label: '10 segundos' },
+    { value: 'post_deglucion', label: 'Post-deglución' },
+  ];
+  const modificacionConsistenciaTiposOptions = [
+    { value: 'liquidos', label: 'Líquidos' },
+    { value: 'semiliquidos', label: 'Semilíquidos' },
+    { value: 'semisolidos', label: 'Semisólidos' },
+    { value: 'solidos', label: 'Sólidos' },
+  ];
+  const modificacionViscosidadTiposOptions = [
+    { value: 'liquido_fino', label: 'Líquido fino (agua, té, café, jugo en polvo disuelto en agua)' },
+    { value: 'nectar', label: 'Néctar (líquido que se acerca mucho al néctar espeso de durazno)' },
+    { value: 'miel', label: 'Miel (yogurt batido)' },
+    { value: 'pudding', label: 'Pudding (flan batido, yogur tipo griego)' },
+  ];
+  const terapiaFonoaudiologicaMainOptions = [
+    { value: 'terapia_deglucion', label: 'Terapia de deglución' },
+    { value: 'terapia_voz', label: 'Terapia de voz' },
+    { value: 'terapia_motricidad_orofacial', label: 'Terapia de motricidad orofacial' },
+    { value: 'terapia_lenguaje', label: 'Terapia de lenguaje' },
+    { value: 'terapia_cognitivo_comunicativa', label: 'Terapia cognitivo-comunicativa' },
+    { value: 'terapia_habla', label: 'Terapia de habla' },
+  ];
+  const rehabilitacionDeglutoriaTiposOptions = [
+    { value: 'ejercicios_fuerza', label: 'Ejercicios de fuerza' },
+    { value: 'ejercicios_rango', label: 'Ejercicios de rango' },
+    { value: 'deglucion_con_esfuerzo', label: 'Deglución con esfuerzo' },
+    { value: 'maniobra_de_masako', label: 'Maniobra de Masako' },
+    { value: 'maniobra_de_mendelsonh', label: 'Maniobra de Mendelsonh' },
+    { value: 'maniobra_de_shaker', label: 'Maniobra de Shaker' },
+    { value: 'ctar_joar', label: 'CTAR-JOAR' },
+    { value: 'otros', label: 'Otros' },
+  ];
+
+
   return (
     <div className="min-h-screen bg-gray-50">
       <Header />
@@ -108,6 +179,8 @@ const SummaryPage = () => {
             <div className="mb-8 p-4 border rounded-lg bg-blue-50">
               <h2 className="text-xl font-bold text-gray-800 mb-3">Etapa 1 - Identificación</h2>
               <ul className="list-disc list-inside space-y-1 text-gray-700">
+                <li><span className="font-medium">Nombre Profesional:</span> {renderString(evaluationData.identification.professionalName)}</li>
+                <li><span className="font-medium">Tipo de Establecimiento:</span> {renderString(evaluationData.identification.establishmentType)}</li>
                 <li><span className="font-medium">Nombre Paciente:</span> {renderString(evaluationData.identification.patientName)}</li>
                 <li><span className="font-medium">Edad Paciente:</span> {renderString(evaluationData.identification.age)}</li>
                 {evaluationData.identification.medicalHistoryToggle && (
@@ -454,7 +527,7 @@ const SummaryPage = () => {
                   <>
                     <li><span className="font-medium">Trastorno de la deglución:</span> {renderBoolean(conclusions.trastornoDeglucion)}</li>
                     {conclusions.trastornoOrigen && (
-                      <li><span className="font-medium">Origen del trastorno:</span> {renderString(conclusions.trastornoOrigen)}</li>
+                      <li><span className="font-medium">Origen del trastorno:</span> {mapValueToLabel(conclusions.trastornoOrigen, trastornoOrigenOptions)}</li>
                     )}
                   </>
                 )}

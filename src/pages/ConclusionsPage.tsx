@@ -105,80 +105,82 @@ const ConclusionsPage = () => {
   const location = useLocation();
   const prevEvaluationData: EvaluationData | undefined = location.state?.evaluationData; // Get previous data
 
-  const [conclusionsData, setConclusionsData] = useState<ConclusionsData>({
-    sinTrastornoDeglucion: false,
-    trastornoDeglucion: false,
-    trastornoOrigen: undefined,
-    noEsPosibleDeterminarGeneral: false,
-    escalaSeveridad: false,
-    doss: undefined,
-    fils: undefined,
-    fois: undefined,
-    alimentacionTotalBoca: false,
-    alimentacionEnteral: false,
-    alimentacionMixta: false,
-    soloConEspecialista: false,
-    alimentosPermitidos: false,
-    alimentosPermitidosConsistencias: [],
-    bebidasPermitidas: false,
-    bebidasPermitidasConsistencias: [],
-    ningunaViscosidadPermitida: false,
-    asistenciaVigilancia: false,
-    posicion45a90: false,
-    verificarResiduosBoca: false,
+  const [conclusionsData, setConclusionsData] = useState<ConclusionsData>(
+    prevEvaluationData?.conclusions || {
+      sinTrastornoDeglucion: false,
+      trastornoDeglucion: false,
+      trastornoOrigen: undefined,
+      noEsPosibleDeterminarGeneral: false,
+      escalaSeveridad: false,
+      doss: undefined,
+      fils: undefined,
+      fois: undefined,
+      alimentacionTotalBoca: false,
+      alimentacionEnteral: false,
+      alimentacionMixta: false,
+      soloConEspecialista: false,
+      alimentosPermitidos: false,
+      alimentosPermitidosConsistencias: [],
+      bebidasPermitidas: false,
+      bebidasPermitidasConsistencias: [],
+      ningunaViscosidadPermitida: false,
+      asistenciaVigilancia: false,
+      posicion45a90: false,
+      verificarResiduosBoca: false,
 
-    // New fields
-    maniobrasPosturales: false,
-    maniobrasPosturalesTipos: [],
-    modificacionSensorial: false,
-    modificacionSensorialTipos: [],
-    modificacionVolumen: false,
-    modificacionVolumenCustom: '',
-    modificacionVelocidad: false,
-    modificacionVelocidadOpciones: undefined,
-    modificacionTemperatura: false,
-    modificacionTemperaturaCustom: '',
-    modificacionSabor: false,
-    modificacionTextura: false,
-    modificacionConsistencia: false,
-    modificacionConsistenciaTipos: [],
-    modificacionViscosidad: false,
-    modificacionViscosidadTipos: [],
+      // New fields
+      maniobrasPosturales: false,
+      maniobrasPosturalesTipos: [],
+      modificacionSensorial: false,
+      modificacionSensorialTipos: [],
+      modificacionVolumen: false,
+      modificacionVolumenCustom: '',
+      modificacionVelocidad: false,
+      modificacionVelocidadOpciones: undefined,
+      modificacionTemperatura: false,
+      modificacionTemperaturaCustom: '',
+      modificacionSabor: false,
+      modificacionTextura: false,
+      modificacionConsistencia: false,
+      modificacionConsistenciaTipos: [],
+      modificacionViscosidad: false,
+      modificacionViscosidadTipos: [],
 
-    usoEspesante: false,
-    usoCucharaMedidora: false,
-    usoVasoAdaptado: false,
-    usoJeringa: false,
-    usoBombilla: false,
-    usoProtesisDental: false,
-    usoEstimulacionSensorial: false,
-    usoEstimulacionTermica: false,
-    usoEstimulacionMecanica: false,
-    usoEstimulacionElectrica: false,
-    usoEstimulacionFarmacologica: false,
-    usoEstimulacionOtros: '',
+      usoEspesante: false,
+      usoCucharaMedidora: false,
+      usoVasoAdaptado: false,
+      usoJeringa: false,
+      usoBombilla: false,
+      usoProtesisDental: false,
+      usoEstimulacionSensorial: false,
+      usoEstimulacionTermica: false,
+      usoEstimulacionMecanica: false,
+      usoEstimulacionElectrica: false,
+      usoEstimulacionFarmacologica: false,
+      usoEstimulacionOtros: '',
 
-    terapiaFonoaudiologica: false, // Replaces old rehabilitacionDeglutoria
-    terapiaFonoaudiologicaTipos: [],
-    terapiaDeglucionSubManiobrasRehabilitadoras: false,
-    terapiaDeglucionSubManiobrasCompensatorias: false,
-    rehabilitacionDeglutoriaTipos: [], // Now specific to "Maniobras rehabilitadoras"
-    rehabilitacionDeglutoriaOtros: '', // Custom text for "Maniobras rehabilitadoras - Otros"
+      terapiaFonoaudiologica: false, // Replaces old rehabilitacionDeglutoria
+      terapiaFonoaudiologicaTipos: [],
+      terapiaDeglucionSubManiobrasRehabilitadoras: false,
+      terapiaDeglucionSubManiobrasCompensatorias: false,
+      rehabilitacionDeglutoriaTipos: [], // Now specific to "Maniobras rehabilitadoras"
+      rehabilitacionDeglutoriaOtros: '', // Custom text for "Maniobras rehabilitadoras - Otros"
 
-    derivacionNutricionista: false,
-    derivacionKinesiologo: false,
-    derivacionTerapeutaOcupacional: false,
-    derivacionMedico: false,
-    derivacionOtros: false, // Initialize as boolean
-    derivacionOtrosText: '', // Initialize new text field
-    observaciones: '',
-    optimizarHigieneOral: false,
-    ningunaRecomendacion: false,
-    instalacionViaAlternativa: false,
-    viaAlternativaTipos: [],
-    evaluacionComplementaria: false,
-    evaluacionComunicativa: false,
-  });
+      derivacionNutricionista: false,
+      derivacionKinesiologo: false,
+      derivacionTerapeutaOcupacional: false,
+      derivacionMedico: false,
+      derivacionOtros: false, // Initialize as boolean
+      derivacionOtrosText: '', // Initialize new text field
+      observaciones: '',
+      optimizarHigieneOral: false,
+      ningunaRecomendacion: false,
+      instalacionViaAlternativa: false,
+      viaAlternativaTipos: [],
+      evaluacionComplementaria: false,
+      evaluacionComunicativa: false,
+    }
+  );
 
   const handleSwitchChange = (field: keyof ConclusionsData, checked: boolean) => {
     setConclusionsData((prev) => {
@@ -262,7 +264,7 @@ const ConclusionsPage = () => {
         newState.rehabilitacionDeglutoriaOtros = '';
       }
       // If 'terapia_deglucion' is unchecked within terapiaFonoaudiologicaTipos, clear its sub-options
-      if (field === 'terapiaFonoaudiologicaTipos' && !checked && !newState.terapiaFonoaudiologicaTipos.includes('terapia_deglucion')) {
+      if (field === 'terapiaFonoaudiologicaTipos' && !checked && !newArray.includes('terapia_deglucion')) { // Use newArray here
         newState.terapiaDeglucionSubManiobrasRehabilitadoras = false;
         newState.terapiaDeglucionSubManiobrasCompensatorias = false;
         newState.rehabilitacionDeglutoriaTipos = [];
@@ -449,9 +451,11 @@ const ConclusionsPage = () => {
     }
 
     const evaluationData: EvaluationData = {
-      ...prevEvaluationData, // Spread previous data
+      ...(prevEvaluationData || {}), // Ensure prevEvaluationData is an object, even if undefined
       conclusions: conclusionsData,
     };
+
+    console.log("Evaluation Data before navigating to Summary:", evaluationData); // Log data for debugging
 
     toast.success('Evaluación finalizada y conclusiones registradas. Redirigiendo al resumen...');
     navigate('/summary', { state: { evaluationData } }); // Pass all data to the summary page
