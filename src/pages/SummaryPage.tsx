@@ -178,6 +178,8 @@ const SummaryPage = () => {
         <h1 className="text-2xl font-semibold text-efodea-blue mb-6 text-center">Resumen de la Evaluación</h1>
 
         <div id="evaluation-summary-content" className="space-y-8"> {/* ID for PDF generation */}
+          <h1 className="text-3xl font-bold text-efodea-blue mb-4 text-center">Evaluación Informal de la Deglución en Fonoaudiología</h1>
+          
           {/* Etapa 1 - Identificación */}
           {evaluationData.identification && (
             <div className="mb-8 p-4 border rounded-lg bg-blue-50">
@@ -473,9 +475,9 @@ const SummaryPage = () => {
                     )}
                     {evaluationData.deglutionNoNutritiva.ascultacionCervicalHumeda && <li><span className="font-medium">Ascultación cervical húmeda:</span> {renderBoolean(evaluationData.deglutionNoNutritiva.ascultacionCervicalHumeda)}</li>}
                     {evaluationData.deglutionNoNutritiva.bdtInmediato && <li><span className="font-medium">BDT (+) inmediato:</span> {renderBoolean(evaluationData.deglutionNoNutritiva.bdtInmediato)}</li>}
-                    {evaluationData.deglutionNoNutritiva.evaluacionPenetracion && <li><span className="font-medium">Evaluación instrumental presenta penetración:</span> {renderBoolean(evaluationData.deglutionNoNutritiva.evaluacionPenetracion)}</li>}
-                    {evaluationData.deglutionNoNutritiva.evaluacionAspiracion && <li><span className="font-medium">Evaluación instrumental presenta aspiración:</span> {renderBoolean(evaluationData.deglutionNoNutritiva.evaluacionAspiracion)}</li>}
-                    {evaluationData.deglutionNoNutritiva.evaluacionAspiracionSilente && <li><span className="font-medium">Evaluación instrumental presenta aspiración silente:</span> {renderBoolean(evaluationData.deglutionNoNutritiva.evaluacionAspiracionSilente)}</li>}
+                    {evaluationData.deglutionNoNutritiva.evaluacionPenetracion && <li><span className="font-medium">A la evaluación instrumental presenta penetración:</span> {renderBoolean(evaluationData.deglutionNoNutritiva.evaluacionPenetracion)}</li>}
+                    {evaluationData.deglutionNoNutritiva.evaluacionAspiracion && <li><span className="font-medium">A la evaluación instrumental presenta aspiración:</span> {renderBoolean(evaluationData.deglutionNoNutritiva.evaluacionAspiracion)}</li>}
+                    {evaluationData.deglutionNoNutritiva.evaluacionAspiracionSilente && <li><span className="font-medium">A la evaluación instrumental presenta aspiración silente:</span> {renderBoolean(evaluationData.deglutionNoNutritiva.evaluacionAspiracionSilente)}</li>}
                   </>
                 )}
               </ul>
@@ -795,6 +797,9 @@ const SummaryPage = () => {
               </ul>
             </div>
           )}
+          <div className="text-center text-gray-600 text-sm mt-8 pt-4 border-t border-gray-300">
+            Creado y adaptado de forma digital por Fonoaudiólogo Cristóbal San Martín
+          </div>
         </div>
 
         <div className="flex justify-center gap-4 mt-8">

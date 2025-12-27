@@ -23,7 +23,6 @@ const FinalMessagePage = () => {
         <h1 className="text-3xl font-bold text-efodea-blue mb-6">Mensaje final</h1>
 
         <p className="text-lg text-gray-700 mb-4">Ha finalizado su evaluación.</p>
-        <p className="text-lg text-gray-700 mb-4">El registro de evaluación será enviado al correo registrado en el sistema.</p>
         <p className="text-lg text-gray-700 mb-6">
           Su información <span className="font-bold">NO</span> queda almacenada en la plataforma. Por lo tanto, asegúrese de guardar el pdf de su evaluación.
         </p>
