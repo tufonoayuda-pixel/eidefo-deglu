@@ -15,27 +15,30 @@ const DeglutionNoNutritivaPage = () => {
   const location = useLocation();
   const prevEvaluationData: EvaluationData | undefined = location.state?.evaluationData; // Get previous data
 
-  const [deglutionNoNutritivaData, setDeglutionNoNutritivaData] = useState<DeglutionNoNutritivaData>({
-    sinAlteracion: false,
-    acumulacionSaliva: false,
-    escapeAnterior: false,
-    xerostomia: false,
-    noDegluteEspontaneamente: false,
-    rmoMasDeUnSegundo: false,
-    excursionLaringeaAusente: false,
-    odinofagia: false,
-    vozHumedaSinAclaramiento: false,
-    aclaraVozEspontanea: false,
-    aclaraVozSolicitud: false,
-    aclaraVozDegluciones: false,
-    aclaraVozCarraspeo: false,
-    aclaraVozTos: false,
-    ascultacionCervicalHumeda: false,
-    bdtInmediato: false,
-    evaluacionPenetracion: false,
-    evaluacionAspiracion: false,
-    evaluacionAspiracionSilente: false,
-  });
+  // Initialize state from previous data or defaults
+  const [deglutionNoNutritivaData, setDeglutionNoNutritivaData] = useState<DeglutionNoNutritivaData>(
+    prevEvaluationData?.deglutionNoNutritiva || {
+      sinAlteracion: false,
+      acumulacionSaliva: false,
+      escapeAnterior: false,
+      xerostomia: false,
+      noDegluteEspontaneamente: false,
+      rmoMasDeUnSegundo: false,
+      excursionLaringeaAusente: false,
+      odinofagia: false,
+      vozHumedaSinAclaramiento: false,
+      aclaraVozEspontanea: false,
+      aclaraVozSolicitud: false,
+      aclaraVozDegluciones: false,
+      aclaraVozCarraspeo: false,
+      aclaraVozTos: false,
+      ascultacionCervicalHumeda: false,
+      bdtInmediato: false,
+      evaluacionPenetracion: false,
+      evaluacionAspiracion: false,
+      evaluacionAspiracionSilente: false,
+    }
+  );
 
   const handleSinAlteracionToggle = (checked: boolean) => {
     setDeglutionNoNutritivaData({

@@ -24,10 +24,11 @@ const RespirationPage = () => {
   const location = useLocation();
   const prevEvaluationData: EvaluationData | undefined = location.state?.evaluationData; // Get previous data
 
-  const [noArtificialAirway, setNoArtificialAirway] = useState(false);
-  const [selectedRespirationOptions, setSelectedRespirationOptions] = useState<string[]>([]);
-  const [orotrachealIntubation, setOrotrachealIntubation] = useState(false);
-  const [tracheostomy, setTracheostomy] = useState(false);
+  // Initialize state from previous data or defaults
+  const [noArtificialAirway, setNoArtificialAirway] = useState(prevEvaluationData?.respiration?.noArtificialAirway || false);
+  const [selectedRespirationOptions, setSelectedRespirationOptions] = useState<string[]>(prevEvaluationData?.respiration?.selectedRespirationOptions || []);
+  const [orotrachealIntubation, setOrotrachealIntubation] = useState(prevEvaluationData?.respiration?.orotrachealIntubation || false);
+  const [tracheostomy, setTracheostomy] = useState(prevEvaluationData?.respiration?.tracheostomy || false);
 
   const handleRespirationOptionChange = (option: string, checked: boolean) => {
     setSelectedRespirationOptions((prev) =>

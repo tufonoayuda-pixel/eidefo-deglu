@@ -15,30 +15,33 @@ const OrofacialEvaluationPage = () => {
   const location = useLocation();
   const prevEvaluationData: EvaluationData | undefined = location.state?.evaluationData;
 
-  const [evaluacionOrofacialData, setEvaluacionOrofacialData] = useState<OrofacialEvaluationData>({
-    noPresentaAlteracion: false,
-    alteracionEstructuras: false,
-    alteracionMotora: false,
-    rangoFuerzaRostroMandibula: false,
-    rangoFuerzaRostroMandibulaDerecha: false, // New
-    rangoFuerzaRostroMandibulaIzquierda: false, // New
-    rangoFuerzaLabios: false,
-    rangoFuerzaLabiosDerecha: false, // New
-    rangoFuerzaLabiosIzquierda: false, // New
-    rangoFuerzaLengua: false,
-    rangoFuerzaLenguaDerecha: false, // New
-    rangoFuerzaLenguaIzquierda: false, // New
-    alteracionSensibilidad: false,
-    sensibilidadExtraoralDerecha: false,
-    sensibilidadExtraoralIzquierda: false,
-    sensibilidadIntraoralDerecha: false,
-    sensibilidadIntraoralIzquierda: false,
-    asimetriaFacial: false,
-    higieneOral: false,
-    higieneBuena: false,
-    higieneMala: false,
-    higieneRegular: false,
-  });
+  // Initialize state from previous data or defaults
+  const [evaluacionOrofacialData, setEvaluacionOrofacialData] = useState<OrofacialEvaluationData>(
+    prevEvaluationData?.orofacialEvaluation || {
+      noPresentaAlteracion: false,
+      alteracionEstructuras: false,
+      alteracionMotora: false,
+      rangoFuerzaRostroMandibula: false,
+      rangoFuerzaRostroMandibulaDerecha: false,
+      rangoFuerzaRostroMandibulaIzquierda: false,
+      rangoFuerzaLabios: false,
+      rangoFuerzaLabiosDerecha: false,
+      rangoFuerzaLabiosIzquierda: false,
+      rangoFuerzaLengua: false,
+      rangoFuerzaLenguaDerecha: false,
+      rangoFuerzaLenguaIzquierda: false,
+      alteracionSensibilidad: false,
+      sensibilidadExtraoralDerecha: false,
+      sensibilidadExtraoralIzquierda: false,
+      sensibilidadIntraoralDerecha: false,
+      sensibilidadIntraoralIzquierda: false,
+      asimetriaFacial: false,
+      higieneOral: false,
+      higieneBuena: false,
+      higieneMala: false,
+      higieneRegular: false,
+    }
+  );
 
   const handleCheckboxChange = (field: keyof OrofacialEvaluationData, checked: boolean) => {
     setEvaluacionOrofacialData((prev) => {

@@ -15,19 +15,22 @@ const DentitionPage = () => {
   const location = useLocation();
   const prevEvaluationData: EvaluationData | undefined = location.state?.evaluationData; // Get previous data
 
-  const [denticionData, setDenticionData] = useState<DentitionData>({
-    noPresentaAlteracion: false,
-    perdidaPiezas: false,
-    superior: false,
-    inferior: false,
-    adaptada: false,
-    noAdaptada: false,
-    total: false,
-    parcial: false,
-    usoAdhesivo: false,
-    evaluacionConProtesis: false,
-    evaluacionSinProtesis: false,
-  });
+  // Initialize state from previous data or defaults
+  const [denticionData, setDenticionData] = useState<DentitionData>(
+    prevEvaluationData?.dentition || {
+      noPresentaAlteracion: false,
+      perdidaPiezas: false,
+      superior: false,
+      inferior: false,
+      adaptada: false,
+      noAdaptada: false,
+      total: false,
+      parcial: false,
+      usoAdhesivo: false,
+      evaluacionConProtesis: false,
+      evaluacionSinProtesis: false,
+    }
+  );
 
   const handleNoAlterationToggle = (checked: boolean) => {
     setDenticionData({

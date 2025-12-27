@@ -23,9 +23,10 @@ const ConsciousnessPage = () => {
   const location = useLocation();
   const prevEvaluationData: EvaluationData | undefined = location.state?.evaluationData; // Get previous data
 
-  const [isVigil, setIsVigil] = useState(false);
-  const [hasAlteredConsciousness, setHasAlteredConsciousness] = useState(false);
-  const [selectedAlteredConsciousness, setSelectedAlteredConsciousness] = useState<string[]>([]);
+  // Initialize state from previous data or defaults
+  const [isVigil, setIsVigil] = useState(prevEvaluationData?.consciousness?.isVigil || false);
+  const [hasAlteredConsciousness, setHasAlteredConsciousness] = useState(prevEvaluationData?.consciousness?.hasAlteredConsciousness || false);
+  const [selectedAlteredConsciousness, setSelectedAlteredConsciousness] = useState<string[]>(prevEvaluationData?.consciousness?.selectedAlteredConsciousness || []);
 
   const handleVigilToggle = (checked: boolean) => {
     setIsVigil(checked);

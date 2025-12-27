@@ -15,16 +15,19 @@ const ReflexesPage = () => {
   const location = useLocation();
   const prevEvaluationData: EvaluationData | undefined = location.state?.evaluationData; // Get previous data
 
-  const [reflejosData, setReflejosData] = useState<ReflexesData>({
-    noPresentaAlteracion: false,
-    presentaAlteracion: false,
-    tosVoluntariaProductiva: false,
-    tosVoluntariaNoProductiva: false,
-    tosVoluntariaAusente: false,
-    tosReflejaProductiva: false,
-    tosReflejaNoProductiva: false,
-    tosReflejaAusente: false,
-  });
+  // Initialize state from previous data or defaults
+  const [reflejosData, setReflejosData] = useState<ReflexesData>(
+    prevEvaluationData?.reflexes || {
+      noPresentaAlteracion: false,
+      presentaAlteracion: false,
+      tosVoluntariaProductiva: false,
+      tosVoluntariaNoProductiva: false,
+      tosVoluntariaAusente: false,
+      tosReflejaProductiva: false,
+      tosReflejaNoProductiva: false,
+      tosReflejaAusente: false,
+    }
+  );
 
   const handleNoAlterationToggle = (checked: boolean) => {
     setReflejosData({

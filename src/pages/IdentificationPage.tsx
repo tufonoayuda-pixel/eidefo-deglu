@@ -29,12 +29,13 @@ const IdentificationPage = () => {
   const prevEvaluationData: EvaluationData | undefined = location.state?.evaluationData; // Get previous data
   const { professionalName, establishmentType } = useAuth(); // Get professionalName and establishmentType from AuthContext
 
-  const [patientName, setPatientName] = useState('');
-  const [age, setAge] = useState('');
-  const [medicalHistoryToggle, setMedicalHistoryToggle] = useState(false);
-  const [selectedMedicalHistory, setSelectedMedicalHistory] = useState<string[]>([]);
-  const [otherMedicalHistory, setOtherMedicalHistory] = useState('');
-  const [swallowingHistory, setSwallowingHistory] = useState('');
+  // Initialize state from previous data or defaults
+  const [patientName, setPatientName] = useState(prevEvaluationData?.identification?.patientName || '');
+  const [age, setAge] = useState(prevEvaluationData?.identification?.age || '');
+  const [medicalHistoryToggle, setMedicalHistoryToggle] = useState(prevEvaluationData?.identification?.medicalHistoryToggle || false);
+  const [selectedMedicalHistory, setSelectedMedicalHistory] = useState<string[]>(prevEvaluationData?.identification?.selectedMedicalHistory || []);
+  const [otherMedicalHistory, setOtherMedicalHistory] = useState(prevEvaluationData?.identification?.otherMedicalHistory || '');
+  const [swallowingHistory, setSwallowingHistory] = useState(prevEvaluationData?.identification?.swallowingHistory || '');
 
   const handleCheckboxChange = (option: string, checked: boolean) => {
     setSelectedMedicalHistory((prev) =>
