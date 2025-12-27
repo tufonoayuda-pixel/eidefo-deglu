@@ -54,6 +54,10 @@ const SummaryPage = () => {
     }
   };
 
+  const handlePrintPage = () => {
+    window.print();
+  };
+
   const handleFinishEvaluation = () => {
     navigate('/final-message');
   };
@@ -789,6 +793,14 @@ const SummaryPage = () => {
             className="p-3 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-100 transition-colors"
           >
             {isDownloading ? 'Generando PDF...' : 'Descargar PDF'}
+          </Button>
+          <Button
+            type="button"
+            variant="outline"
+            onClick={handlePrintPage}
+            className="p-3 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-100 transition-colors"
+          >
+            Imprimir
           </Button>
           <Button
             type="button"
