@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { Button } from "@/components/ui/button";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { Checkbox } from "@/components/ui/checkbox"; // Import Checkbox
 import { toast } from 'sonner';
 import Header from '@/components/Header';
 import { useNavigate, useLocation } from 'react-router-dom'; // Import useLocation
@@ -13,8 +13,8 @@ import { NutritionData, EvaluationData } from '@/types/evaluation'; // Import in
 const oralFeedingOptions = [
   "Líquido fino",
   "Líquido espeso",
-  "Papilla licuada", // Added new option
-  "Papilla espesa",  // Added new option
+  "Papilla licuada",
+  "Papilla espesa",
   "Papilla",
   "Sólido blando",
   "Sólidos",
@@ -25,10 +25,16 @@ const NutritionPage = () => {
   const location = useLocation();
   const prevEvaluationData: EvaluationData | undefined = location.state?.evaluationData; // Get previous data
 
-  const [hasOralFeeding, setHasOralFeeding] = useState(false);
-  const [hasNonOralFeeding, setHasNonOralFeeding] = useState(false);
-  const [hasMixedFeeding, setHasMixedFeeding] = useState(false);
-  const [selectedOralConsistency, setSelectedOralConsistency] = useState<string | undefined>(undefined);
+  const [hasOralFeeding, setHasOralFeeding] = useState(prevEvaluationData?.nutrition?.hasOralFeeding || false);
+  const [hasNonOralFeeding, setHasNonOralFeeding] = useState(prevEvaluationData?.nutrition?.hasNonOralFeeding || false);
+  const [hasMixedFeeding, setHasMixedFeeding] = useState(prevEvaluationData?.nutrition?.hasMixedFeeding || false);
+  const [selectedOralConsistencies, setSelectedOralConsistencies] = useState<string[]>(prevEvaluationData?.nutrition?.selectedOralConsistency || []); // Changed to array
+
+  const handleOralConsistencyChange = (option: string, checked: boolean) => {
+    setSelectedOralConsistencies((prev) =>
+      checked ? [...prev, option] : prev.filter((item) => item !== option)
+    );
+  };
 
   const handleBack = () => {
     navigate('/respiration', { state: { evaluationData: prevEvaluationData } }); // Navigate back, passing data
@@ -37,14 +43,14 @@ const NutritionPage = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (hasOralFeeding && !selectedOralConsistency) {
-      toast.error('Por favor, seleccione una consistencia de alimentación oral.');
+    if (hasOralFeeding && selectedOralConsistencies.length === 0) { // Validation for multiple selections
+      toast.error('Por favor, seleccione al menos una consistencia de alimentación oral.');
       return;
     }
 
     const currentData: NutritionData = {
       hasOralFeeding,
-      selectedOralConsistency: hasOralFeeding ? selectedOralConsistency : undefined,
+      selectedOralConsistency: hasOralFeeding ? selectedOralConsistencies : [], // Pass array
       hasNonOralFeeding,
       hasMixedFeeding,
     };
@@ -75,7 +81,7 @@ const NutritionPage = () => {
                 onCheckedChange={(checked) => {
                   setHasOralFeeding(checked);
                   if (!checked) {
-                    setSelectedOralConsistency(undefined); // Clear selection if toggle is off
+                    setSelectedOralConsistencies([]); // Clear selections if toggle is off
                   }
                 }}
               />
@@ -83,18 +89,17 @@ const NutritionPage = () => {
 
             {hasOralFeeding && (
               <div className="ml-8 mt-4 space-y-2">
-                <RadioGroup
-                  onValueChange={setSelectedOralConsistency}
-                  value={selectedOralConsistency}
-                  className="flex flex-col space-y-2"
-                >
-                  {oralFeedingOptions.map((option) => (
-                    <div key={option} className="flex items-center space-x-2">
-                      <RadioGroupItem value={option} id={`oral-feeding-${option}`} />
-                      <Label htmlFor={`oral-feeding-${option}`}>{option}</Label>
-                    </div>
-                  ))}
-                </RadioGroup>
+                {oralFeedingOptions.map((option) => (
+                  <div key={option} className="flex items-center space-x-2">
+                    <Checkbox
+                      id={`oral-feeding-${option}`}
+                      checked={selectedOralConsistencies.includes(option)} // Check if option is in array
+                      onCheckedChange={(checked) => handleOralConsistencyChange(option, checked as boolean)}
+                      className="data-[state=checked]:bg-efodea-blue"
+                    />
+                    <Label htmlFor={`oral-feeding-${option}`}>{option}</Label>
+                  </div>
+                ))}
               </div>
             )}
 

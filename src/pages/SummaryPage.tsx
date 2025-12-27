@@ -238,8 +238,8 @@ const SummaryPage = () => {
                 {evaluationData.nutrition.hasOralFeeding && (
                   <>
                     <li><span className="font-medium">Presenta alimentación oral:</span> {renderBoolean(evaluationData.nutrition.hasOralFeeding)}</li>
-                    {evaluationData.nutrition.selectedOralConsistency && (
-                      <li><span className="font-medium">Consistencia oral seleccionada:</span> {renderString(evaluationData.nutrition.selectedOralConsistency)}</li>
+                    {evaluationData.nutrition.selectedOralConsistency && evaluationData.nutrition.selectedOralConsistency.length > 0 && (
+                      <li><span className="font-medium">Consistencias orales seleccionadas:</span> {renderArray(evaluationData.nutrition.selectedOralConsistency)}</li>
                     )}
                   </>
                 )}

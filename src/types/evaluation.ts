@@ -20,7 +20,7 @@ export interface NutritionData {
   hasOralFeeding: boolean;
   hasNonOralFeeding: boolean;
   hasMixedFeeding: boolean;
-  selectedOralConsistency: string | undefined;
+  selectedOralConsistency: string[]; // Changed to string[] for multiple selections
 }
 
 export interface ConsciousnessData {
