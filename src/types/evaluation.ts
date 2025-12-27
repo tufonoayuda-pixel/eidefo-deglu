@@ -30,7 +30,10 @@ export interface ConsciousnessData {
 }
 
 export interface CommunicationData {
-  mainCommunicationOption: string | undefined;
+  isCooperativeAndOriented: boolean; // New: Replaces 'cooperador' radio option
+  isNotEvaluable: boolean; // New: Replaces 'no_evaluable' radio option
+  hasCognitiveBehavioralAlteration: boolean; // New: Allows independent selection
+  hasVoiceAlteration: boolean; // New: Allows independent selection
   selectedCooperation: string | undefined;
   selectedAttention: string | undefined;
   selectedCalmness: string | undefined;

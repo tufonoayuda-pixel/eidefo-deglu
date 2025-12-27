@@ -278,20 +278,33 @@ const SummaryPage = () => {
             <div className="mb-8 p-4 border rounded-lg bg-red-50">
               <h2 className="text-xl font-bold text-gray-800 mb-3">Etapa 5 - Comunicación</h2>
               <ul className="list-disc list-inside space-y-1 text-gray-700">
-                {evaluationData.communication.mainCommunicationOption && (
-                  <li><span className="font-medium">Opción principal de comunicación:</span> {renderString(evaluationData.communication.mainCommunicationOption)}</li>
+                {evaluationData.communication.isCooperativeAndOriented && (
+                  <li><span className="font-medium">Estado principal:</span> Cooperador, atento, tranquilo, orientado con seguimiento de instrucciones</li>
                 )}
-                {evaluationData.communication.mainCommunicationOption === "alteracion_cognitiva_conductual" && (
-                  <ul className="list-disc list-inside ml-4 space-y-1 text-gray-600">
-                    {evaluationData.communication.selectedCooperation && <li><span className="font-medium">Cooperación:</span> {renderString(evaluationData.communication.selectedCooperation)}</li>}
-                    {evaluationData.communication.selectedAttention && <li><span className="font-medium">Atención:</span> {renderString(evaluationData.communication.selectedAttention)}</li>}
-                    {evaluationData.communication.selectedCalmness && <li><span className="font-medium">Tranquilidad:</span> {renderString(evaluationData.communication.selectedCalmness)}</li>}
-                    {evaluationData.communication.selectedOrientation && <li><span className="font-medium">Orientación:</span> {renderString(evaluationData.communication.selectedOrientation)}</li>}
-                    {evaluationData.communication.selectedInstructionFollowing && <li><span className="font-medium">Seguimiento de Instrucciones:</span> {renderString(evaluationData.communication.selectedInstructionFollowing)}</li>}
-                  </ul>
+                {evaluationData.communication.isNotEvaluable && (
+                  <li><span className="font-medium">Estado principal:</span> No evaluable</li>
                 )}
-                {evaluationData.communication.mainCommunicationOption === "si_alteracion_voz" && evaluationData.communication.selectedVoiceAlterationType && (
-                  <li><span className="font-medium">Tipo de alteración en la voz:</span> {renderString(evaluationData.communication.selectedVoiceAlterationType)}</li>
+                {evaluationData.communication.hasCognitiveBehavioralAlteration && (
+                  <>
+                    <li><span className="font-medium">Alteración cognitiva-conductual:</span> {renderBoolean(evaluationData.communication.hasCognitiveBehavioralAlteration)}</li>
+                    <ul className="list-disc list-inside ml-4 space-y-1 text-gray-600">
+                      {evaluationData.communication.selectedCooperation && <li><span className="font-medium">Cooperación:</span> {renderString(evaluationData.communication.selectedCooperation)}</li>}
+                      {evaluationData.communication.selectedAttention && <li><span className="font-medium">Atención:</span> {renderString(evaluationData.communication.selectedAttention)}</li>}
+                      {evaluationData.communication.selectedCalmness && <li><span className="font-medium">Tranquilidad:</span> {renderString(evaluationData.communication.selectedCalmness)}</li>}
+                      {evaluationData.communication.selectedOrientation && <li><span className="font-medium">Orientación:</span> {renderString(evaluationData.communication.selectedOrientation)}</li>}
+                      {evaluationData.communication.selectedInstructionFollowing && <li><span className="font-medium">Seguimiento de Instrucciones:</span> {renderString(evaluationData.communication.selectedInstructionFollowing)}</li>}
+                    </ul>
+                  </>
+                )}
+                {evaluationData.communication.hasVoiceAlteration && (
+                  <>
+                    <li><span className="font-medium">Presenta alteración en la voz:</span> {renderBoolean(evaluationData.communication.hasVoiceAlteration)}</li>
+                    {evaluationData.communication.selectedVoiceAlterationType && (
+                      <ul className="list-disc list-inside ml-4 space-y-1 text-gray-600">
+                        <li><span className="font-medium">Tipo de alteración en la voz:</span> {renderString(evaluationData.communication.selectedVoiceAlterationType)}</li>
+                      </ul>
+                    )}
+                  </>
                 )}
               </ul>
             </div>
@@ -793,14 +806,6 @@ const SummaryPage = () => {
             className="p-3 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-100 transition-colors"
           >
             {isDownloading ? 'Generando PDF...' : 'Descargar PDF'}
-          </Button>
-          <Button
-            type="button"
-            variant="outline"
-            onClick={handlePrintPage}
-            className="p-3 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-100 transition-colors"
-          >
-            Imprimir
           </Button>
           <Button
             type="button"

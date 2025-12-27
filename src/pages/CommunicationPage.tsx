@@ -4,18 +4,11 @@ import React, { useState } from 'react';
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { Switch } from "@/components/ui/switch"; // Import Switch
 import { toast } from 'sonner';
 import Header from '@/components/Header';
-import { useNavigate, useLocation } from 'react-router-dom'; // Import useLocation
-import { CommunicationData, EvaluationData } from '@/types/evaluation'; // Import interfaces
-
-const mainCommunicationOptions = [
-  { value: "cooperador", label: "Cooperador, atento, tranquilo, orientado con seguimiento de instrucciones" },
-  { value: "alteracion_cognitiva_conductual", label: "Alteración cognitiva-conductual" },
-  { value: "no_alteracion_voz", label: "No presenta alteración en la voz" },
-  { value: "si_alteracion_voz", label: "Presenta alteración en la voz" },
-  { value: "no_evaluable", label: "No evaluable" },
-];
+import { useNavigate, useLocation } from 'react-router-dom';
+import { CommunicationData, EvaluationData } from '@/types/evaluation';
 
 const cooperationOptions = ["Cooperador", "Cooperador parcial", "No cooperador"];
 const attentionOptions = ["Atento", "Atento parcial", "Inatento"];
@@ -31,40 +24,99 @@ const voiceAlterationOptions = [
 const CommunicationPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const prevEvaluationData: EvaluationData | undefined = location.state?.evaluationData; // Get previous data
+  const prevEvaluationData: EvaluationData | undefined = location.state?.evaluationData;
 
-  const [mainCommunicationOption, setMainCommunicationOption] = useState<string | undefined>(undefined);
+  // Initialize state from previous data or defaults
+  const [isCooperativeAndOriented, setIsCooperativeAndOriented] = useState(prevEvaluationData?.communication?.isCooperativeAndOriented || false);
+  const [isNotEvaluable, setIsNotEvaluable] = useState(prevEvaluationData?.communication?.isNotEvaluable || false);
+  const [hasCognitiveBehavioralAlteration, setHasCognitiveBehavioralAlteration] = useState(prevEvaluationData?.communication?.hasCognitiveBehavioralAlteration || false);
+  const [hasVoiceAlteration, setHasVoiceAlteration] = useState(prevEvaluationData?.communication?.hasVoiceAlteration || false);
 
-  // States for sub-options under "Alteración cognitiva-conductual"
-  const [selectedCooperation, setSelectedCooperation] = useState<string | undefined>(undefined);
-  const [selectedAttention, setSelectedAttention] = useState<string | undefined>(undefined);
-  const [selectedCalmness, setSelectedCalmness] = useState<string | undefined>(undefined);
-  const [selectedOrientation, setSelectedOrientation] = useState<string | undefined>(undefined);
-  const [selectedInstructionFollowing, setSelectedInstructionFollowing] = useState<string | undefined>(undefined);
+  const [selectedCooperation, setSelectedCooperation] = useState<string | undefined>(prevEvaluationData?.communication?.selectedCooperation);
+  const [selectedAttention, setSelectedAttention] = useState<string | undefined>(prevEvaluationData?.communication?.selectedAttention);
+  const [selectedCalmness, setSelectedCalmness] = useState<string | undefined>(prevEvaluationData?.communication?.selectedCalmness);
+  const [selectedOrientation, setSelectedOrientation] = useState<string | undefined>(prevEvaluationData?.communication?.selectedOrientation);
+  const [selectedInstructionFollowing, setSelectedInstructionFollowing] = useState<string | undefined>(prevEvaluationData?.communication?.selectedInstructionFollowing);
+  const [selectedVoiceAlterationType, setSelectedVoiceAlterationType] = useState<string | undefined>(prevEvaluationData?.communication?.selectedVoiceAlterationType);
 
-  // State for sub-options under "Presenta alteración en la voz"
-  const [selectedVoiceAlterationType, setSelectedVoiceAlterationType] = useState<string | undefined>(undefined);
+  // Helper to manage mutual exclusivity for main states
+  const handleMainStateChange = (stateKey: 'cooperative' | 'notEvaluable', checked: boolean) => {
+    if (stateKey === 'cooperative') {
+      setIsCooperativeAndOriented(checked);
+      if (checked) {
+        setIsNotEvaluable(false);
+        setHasCognitiveBehavioralAlteration(false);
+        setHasVoiceAlteration(false);
+        // Clear sub-options if main state is cooperative
+        setSelectedCooperation(undefined);
+        setSelectedAttention(undefined);
+        setSelectedCalmness(undefined);
+        setSelectedOrientation(undefined);
+        setSelectedInstructionFollowing(undefined);
+        setSelectedVoiceAlterationType(undefined);
+      }
+    } else if (stateKey === 'notEvaluable') {
+      setIsNotEvaluable(checked);
+      if (checked) {
+        setIsCooperativeAndOriented(false);
+        setHasCognitiveBehavioralAlteration(false);
+        setHasVoiceAlteration(false);
+        // Clear sub-options if main state is not evaluable
+        setSelectedCooperation(undefined);
+        setSelectedAttention(undefined);
+        setSelectedCalmness(undefined);
+        setSelectedOrientation(undefined);
+        setSelectedInstructionFollowing(undefined);
+        setSelectedVoiceAlterationType(undefined);
+      }
+    }
+  };
+
+  // Helper to manage mutual exclusivity for alteration switches
+  const handleAlterationSwitchChange = (alterationKey: 'cognitive' | 'voice', checked: boolean) => {
+    if (checked) {
+      setIsCooperativeAndOriented(false);
+      setIsNotEvaluable(false);
+    }
+
+    if (alterationKey === 'cognitive') {
+      setHasCognitiveBehavioralAlteration(checked);
+      if (!checked) {
+        setSelectedCooperation(undefined);
+        setSelectedAttention(undefined);
+        setSelectedCalmness(undefined);
+        setSelectedOrientation(undefined);
+        setSelectedInstructionFollowing(undefined);
+      }
+    } else if (alterationKey === 'voice') {
+      setHasVoiceAlteration(checked);
+      if (!checked) {
+        setSelectedVoiceAlterationType(undefined);
+      }
+    }
+  };
 
   const handleBack = () => {
-    navigate('/consciousness', { state: { evaluationData: prevEvaluationData } }); // Navigate back, passing data
+    navigate('/consciousness', { state: { evaluationData: prevEvaluationData } });
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!mainCommunicationOption) {
-      toast.error('Por favor, seleccione una opción principal de comunicación.');
+    // Validation logic
+    if (!isCooperativeAndOriented && !isNotEvaluable && !hasCognitiveBehavioralAlteration && !hasVoiceAlteration) {
+      toast.error('Por favor, seleccione al menos una opción de comunicación.');
       return;
     }
 
-    if (mainCommunicationOption === "alteracion_cognitiva_conductual") {
+    if (hasCognitiveBehavioralAlteration) {
       if (!selectedCooperation || !selectedAttention || !selectedCalmness || !selectedOrientation || !selectedInstructionFollowing) {
         toast.error('Por favor, complete todas las sub-opciones de Alteración cognitiva-conductual.');
         return;
       }
     }
 
-    if (mainCommunicationOption === "si_alteracion_voz") {
+    if (hasVoiceAlteration) {
       if (!selectedVoiceAlterationType) {
         toast.error('Por favor, seleccione el tipo de alteración en la voz.');
         return;
@@ -72,23 +124,39 @@ const CommunicationPage = () => {
     }
 
     const currentData: CommunicationData = {
-      mainCommunicationOption,
-      selectedCooperation: mainCommunicationOption === "alteracion_cognitiva_conductual" ? selectedCooperation : undefined,
-      selectedAttention: mainCommunicationOption === "alteracion_cognitiva_conductual" ? selectedAttention : undefined,
-      selectedCalmness: mainCommunicationOption === "alteracion_cognitiva_conductual" ? selectedCalmness : undefined,
-      selectedOrientation: mainCommunicationOption === "alteracion_cognitiva_conductual" ? selectedOrientation : undefined,
-      selectedInstructionFollowing: mainCommunicationOption === "alteracion_cognitiva_conductual" ? selectedInstructionFollowing : undefined,
-      selectedVoiceAlterationType: mainCommunicationOption === "si_alteracion_voz" ? selectedVoiceAlterationType : undefined,
+      isCooperativeAndOriented,
+      isNotEvaluable,
+      hasCognitiveBehavioralAlteration,
+      hasVoiceAlteration,
+      selectedCooperation: hasCognitiveBehavioralAlteration ? selectedCooperation : undefined,
+      selectedAttention: hasCognitiveBehavioralAlteration ? selectedAttention : undefined,
+      selectedCalmness: hasCognitiveBehavioralAlteration ? selectedCalmness : undefined,
+      selectedOrientation: hasCognitiveBehavioralAlteration ? selectedOrientation : undefined,
+      selectedInstructionFollowing: hasCognitiveBehavioralAlteration ? selectedInstructionFollowing : undefined,
+      selectedVoiceAlterationType: hasVoiceAlteration ? selectedVoiceAlterationType : undefined,
     };
 
     const evaluationData: EvaluationData = {
-      ...prevEvaluationData, // Spread previous data
+      ...prevEvaluationData,
       communication: currentData,
     };
 
     toast.success('Etapa 5 - Comunicación completada. Procediendo a la siguiente etapa...');
-    navigate('/orofacial-evaluation', { state: { evaluationData } }); // Pass data to the next page
+    navigate('/orofacial-evaluation', { state: { evaluationData } });
   };
+
+  // Determine if alteration switches should be disabled
+  const areAlterationSwitchesDisabled = isCooperativeAndOriented || isNotEvaluable;
+
+  // Determine the value for the main radio group
+  let mainRadioValue: string | undefined;
+  if (isCooperativeAndOriented) {
+    mainRadioValue = 'cooperative';
+  } else if (isNotEvaluable) {
+    mainRadioValue = 'notEvaluable';
+  } else {
+    mainRadioValue = undefined; // No main radio selected if alterations are active
+  }
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -98,34 +166,42 @@ const CommunicationPage = () => {
         <h1 className="text-2xl font-semibold text-efodea-blue mb-6">Etapa 5 - Comunicación</h1>
 
         <form onSubmit={handleSubmit}>
-          <div className="mb-6 space-y-4">
+          <div className="mb-6 space-y-6">
+            {/* Main Radio Group for mutually exclusive states */}
             <RadioGroup
               onValueChange={(value) => {
-                setMainCommunicationOption(value);
-                // Clear sub-options if main option changes
-                if (value !== "alteracion_cognitiva_conductual") {
-                  setSelectedCooperation(undefined);
-                  setSelectedAttention(undefined);
-                  setSelectedCalmness(undefined);
-                  setSelectedOrientation(undefined);
-                  setSelectedInstructionFollowing(undefined);
-                }
-                if (value !== "si_alteracion_voz") {
-                  setSelectedVoiceAlterationType(undefined);
+                if (value === 'cooperative') {
+                  handleMainStateChange('cooperative', true);
+                } else if (value === 'notEvaluable') {
+                  handleMainStateChange('notEvaluable', true);
                 }
               }}
-              value={mainCommunicationOption}
+              value={mainRadioValue}
               className="flex flex-col space-y-4"
             >
-              {mainCommunicationOptions.map((option) => (
-                <div key={option.value} className="flex items-center space-x-2">
-                  <RadioGroupItem value={option.value} id={`main-comm-${option.value}`} />
-                  <Label htmlFor={`main-comm-${option.value}`} className="text-gray-700 font-medium">{option.label}</Label>
-                </div>
-              ))}
+              <div className="flex items-center space-x-2">
+                <RadioGroupItem value="cooperative" id="main-comm-cooperative" disabled={hasCognitiveBehavioralAlteration || hasVoiceAlteration} />
+                <Label htmlFor="main-comm-cooperative" className="text-gray-700 font-medium">Cooperador, atento, tranquilo, orientado con seguimiento de instrucciones</Label>
+              </div>
+              <div className="flex items-center space-x-2">
+                <RadioGroupItem value="notEvaluable" id="main-comm-not-evaluable" disabled={hasCognitiveBehavioralAlteration || hasVoiceAlteration} />
+                <Label htmlFor="main-comm-not-evaluable" className="text-gray-700 font-medium">No evaluable</Label>
+              </div>
             </RadioGroup>
 
-            {mainCommunicationOption === "alteracion_cognitiva_conductual" && (
+            {/* Independent Switches for Alterations */}
+            <div className="flex items-center justify-between">
+              <Label htmlFor="hasCognitiveBehavioralAlteration" className="text-gray-700 font-medium">Alteración cognitiva-conductual</Label>
+              <Switch
+                id="hasCognitiveBehavioralAlteration"
+                checked={hasCognitiveBehavioralAlteration}
+                onCheckedChange={(checked) => handleAlterationSwitchChange('cognitive', checked)}
+                disabled={areAlterationSwitchesDisabled}
+                className="data-[state=checked]:bg-efodea-blue"
+              />
+            </div>
+
+            {hasCognitiveBehavioralAlteration && (
               <div className="ml-8 mt-4 space-y-4 p-4 border rounded-lg bg-gray-50">
                 <h3 className="text-lg font-semibold text-gray-800 mb-2">Detalle de Alteración cognitiva-conductual:</h3>
                 
@@ -191,7 +267,18 @@ const CommunicationPage = () => {
               </div>
             )}
 
-            {mainCommunicationOption === "si_alteracion_voz" && (
+            <div className="flex items-center justify-between">
+              <Label htmlFor="hasVoiceAlteration" className="text-gray-700 font-medium">Presenta alteración en la voz</Label>
+              <Switch
+                id="hasVoiceAlteration"
+                checked={hasVoiceAlteration}
+                onCheckedChange={(checked) => handleAlterationSwitchChange('voice', checked)}
+                disabled={areAlterationSwitchesDisabled}
+                className="data-[state=checked]:bg-efodea-blue"
+              />
+            </div>
+
+            {hasVoiceAlteration && (
               <div className="ml-8 mt-4 space-y-2 p-4 border rounded-lg bg-gray-50">
                 <h3 className="text-lg font-semibold text-gray-800 mb-2">Tipo de Alteración en la Voz:</h3>
                 <RadioGroup onValueChange={setSelectedVoiceAlterationType} value={selectedVoiceAlterationType} className="flex flex-col space-y-2">
